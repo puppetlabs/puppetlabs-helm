@@ -1,8 +1,8 @@
 {
   "name": "puppetlabs-helm",
   "version": "0.1.0",
-  "author": "dave.try@puppet.com",
-  "summary": "A module to install Helm, the Kubernetes package manager",
+  "author": "puppetlabs",
+  "summary": "A module to install Helm, a kubernetes package manager",
   "license": "Apache-2.0",
   "source": "",
   "project_page": null,

@@ -42,7 +42,16 @@
 #
 # Copyright 2017 Your name here, unless otherwise noted.
 #
-class helm {
+class helm ( 
+  $version      = $helm::params::version,
+  $install_path = $helm::params::install_path,
+  $init = undef,
+) inherits helm::params {
 
+  validate_string($version)
+  validate_string($install_path)
+  validate_re($::kernel, 'Linux','This module only supports the Linux kernel')
 
+  class { 'helm::package': }
+  class { 'helm::helm_init': }
 }
