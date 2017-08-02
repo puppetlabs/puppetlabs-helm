@@ -1,16 +1,22 @@
 # Class: helm
 # ===========================
 #
-# Full description of class helm here.
+# A module to install Helm, the Kubernetes package manager.
 #
 # Parameters
 # ----------
 #
-# Document parameters here.
-#
-# * `sample parameter`
-# Explanation of what this parameter affects and what it defaults to.
-# e.g. "Specify one or more upstream ntp servers as an array."
+# [*version*]
+# The version of helm to install.
+# Defaults to undefined
+# 
+# [*install_path*]
+# The path to extract helm binary to.
+# Defaults to /usr/bin
+# 
+# [*init*]
+# Determines the behaviour of the config function. Setting to true will init the cluster and install tiller. False will install Helm in client only mode.
+# Defaults to true
 #
 # Variables
 # ----------
@@ -43,13 +49,18 @@
 # Copyright 2017 Your name here, unless otherwise noted.
 #
 class helm ( 
-  $version      = $helm::params::version,
+  $version = $helm::params::version,
   $install_path = $helm::params::install_path,
-  $init = undef,
+  $init = $helm::params::init,
+  $service_account = $helm::params::service_account,
+  $tiller_namespace = $helm::params::tiller_namespace, 
 ) inherits helm::params {
 
   validate_string($version)
   validate_string($install_path)
+  validate_bool($init)
+  validate_string($service_account)
+  validate_string($tiller_namespace)
   validate_re($::kernel, 'Linux','This module only supports the Linux kernel')
 
   class { 'helm::package': }

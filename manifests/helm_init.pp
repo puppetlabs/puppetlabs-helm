@@ -1,12 +1,13 @@
 class helm::helm_init (
-
-
+  $init = $helm::init,
+  $service_account = $helm::service_account,
+  $tiller_namespace = $helm::tiller_namespace,
 ) {
 
 	helm::config { 'kube-controller': 
-    init => true,
-    service_account => 'tiller',
-    tiller_namespace => 'kube-system'
+    init => $init,
+    service_account => $service_account,
+    tiller_namespace => $tiller_namespace,
 	}
 	
 }
