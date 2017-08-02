@@ -1,5 +1,5 @@
 class helm::params {
-  $version      = undef
+  $version = undef
   $install_path = '/usr/bin'
   $init = true
   $service_account = 'tiller'
