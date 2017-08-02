@@ -1,5 +1,17 @@
 # helm
 
+## NOTE
+
+At present this module is requires a working kubernetes cluster, with kubectl installed. 
+In addition to this it is recommended that a service account be setup in the desired namespace
+before installation of helm to use full functionatlity. 
+
+See here for more information: 
+
+https://github.com/kubernetes/helm/issues/2224
+
+
+
 #### Table of Contents
 
 1. [Description](#description)
