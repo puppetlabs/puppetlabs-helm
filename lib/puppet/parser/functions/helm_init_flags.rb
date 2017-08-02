@@ -1,7 +1,7 @@
 require 'shellwords'
 
 module Puppet::Parser::Functions
-  # Transforms a hash into a string of docker swarm init flags
+  # Transforms a hash into a string of helm init flags
   newfunction(:helm_init_flags, :type => :rvalue) do |args|
     opts = args[0] || {}
     flags = []
