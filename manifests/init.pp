@@ -12,41 +12,19 @@
 # 
 # [*install_path*]
 # The path to extract helm binary to.
-# Defaults to /usr/bin
+# Defaults to '/usr/bin'
 # 
 # [*init*]
 # Determines the behaviour of the config function. Setting to true will init the cluster and install tiller. False will install Helm in client only mode.
 # Defaults to true
-#
-# Variables
-# ----------
-#
-# Here you should define a list of variables that this module would require.
-#
-# * `sample variable`
-#  Explanation of how this variable affects the function of this class and if
-#  it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#  External Node Classifier as a comma separated list of hostnames." (Note,
-#  global variables should be avoided in favor of class parameters as
-#  of Puppet 2.6.)
-#
-# Examples
-# --------
-#
-# @example
-#    class { 'helm':
-#      servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#    }
-#
-# Authors
-# -------
-#
-# Author Name <author@domain.com>
-#
-# Copyright
-# ---------
-#
-# Copyright 2017 Your name here, unless otherwise noted.
+# 
+# [*service_aocount*]
+# The service account for tiller
+# Defaults to 'tiller'
+# 
+# [*tiller_namesamce*]
+# The namespace in which to install tiller
+# Defaults to 'kube-system'
 #
 class helm ( 
   $version = $helm::params::version,
