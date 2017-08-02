@@ -12,7 +12,7 @@ class helm::package (
       }
       default: {
         fail("${::architecture} is not supported")
-      }  
+      }
     }
 
     $filename = "helm-v${version}-linux-${arch}.tar.gz"
@@ -20,9 +20,9 @@ class helm::package (
     archive { 'helm':
       path            => "/tmp/${filename}",
       source          => "https://kubernetes-helm.storage.googleapis.com/${filename}",
-      extract_command => "tar xfz %s linux-${arch}/helm --strip-components=1",  
+      extract_command => "tar xfz %s linux-${arch}/helm --strip-components=1",
       extract         => true,
-      extract_path    => "${install_path}",
+      extract_path    => $install_path,
       creates         => "${install_path}/helm",
       cleanup         => true,
     }

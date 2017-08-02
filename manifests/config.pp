@@ -1,4 +1,4 @@
-define helm::config (
+ define helm::config (
   $init = false,
   $client_only = undef,
   $dry_run = undef,
@@ -38,7 +38,7 @@ define helm::config (
   $exec_init = "helm ${helm_init_flags}"
   $unless_init = "kubectl get deployment --namespace=${tiller_namespace}  | grep 'tiller-deploy' "
 
-  exec { "Helm init":
+  exec { 'Helm init':
     command     => $exec_init,
     environment => 'HOME=/root',
     path        => ['/bin', '/usr/bin'],

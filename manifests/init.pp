@@ -15,7 +15,8 @@
 # Defaults to '/usr/bin'
 # 
 # [*init*]
-# Determines the behaviour of the config function. Setting to true will init the cluster and install tiller. False will install Helm in client only mode.
+# Determines the behaviour of the config function. Setting to true will init the cluster and install tiller. 
+# False will install Helm in client only mode.
 # Defaults to true
 # 
 # [*service_aocount*]
@@ -26,12 +27,12 @@
 # The namespace in which to install tiller
 # Defaults to 'kube-system'
 #
-class helm ( 
+class helm (
   $version = $helm::params::version,
   $install_path = $helm::params::install_path,
   $init = $helm::params::init,
   $service_account = $helm::params::service_account,
-  $tiller_namespace = $helm::params::tiller_namespace, 
+  $tiller_namespace = $helm::params::tiller_namespace,
 ) inherits helm::params {
 
   validate_string($version)
