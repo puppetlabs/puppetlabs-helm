@@ -34,6 +34,7 @@
       tiller_tls_key => $tiller_tls_key,
       tls_ca_cert => $tls_ca_cert,
     })
+  }  
 
   $exec_init = "helm ${helm_init_flags}"
   $unless_init = "kubectl get deployment --namespace=${tiller_namespace}  | grep 'tiller-deploy' "
@@ -44,6 +45,5 @@
     path        => ['/bin', '/usr/bin'],
     timeout     => 0,
     unless      => $unless_init,
-    }
   }
 }
