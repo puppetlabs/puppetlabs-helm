@@ -9,20 +9,20 @@
 # [*version*]
 # The version of helm to install.
 # Defaults to undefined
-# 
+#
 # [*install_path*]
 # The path to extract helm binary to.
 # Defaults to '/usr/bin'
-# 
+#
 # [*init*]
-# Determines the behaviour of the config function. Setting to true will init the cluster and install tiller. 
+# Determines the behaviour of the config function. Setting to true will init the cluster and install tiller.
 # False will install Helm in client only mode.
 # Defaults to true
-# 
+#
 # [*service_aocount*]
 # The service account for tiller
 # Defaults to 'tiller'
-# 
+#
 # [*tiller_namesamce*]
 # The namespace in which to install tiller
 # Defaults to 'kube-system'
@@ -43,5 +43,6 @@ class helm (
   validate_re($::kernel, 'Linux','This module only supports the Linux kernel')
 
   class { 'helm::package': }
-  class { 'helm::helm_init': }
+  -> class { 'helm::helm_init': }
+
 }
