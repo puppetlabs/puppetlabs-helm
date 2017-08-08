@@ -10,58 +10,74 @@ module Puppet::Parser::Functions
       flags << 'init'
     end
 
+    if opts['canary_image'].to_s == 'true'
+      flags << '--canary-image'
+    end
+
     if opts['client_only'].to_s != 'undef'
       flags << "--client-only '#{opts['client_only']}'"
     end
-      
-    if opts['dry_run'].to_s != 'undef'
-      flags << "--dry_run '#{opts['dry_run']}'"
+
+    if opts['debug'].to_s == 'true'
+      flags << '--debug'
     end
-   
+
+    if opts['dry_run'].to_s == 'true'
+      flags << '--dry_run'
+    end
+
     if opts['local_repo_url'].to_s != 'undef'
       flags << "--local-repo-url '#{opts['local_repo_url']}'"
-    end  
-     
-    if opts['net_host'].to_s != 'undef'
-      flags << "--net-host '#{opts['net_host']}'"	    
+    end
+
+    if opts['net_host'].to_s == 'true'
+      flags << '--net-host'
     end
 
     if opts['service_account'].to_s != 'undef'
       flags << "--service-account '#{opts['service_account']}'"
     end
-    
-    if opts['skip_refresh'].to_s != 'undef'
-      flags << "--skip-refresh '#{opts['skip_refresh']}'"
+
+    if opts['skip_refresh'].to_s == 'true'
+      flags << '--skip-refresh'
     end
 
     if opts['stable_repo_url'].to_s != 'undef'
       flags << "--stable-repo-url '#{opts['stable_repo_url']}'"
-    end     
-    
+    end
+
     if opts['tiller_image'].to_s != 'undef'
       flags << "--tiller-image '#{opts['tiller_image']}'"
-    end 
+    end
 
     if opts['tiller_namespace'].to_s != 'undef'
       flags << "--tiller-namespace '#{opts['tiller_namespace']}'"
-    end 
+    end
 
-    if opts['tiller_tls'].to_s != 'undef'
-      flags << "--tiller-tls '#{opts['tiller_tls']}'"
+    if opts['tiller_tls'].to_s == 'true'
+      flags << '--tiller-tls'
     end
 
     if opts['tiller_tls_cert'].to_s != 'undef'
       flags << "--tiller-tls-cert '#{opts['tiller_tls_cert']}'"
     end
-  
+
     if opts['tiller_tls_key'].to_s != 'undef'
       flags << "--tiller-tls-key '#{opts['tiller_tls_key']}'"
     end
 
+    if opts['tiller_tls_verify'].to_s == 'true'
+      flags << '--tiller-tls-verify'
+    end
+
     if opts['tls_ca_cert'].to_s != 'undef'
       flags << "--tls_ca_cert '#{opts['tls_ca_cert']}'"
-    end   
-    
+    end
+
+    if opts['upgrade'].to_s == 'true'
+      flags << '--upgrade'
+    end
+
     flags.flatten.join(" ")
   end
 end

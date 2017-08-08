@@ -9,10 +9,9 @@ class helm::helm_init (
     tiller_namespace => $tiller_namespace,
   }
 
- helm::chart { 'stable/mysql':
-   chart => 'stable/mysql',
-   service_name => 'dave-service',
-   set => ['dave=test','array=dave'],
-   values => ['dave','test'],
- }
+  helm::chart { 'stable/mysql':
+    ensure       => absent,
+    chart        => 'stable/mysql',
+    release_name => 'dave-release',
+  }
 }

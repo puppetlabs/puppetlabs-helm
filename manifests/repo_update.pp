@@ -1,9 +1,9 @@
 define helm::repo_update (
-  $update = true,  
-  $home = undef,                
-  $host = undef,                
-  $kube_context = undef,        
-  $tiller_namespace = 'kube-system', 
+  $update = true,
+  $home = undef,
+  $host = undef,
+  $kube_context = undef,
+  $tiller_namespace = 'kube-system',
 ){
 
   include helm::params
@@ -17,7 +17,7 @@ define helm::repo_update (
       tiller_namespace => $tiller_namespace,
     })
   }
-  
+
   if $update {
     $exec_update = "helm repo ${helm_repo_update_flags}"
   }
@@ -28,5 +28,5 @@ define helm::repo_update (
     path        => ['/bin', '/usr/bin'],
     timeout     => 0,
   }
- 
+
 }

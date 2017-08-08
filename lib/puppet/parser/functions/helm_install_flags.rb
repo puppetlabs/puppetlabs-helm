@@ -6,6 +6,10 @@ module Puppet::Parser::Functions
     opts = args[0] || {}
     flags = []
 
+    if opts['ensure'].to_s == 'present'
+      flags << "install"
+    end
+
     if opts['ca_file'].to_s != 'undef'
       flags << "--ca-file '#{opts['ca_file']}'"
     end
@@ -42,8 +46,8 @@ module Puppet::Parser::Functions
       flags << "--kube-context '#{opts['kube_context']}'"
     end
 
-    if opts['service_name'].to_s != 'undef'
-      flags << "--name '#{opts['service_name']}'"
+    if opts['release_name'].to_s != 'undef'
+      flags << "--name '#{opts['release_name']}'"
     end
 
     if opts['name_template'].to_s != 'undef'
@@ -100,8 +104,8 @@ module Puppet::Parser::Functions
       flags << "--tiller-tls-key '#{opts['tiller_tls_key']}'"
     end
 
-    if opts['tls'].to_s != 'undef'
-      flags << "--tls '#{opts['tls']}'"
+    if opts['tls'].to_s == 'true'
+      flags << "--tls"
     end
 
     if opts['tls_ca_cert'].to_s != 'undef'

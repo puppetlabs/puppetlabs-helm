@@ -13,10 +13,11 @@ define helm::chart (
   $name_template = undef,
   $namespace = undef,
   $no_hooks = undef,
+  $purge = true,
   $replace = undef,
   $repo = undef,
-  $service_name = undef,
-  $set = undef,
+  $release_name = undef,
+  $set = [],
   $timeout = undef,
   $tiller_namespace = 'kube-system',
   $tiller_tls = undef,
@@ -27,7 +28,7 @@ define helm::chart (
   $tls_cert = undef,
   $tls_key = undef,
   $tls_verify = undef,
-  $values = undef,
+  $values = [],
   $verify = undef,
   $version = undef,
   $wait = undef,
@@ -35,8 +36,8 @@ define helm::chart (
 
   include helm::params
 
-  if ($service_name == undef) {
-    fail("\nYou must specify a name for the service with the service_name attribute \neg: service_name => 'mysql'")
+  if ($release_name == undef) {
+    fail("\nYou must specify a name for the service with the release_name attribute \neg: release_name => 'mysql'")
   }
 
   if $ensure == present {
@@ -57,7 +58,7 @@ define helm::chart (
       no_hooks => $no_hooks,
       replace => $replace,
       repo => $repo,
-      service_name => $service_name,
+      release_name => $release_name,
       set => $set,
       timeout => $timeout,
       tiller_namespace => $tiller_namespace,
@@ -74,15 +75,42 @@ define helm::chart (
       version => $version,
       wait => $wait,
       })
+    $exec = 'helm install'
+    $exec_chart = "helm ${helm_install_flags}"
+    $unless_chart = "helm ls --tiller-namespace ${tiller_namespace} | grep ${release_name}"
   }
 
-  $exec_chart = "helm install ${helm_install_flags}"
-  $unless_chart = "helm list --all | awk '{print $1"
+  if $ensure == absent {
+    $helm_delete_flags = helm_delete_flags({
+      ensure => $ensure,
+      dry_run => $dry_run,
+      home => $home,
+      host => $host,
+      kube_context => $kube_context,
+      name_template => $name_template,
+      namespace => $namespace,
+      no_hooks => $no_hooks,
+      purge => $purge,
+      release_name => $release_name,
+      timeout => $timeout,
+      tiller_namespace => $tiller_namespace,
+      tls => $tls,
+      tls_ca_cert => $tls_ca_cert,
+      tls_cert => $tls_cert,
+      tls_key => $tls_key,
+      tls_verify => $tls_verify,
+      })
+    $exec = 'helm delete'
+    $exec_chart = "helm ${helm_delete_flags}"
+    $unless_chart = "helm ls -q --tiller-namespace ${tiller_namespace} | awk '{if(\$1 == \"${release_name}\") exit 1}'"
+  }
 
-  exec { $exec_chart :
+  exec { $exec:
+    command     => $exec_chart,
     environment => 'HOME=/root',
     path        => ['/bin', '/usr/bin'],
     timeout     => 0,
+    unless      => $unless_chart,
   }
 
 }

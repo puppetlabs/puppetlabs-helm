@@ -8,19 +8,19 @@ module Puppet::Parser::Functions
 
     if opts['home'].to_s != 'undef'
       flags << "--home '#{opts['home']}'"
-    end   
+    end
 
     if opts['host'].to_s != 'undef'
       flags << "--host '#{opts['host']}'"
-    end   
+    end
 
     if opts['kube_context'].to_s != 'undef'
       flags << "--kube-context '#{opts['kube_context']}'"
-    end  
+    end
 
     if opts['tiller_namespace'].to_s != 'undef'
       flags << "--tiller-namespace '#{opts['tiller_namespace']}'"
-    end 
+    end
 
     if opts['update'].to_s != 'false'
       flags << 'update'
@@ -28,4 +28,4 @@ module Puppet::Parser::Functions
 
     flags.flatten.join(" ")
   end
-end    
+end

@@ -6,7 +6,7 @@ module Puppet::Parser::Functions
     opts = args[0] || {}
     flags = []
 
-    if opts['ensure'].to_s != 'absent'
+    if opts['ensure'].to_s = 'present'
       flags << 'add'
     end
 
@@ -20,27 +20,27 @@ module Puppet::Parser::Functions
 
     if opts['key_file'].to_s != 'undef'
       flags << "--repo-name '#{opts['key_file']}'"
-    end    
+    end
 
     if opts['no_update'].to_s != 'undef'
       flags << '--repo-name'
-    end 
+    end
 
     if opts['home'].to_s != 'undef'
       flags << "--home '#{opts['home']}'"
-    end   
+    end
 
     if opts['host'].to_s != 'undef'
       flags << "--host '#{opts['host']}'"
-    end   
+    end
 
     if opts['kube_context'].to_s != 'undef'
       flags << "--kube-context '#{opts['kube_context']}'"
-    end  
+    end
 
     if opts['tiller_namespace'].to_s != 'undef'
       flags << "--tiller-namespace '#{opts['tiller_namespace']}'"
-    end 
+    end
 
     if opts['repo_name'].to_s != 'undef'
       flags << "'#{opts['repo_name']}'"
@@ -52,7 +52,7 @@ module Puppet::Parser::Functions
 
     flags.flatten.join(" ")
   end
-end        
+end
 
 
 
