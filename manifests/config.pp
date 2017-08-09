@@ -1,18 +1,25 @@
  define helm::config (
-  $init = false,
-  $client_only = undef,
-  $dry_run = undef,
+  $init = true,
+  $canary_image = false,
+  $client_only = false,
+  $debug = false,
+  $dry_run = false,
+  $home = undef,
+  $host = undef,
+  $kube_context = undef,
   $local_repo_url = undef,
-  $net_host = undef,
+  $net_host = false,
   $service_account = undef,
-  $skip_refresh = undef,
+  $skip_refresh = false,
   $stable_repo_url = undef,
   $tiller_image = undef,
   $tiller_namespace = 'kube-system',
-  $tiller_tls = undef,
+  $tiller_tls = false,
   $tiller_tls_cert = undef,
   $tiller_tls_key = undef,
+  $tiller_tls_verify = false,
   $tls_ca_cert = undef,
+  $upgrade = false,
   ){
 
   include helm::params
@@ -20,8 +27,13 @@
   if $init {
     $helm_init_flags = helm_init_flags({
       init => $init,
+      canary_image => $canary_image,
       client_only => $client_only,
+      debug => $debug,
       dry_run => $dry_run,
+      home => $home,
+      host => $host,
+      kube_context => $kube_context,
       local_repo_url => $local_repo_url,
       net_host => $net_host,
       service_account => $service_account,
@@ -33,6 +45,7 @@
       tiller_tls_cert => $tiller_tls_cert,
       tiller_tls_key => $tiller_tls_key,
       tls_ca_cert => $tls_ca_cert,
+      upgrade => $upgrade,
     })
   }
 

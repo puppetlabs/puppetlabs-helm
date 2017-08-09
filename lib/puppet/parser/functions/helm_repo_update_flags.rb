@@ -6,6 +6,10 @@ module Puppet::Parser::Functions
     opts = args[0] || {}
     flags = []
 
+    if opts['debug']
+      flags << '--debug'
+    end
+
     if opts['home'].to_s != 'undef'
       flags << "--home '#{opts['home']}'"
     end
@@ -22,7 +26,7 @@ module Puppet::Parser::Functions
       flags << "--tiller-namespace '#{opts['tiller_namespace']}'"
     end
 
-    if opts['update'].to_s != 'false'
+    if opts['update']
       flags << 'update'
     end
 

@@ -3,8 +3,8 @@ define helm::chart (
   $ca_file = undef,
   $cert_file = undef,
   $chart = undef,
-  $devel = undef,
-  $dry_run = undef,
+  $devel = false,
+  $dry_run = false,
   $key_file = undef,
   $key_ring = undef,
   $home = undef,
@@ -12,9 +12,9 @@ define helm::chart (
   $kube_context = undef,
   $name_template = undef,
   $namespace = undef,
-  $no_hooks = undef,
+  $no_hooks = false,
   $purge = true,
-  $replace = undef,
+  $replace = false,
   $repo = undef,
   $release_name = undef,
   $set = [],
@@ -23,15 +23,15 @@ define helm::chart (
   $tiller_tls = undef,
   $tiller_tls_cert = undef,
   $tiller_tls_key = undef,
-  $tls = undef,
+  $tls = false,
   $tls_ca_cert = undef,
   $tls_cert = undef,
   $tls_key = undef,
   $tls_verify = undef,
   $values = [],
-  $verify = undef,
+  $verify = false,
   $version = undef,
-  $wait = undef,
+  $wait = false,
 ){
 
   include helm::params
@@ -112,5 +112,4 @@ define helm::chart (
     timeout     => 0,
     unless      => $unless_chart,
   }
-
 }

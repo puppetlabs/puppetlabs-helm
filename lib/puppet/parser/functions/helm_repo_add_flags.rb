@@ -18,12 +18,16 @@ module Puppet::Parser::Functions
       flags << "--cert-file '#{opts['cert_file']}'"
     end
 
+    if opts['debug']
+      flags << '--debug'
+    end
+
     if opts['key_file'].to_s != 'undef'
       flags << "--repo-name '#{opts['key_file']}'"
     end
 
-    if opts['no_update'].to_s != 'undef'
-      flags << '--repo-name'
+    if opts['no_update']
+      flags << '--no-update'
     end
 
     if opts['home'].to_s != 'undef'

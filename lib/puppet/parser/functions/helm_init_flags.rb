@@ -6,11 +6,11 @@ module Puppet::Parser::Functions
     opts = args[0] || {}
     flags = []
 
-    if opts['init'].to_s != 'false'
+    if opts['init']
       flags << 'init'
     end
 
-    if opts['canary_image'].to_s == 'true'
+    if opts['canary_image']
       flags << '--canary-image'
     end
 
@@ -18,19 +18,31 @@ module Puppet::Parser::Functions
       flags << "--client-only '#{opts['client_only']}'"
     end
 
-    if opts['debug'].to_s == 'true'
+    if opts['debug']
       flags << '--debug'
     end
 
-    if opts['dry_run'].to_s == 'true'
+    if opts['dry_run']
       flags << '--dry_run'
+    end
+
+    if opts['home'].to_s != 'undef'
+      flags << "--home '#{opts['home']}'"
+    end
+
+    if opts['host'].to_s != 'undef'
+      flags << "--host '#{opts['host']}'"
+    end
+
+    if opts['kube_context'].to_s != 'undef'
+      flags << "--kube-context '#{opts['kube_context']}'"
     end
 
     if opts['local_repo_url'].to_s != 'undef'
       flags << "--local-repo-url '#{opts['local_repo_url']}'"
     end
 
-    if opts['net_host'].to_s == 'true'
+    if opts['net_host']
       flags << '--net-host'
     end
 
@@ -38,7 +50,7 @@ module Puppet::Parser::Functions
       flags << "--service-account '#{opts['service_account']}'"
     end
 
-    if opts['skip_refresh'].to_s == 'true'
+    if opts['skip_refresh']
       flags << '--skip-refresh'
     end
 
@@ -54,7 +66,7 @@ module Puppet::Parser::Functions
       flags << "--tiller-namespace '#{opts['tiller_namespace']}'"
     end
 
-    if opts['tiller_tls'].to_s == 'true'
+    if opts['tiller_tls']
       flags << '--tiller-tls'
     end
 
@@ -66,7 +78,7 @@ module Puppet::Parser::Functions
       flags << "--tiller-tls-key '#{opts['tiller_tls_key']}'"
     end
 
-    if opts['tiller_tls_verify'].to_s == 'true'
+    if opts['tiller_tls_verify']
       flags << '--tiller-tls-verify'
     end
 
@@ -74,7 +86,7 @@ module Puppet::Parser::Functions
       flags << "--tls_ca_cert '#{opts['tls_ca_cert']}'"
     end
 
-    if opts['upgrade'].to_s == 'true'
+    if opts['upgrade']
       flags << '--upgrade'
     end
 

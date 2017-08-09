@@ -10,8 +10,8 @@ module Puppet::Parser::Functions
       flags << "delete"
     end
 
-    if opts['dry_run'].to_s == 'true'
-      flags << "--dry_run '#{opts['dry_run']}'"
+    if opts['dry_run']
+      flags << '--dry_run'
     end
 
     if opts['home'].to_s != 'undef'
@@ -26,12 +26,12 @@ module Puppet::Parser::Functions
       flags << "--kube-context '#{opts['kube_context']}'"
     end
 
-    if opts['no_hooks'].to_s != 'undef'
-      flags << "--no-hooks '#{opts['no_hooks']}'"
+    if opts['no_hooks']
+      flags << '--no-hooks'
     end
 
-    if opts['purge'].to_s == 'true'
-      flags << "--purge"
+    if opts['purge']
+      flags << '--purge'
     end
 
     if opts['timeout'].to_s != 'undef'
@@ -42,7 +42,7 @@ module Puppet::Parser::Functions
       flags << "--tiller-namespace '#{opts['tiller_namespace']}'"
     end
 
-    if opts['tls'].to_s == 'true'
+    if opts['tls']
       flags << "--tls"
     end
 
@@ -58,8 +58,8 @@ module Puppet::Parser::Functions
       flags << "--tls-key '#{opts['tls_key']}'"
     end
 
-    if opts['tls_verify'].to_s != 'undef'
-      flags << "--tls-verify '#{opts['tls_verify']}'"
+    if opts['tls_verify']
+      flags << '--tls-verify'
     end
 
     if opts['release_name'].to_s != 'undef'

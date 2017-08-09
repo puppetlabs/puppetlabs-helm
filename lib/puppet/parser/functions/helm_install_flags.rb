@@ -18,12 +18,12 @@ module Puppet::Parser::Functions
       flags << "--cert-file '#{opts['cert_file']}'"
     end
 
-    if opts['devel'].to_s != 'undef'
-      flags << "--devel '#{opts['devel']}'"
+    if opts['devel']
+      flags << '--devel'
     end
 
-    if opts['dry_run'].to_s != 'undef'
-      flags << "--dry_run '#{opts['dry_run']}'"
+    if opts['dry_run']
+      flags << '--dry_run'
     end
 
     if opts['key_file'].to_s != 'undef'
@@ -58,12 +58,12 @@ module Puppet::Parser::Functions
       flags << "--namespace '#{opts['namespace']}'"
     end
 
-    if opts['no_hooks'].to_s != 'undef'
-      flags << "--no-hooks '#{opts['no_hooks']}'"
+    if opts['no_hooks']
+      flags << '--no-hooks'
     end
 
-    if opts['replace'].to_s != 'undef'
-      flags << "--replace '#{opts['replace']}'"
+    if opts['replace']
+      flags << '--replace'
     end
 
     if opts['repo'].to_s != 'undef'
@@ -92,8 +92,8 @@ module Puppet::Parser::Functions
       flags << "--tiller-namespace '#{opts['tiller_namespace']}'"
     end
 
-    if opts['tiller_tls'].to_s != 'undef'
-      flags << "--tiller-tls '#{opts['tiller_tls']}'"
+    if opts['tiller_tls']
+      flags << '--tiller-tls'
     end
 
     if opts['tiller_tls_cert'].to_s != 'undef'
@@ -104,7 +104,7 @@ module Puppet::Parser::Functions
       flags << "--tiller-tls-key '#{opts['tiller_tls_key']}'"
     end
 
-    if opts['tls'].to_s == 'true'
+    if opts['tls']
       flags << "--tls"
     end
 
@@ -120,26 +120,25 @@ module Puppet::Parser::Functions
       flags << "--tls-key '#{opts['tls_key']}'"
     end
 
-    if opts['tls_verify'].to_s != 'undef'
-      flags << "--tls-verify '#{opts['tls_verify']}'"
+    if opts['tls_verify']
+      flags << '--tls-verify'
     end
 
-    if opts['verify'].to_s != 'undef'
-      flags << "--verify '#{opts['verify']}'"
+    if opts['verify']
+      flags << '--verify'
     end
 
     if opts['version'].to_s != 'undef'
       flags << "--version '#{opts['version']}'"
     end
 
-    if opts['wait'].to_s != 'undef'
-      flags << "--wait '#{opts['wait']}'"
+    if opts['wait']
+      flags << '--wait'
     end
 
     if opts['chart'].to_s != 'undef'
       flags << "'#{opts['chart']}'"
     end
-
 
    flags.flatten.join(" ")
   end
