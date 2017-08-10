@@ -1,35 +1,47 @@
-class helm::package (
-  $version      = $helm::version,
-  $install_path = $helm::install_path,
-  ) {
+define helm::package (
+  $chart_name = undef,
+  $chart_path = undef,
+  $debug = false,
+  $dependency_update = false,
+  $destination = undef,
+  $home = undef,
+  $host = undef,
+  $key = undef,
+  $keystring = undef,
+  $kube_context = undef,
+  $save = true,
+  $sign = false,
+  $tiller_namespace = undef,
+  $version = undef,
+){
 
-    case $::architecture {
-      'amd64': {
-        $arch = 'amd64'
-      }
-      'i386': {
-        $arch = '386'
-      }
-      default: {
-        fail("${::architecture} is not supported")
-      }
-    }
+  include helm::params
 
-    $filename = "helm-v${version}-linux-${arch}.tar.gz"
+  $helm_package_flags = helm_package_flags({
+    chart_name => $chart_name,
+    chart_path => $chart_path,
+    debug => $debug,
+    dependency_update => $dependency_update,
+    destination => $destination,
+    home => $home,
+    host => $host,
+    key => $key,
+    keystring => $keystring,
+    kube_context => $kube_context,
+    save => $save,
+    sign => $sign,
+    tiller_namespace => $tiller_namespace,
+    version => $version,
+    })
 
-    archive { 'helm':
-      path            => "/tmp/${filename}",
-      source          => "https://kubernetes-helm.storage.googleapis.com/${filename}",
-      extract_command => "tar xfz %s linux-${arch}/helm --strip-components=1",
-      extract         => true,
-      extract_path    => $install_path,
-      creates         => "${install_path}/helm",
-      cleanup         => true,
-    }
 
-    file { "${install_path}/helm":
-      owner   => 'root',
-      mode    => '0755',
-      require => Archive['helm']
-    }
+  $exec_package = "helm package ${helm_package_flags}"
+
+  exec { "helm package ${chart_name}":
+    command     => $exec_package,
+    environment => 'HOME=/root',
+    path        => ['/bin', '/usr/bin'],
+    timeout     => 0,
+    creates     => "${destination}/${chart_name}-${version}.tgz"
+  }
 }

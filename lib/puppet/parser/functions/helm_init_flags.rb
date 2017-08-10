@@ -14,8 +14,8 @@ module Puppet::Parser::Functions
       flags << '--canary-image'
     end
 
-    if opts['client_only'].to_s != 'undef'
-      flags << "--client-only '#{opts['client_only']}'"
+    if opts['client_only']
+      flags << '--client-only'
     end
 
     if opts['debug']

@@ -42,7 +42,7 @@ class helm (
   validate_string($tiller_namespace)
   validate_re($::kernel, 'Linux','This module only supports the Linux kernel')
 
-  class { 'helm::package': }
-  -> class { 'helm::helm_init': }
+  class { 'helm::binary': }
+  -> class { 'helm::config': }
 
 }
