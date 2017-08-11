@@ -29,5 +29,4 @@ define helm::repo_update (
     path        => ['/bin', '/usr/bin'],
     timeout     => 0,
   }
-
 }
