@@ -47,7 +47,7 @@ class helm (
   contain helm::binary
   contain helm::config
 
-  Class ['helm::binary']
-    -> Class ['helm::config']
+  Class['helm::binary']
+    -> Class['helm::config']
 
 }
