@@ -44,6 +44,7 @@ class helm (
 
   include helm::binary
   include helm::config
+
   contain helm::binary
   contain helm::config
 
