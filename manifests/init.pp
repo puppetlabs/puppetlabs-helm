@@ -43,12 +43,15 @@ class helm (
   validate_re($::kernel, 'Linux','This module only supports the Linux kernel')
 
   include helm::binary
+  include helm::account_config
   include helm::config
 
   contain helm::binary
+  contain helm::account_config
   contain helm::config
 
   Class['helm::binary']
+    -> Class['helm::account_config']
     -> Class['helm::config']
 
 }
