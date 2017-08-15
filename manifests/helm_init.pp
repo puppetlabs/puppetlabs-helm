@@ -54,8 +54,9 @@
 
   exec { 'Helm init':
     command     => $exec_init,
-    environment => 'HOME=/root',
+    environment => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
     path        => ['/bin', '/usr/bin'],
+    logoutput   => true,
     timeout     => 0,
     unless      => $unless_init,
   }
