@@ -1,11 +1,13 @@
 class helm::account_config (
-
+  $env = $helm::env,
+  $path = $helm::path,
 ){
 
   Exec {
-    path        => ['/usr/bin', '/bin'],
-    environment => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
+    cwd         => '/etc/kubernetes',
+    environment => $env,
     logoutput   => true,
+    path        => $path,
   }
 
   file {'/etc/kubernetes/tiller-serviceaccount.yaml':
@@ -18,7 +20,6 @@ class helm::account_config (
 
   exec {'create service account':
     command     => 'kubectl create -f tiller-serviceaccount.yaml',
-    cwd         => '/etc/kubernetes',
     subscribe   => File['/etc/kubernetes/tiller-serviceaccount.yaml'],
     refreshonly => true,
     require     => File['/etc/kubernetes/tiller-serviceaccount.yaml'],
@@ -34,7 +35,6 @@ class helm::account_config (
 
   exec {'create cluster role':
     command     => 'kubectl create -f tiller-clusterrole.yaml',
-    cwd         => '/etc/kubernetes',
     subscribe   => File['/etc/kubernetes/tiller-clusterrole.yaml'],
     refreshonly => true,
     require     => File['/etc/kubernetes/tiller-clusterrole.yaml'],

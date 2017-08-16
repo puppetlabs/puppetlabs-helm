@@ -28,11 +28,13 @@
 # Defaults to 'kube-system'
 #
 class helm (
-  $version = $helm::params::version,
-  $install_path = $helm::params::install_path,
+  $env = $helm::params::env,
   $init = $helm::params::init,
+  $install_path = $helm::params::install_path,
+  $path = $helm::params::path,
   $service_account = $helm::params::service_account,
   $tiller_namespace = $helm::params::tiller_namespace,
+  $version = $helm::params::version,
 ) inherits helm::params {
 
   validate_string($version)

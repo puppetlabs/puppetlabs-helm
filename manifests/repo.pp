@@ -4,11 +4,11 @@ define helm::repo (
   $cert_file = undef,
   $debug = false,
   $key_file = undef,
-  $no_update = undef,
+  $no_update = false,
   $home = undef,
   $host = undef,
   $kube_context = undef,
-  $tiller_namespace = 'kube-system',
+  $tiller_namespace = undef,
   $repo_name = undef,
   $url = undef,
 ){
@@ -29,9 +29,8 @@ define helm::repo (
       repo_name => $repo_name,
       url => $url,
     })
-    $exec = 'helm repo add'
-    $exec_repo = "helm repo ${helm_repo_add_flags}"
-    $unless_repo = "helm repo list --tiller_namespace ${tiller_namespace} | awk '{if(NR>1)print ${1}}' | grep ${repo_name}"
+    $exec_repo = "helm repo add ${helm_repo_add_flags}"
+    $unless_repo = "helm repo list --tiller-namespace ${tiller_namespace} | awk '{if(NR>1)print \$1}' | grep -w ${repo_name}"
   }
 
   if $ensure == absent {
@@ -42,16 +41,16 @@ define helm::repo (
       repo_name => $repo_name,
       tiller_namespace => $tiller_namespace,
     })
-    $exec = 'helm repo delete'
-    $exec_repo = "helm repo ${helm_repo_delete_flags}"
+    $exec_repo = "helm repo delete ${helm_repo_delete_flags}"
     $unless_repo = "helm repo list --tiller_namespace ${tiller_namespace} | awk '{if (\$1 == \"${repo_name}\") exit 1}'"
   }
 
-  exec { $exec:
+  exec { 'helm repo':
     command     => $exec_repo,
-    environment => 'HOME=/root',
-    path        => ['/bin', '/usr/bin'],
+    environment => $env,
+    path        => $path,
     timeout     => 0,
     unless      => $unless_repo,
+    logoutput   => true,
   }
 }

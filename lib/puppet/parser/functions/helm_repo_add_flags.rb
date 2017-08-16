@@ -6,7 +6,7 @@ module Puppet::Parser::Functions
     opts = args[0] || {}
     flags = []
 
-    if opts['ensure'].to_s = 'present'
+    if opts['ensure'].to_s == 'present'
       flags << 'add'
     end
 

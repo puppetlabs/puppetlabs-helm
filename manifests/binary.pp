@@ -1,5 +1,5 @@
 class helm::binary (
-  $version      = $helm::version,
+  $version = $helm::version,
   $install_path = $helm::install_path,
 ){
 
@@ -15,21 +15,27 @@ class helm::binary (
     }
   }
 
-  $filename = "helm-v${version}-linux-${arch}.tar.gz"
+  $archive = "helm-v${version}-linux-${arch}.tar.gz"
 
   archive { 'helm':
-    path            => "/tmp/${filename}",
-    source          => "https://kubernetes-helm.storage.googleapis.com/${filename}",
-    extract_command => "tar xfz %s linux-${arch}/helm --strip-components=1",
+    path            => "/tmp/${archive}",
+    source          => "https://kubernetes-helm.storage.googleapis.com/${archive}",
+    extract_command => "tar xfz %s linux-${arch}/helm --strip-components=1 -O > ${install_path}/helm-${version}",
     extract         => true,
     extract_path    => $install_path,
     creates         => "${install_path}/helm",
     cleanup         => true,
   }
 
-  file { "${install_path}/helm":
+  file { "${install_path}/helm-${version}" :
     owner   => 'root',
     mode    => '0755',
     require => Archive['helm']
+  }
+
+  file { "${install_path}/helm":
+    ensure  => link,
+    target  => "${install_path}/helm-${version}",
+    require => File["${install_path}/helm-${version}"],
   }
 }

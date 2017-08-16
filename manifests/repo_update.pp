@@ -20,7 +20,6 @@ define helm::repo_update (
     })
   }
 
-
   $exec_update = "helm repo ${helm_repo_update_flags}"
 
   exec { 'Helm repo update':
