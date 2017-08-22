@@ -9,7 +9,7 @@ describe 'helm::create', :type => :define do
   context 'with default values for all parameters' do
     it do
       is_expected.to compile.with_all_deps
-      is_expected.to contain_exec('helm create foo').with_command('helm create --tiller-namespace \'kube-system\' \'/tmp/foo\'')
+      is_expected.to contain_exec('helm create foo').with_command("helm create '/tmp/foo'")
     end
   end
 end

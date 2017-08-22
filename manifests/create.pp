@@ -6,7 +6,7 @@ define helm::create (
   $host = undef,
   $kube_context = undef,
   $starter = undef,
-  $tiller_namespace = 'kube-system',
+  $tiller_namespace = undef,
 ){
 
   include helm::params
