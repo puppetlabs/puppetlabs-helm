@@ -1,0 +1,443 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>spec/fixtures/modules/archive/lib/puppet_x/bodeco/archive.rb</title>
+    <link href="./assets/0.2.3/screen.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="./assets/0.2.3/print.css" media="print" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <script type="text/javascript" src="./assets/0.2.3/rcov.js"></script>
+  </head>
+  <body>
+    <h1>Helm C0 Coverage Information - Simploco - RCov</h1>
+    <h2>spec/fixtures/modules/archive/lib/puppet_x/bodeco/archive.rb</h2>
+
+    <div class="report_table_wrapper">
+      <table class='report' id='report_table'>
+        <thead>
+          <tr>
+            <th class="left_align">Name</th>
+            <th class="right_align">Total Lines</th>
+            <th class="right_align">Lines of Code</th>
+            <th class="left_align">Total Coverage</th>
+            <th class="left_align">Code Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="left_align"><a href="spec-fixtures-modules-archive-lib-puppet_x-bodeco-archive_rb.html">spec/fixtures/modules/archive/lib/puppet_x/bodeco/archive.rb</a></td>
+            <td class='right_align'><tt>128</tt></td>
+            <td class='right_align'><tt>73</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>53.91%</tt></div>
+      <div class="percent_graph">
+        <div class="covered" style="width:54px"></div>
+        <div class="uncovered" style="width:46px"></div>
+      </div></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>19.18%</tt></div>
+      <div class="percent_graph">
+        <div class="covered" style="width:19px"></div>
+        <div class="uncovered" style="width:81px"></div>
+      </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Key</h3>
+
+    <div class="key"><pre><span class='marked'>Code reported as executed by Ruby looks like this...</span><span class='marked1'>and this: this line is also marked as covered.</span><span class='inferred'>Lines considered as run by rcov, but not reported by Ruby, look like this,</span><span class='inferred1'>and this: these lines were inferred by rcov (using simple heuristics).</span><span class='uncovered'>Finally, here's a line marked as not executed.</span></pre></div>
+
+    <h3>Coverage Details</h3>
+
+    <table class="details">
+      <tbody>
+        <tr class="marked">
+          <td><pre><a name="line2">2</a> require &#39;digest&#39;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line3">3</a> require &#39;puppet/util/execution&#39;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line4">4</a> require &#39;shellwords&#39;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line5">5</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line6">6</a> module PuppetX</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line7">7</a>   module Bodeco</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line8">8</a>     class Archive</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line9">9</a>       def initialize(file)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line10">10</a>         @file = file</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line11">11</a>         @file_path = Shellwords.shellescape file</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line12">12</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line13">13</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line14">14</a>       def checksum(type)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line15">15</a>         return nil if type == :none</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line16">16</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line17">17</a>         digest = Digest.const_get(type.to_s.upcase)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line18">18</a>         digest.file(@file).hexdigest</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line19">19</a>       rescue LoadError</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line20">20</a>         raise $ERROR_INFO, &quot;invalid checksum type #{type}. #{$ERROR_INFO}&quot;, $ERROR_INFO.backtrace</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line21">21</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line22">22</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line23">23</a>       def root_dir</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line24">24</a>         if Facter.value(:osfamily) == &#39;windows&#39;</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line25">25</a>           &#39;C:\\&#39;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line26">26</a>         else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line27">27</a>           &#39;/&#39;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line28">28</a>         end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line29">29</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line30">30</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line31">31</a>       def extract(path = root_dir, opts = {})</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line32">32</a>         opts = {</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line33">33</a>           custom_command: nil,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line34">34</a>           options: &#39;&#39;,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line35">35</a>           uid: nil,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line36">36</a>           gid: nil</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line37">37</a>         }.merge(opts)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line38">38</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line39">39</a>         custom_command = opts.fetch(:custom_command, nil)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line40">40</a>         options = opts.fetch(:options)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line41">41</a>         Dir.chdir(path) do</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line42">42</a>           cmd = if custom_command &amp;&amp; custom_command =~ %r{%s}</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line43">43</a>                   custom_command % @file_path</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line44">44</a>                 elsif custom_command</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line45">45</a>                   &quot;#{custom_command} #{options} #{@file_path}&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line46">46</a>                 else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line47">47</a>                   command(options)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line48">48</a>                 end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line49">49</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line50">50</a>           Puppet.debug(&quot;Archive extracting #{@file} in #{path}: #{cmd}&quot;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line51">51</a>           File.chmod(0o644, @file) if opts[:uid] || opts[:gid]</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line52">52</a>           Puppet::Util::Execution.execute(cmd, uid: opts[:uid], gid: opts[:gid], failonfail: true, squelch: false, combine: true)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line53">53</a>         end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line54">54</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line55">55</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line56">56</a>       private</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line57">57</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line58">58</a>       def win_7zip</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line59">59</a>         if ENV[&#39;path&#39;].include?(&#39;7-Zip&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line60">60</a>           &#39;7z.exe&#39;</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line61">61</a>         elsif File.directory?(&#39;C:\\Program Files\\7-Zip&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line62">62</a>           &#39;C:\\Program Files\\7-Zip\\7z.exe&#39;</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line63">63</a>         elsif File.directory?(&#39;C:\\Program Files (x86)\\7-zip&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line64">64</a>           &#39;C:\\Program Files (x86)\\7-Zip\\7z.exe&#39;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line65">65</a>         else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line66">66</a>           raise Exception, &#39;7z.exe not available&#39;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line67">67</a>         end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line68">68</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line69">69</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line70">70</a>       def command(options)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line71">71</a>         if Facter.value(:osfamily) == &#39;windows&#39;</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line72">72</a>           opt = parse_flags(&#39;x -aoa&#39;, options, &#39;7z&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line73">73</a>           &quot;#{win_7zip} #{opt} #{@file_path}&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line74">74</a>         else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line75">75</a>           case @file</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line76">76</a>           when %r{\.tar$}</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line77">77</a>             opt = parse_flags(&#39;xf&#39;, options, &#39;tar&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line78">78</a>             &quot;tar #{opt} #{@file_path}&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line79">79</a>           when %r{(\.tgz|\.tar\.gz)$}</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line80">80</a>             case Facter.value(:osfamily)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line81">81</a>             when &#39;Solaris&#39;, &#39;AIX&#39;</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line82">82</a>               gunzip_opt = parse_flags(&#39;-dc&#39;, options, &#39;gunzip&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line83">83</a>               tar_opt = parse_flags(&#39;xf&#39;, options, &#39;tar&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line84">84</a>               &quot;gunzip #{gunzip_opt} #{@file_path} | tar #{tar_opt} -&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line85">85</a>             else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line86">86</a>               opt = parse_flags(&#39;xzf&#39;, options, &#39;tar&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line87">87</a>               &quot;tar #{opt} #{@file_path}&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line88">88</a>             end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line89">89</a>           when %r{(\.tbz|\.tar\.bz2)$}</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line90">90</a>             case Facter.value(:osfamily)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line91">91</a>             when &#39;Solaris&#39;, &#39;AIX&#39;</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line92">92</a>               bunzip_opt = parse_flags(&#39;-dc&#39;, options, &#39;bunzip&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line93">93</a>               tar_opt = parse_flags(&#39;xf&#39;, options, &#39;tar&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line94">94</a>               &quot;bunzip2 #{bunzip_opt} #{@file_path} | tar #{tar_opt} -&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line95">95</a>             else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line96">96</a>               opt = parse_flags(&#39;xjf&#39;, options, &#39;tar&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line97">97</a>               &quot;tar #{opt} #{@file_path}&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line98">98</a>             end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line99">99</a>           when %r{(\.txz|\.tar\.xz)$}</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line100">100</a>             unxz_opt = parse_flags(&#39;-dc&#39;, options, &#39;unxz&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line101">101</a>             tar_opt = parse_flags(&#39;xf&#39;, options, &#39;tar&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line102">102</a>             &quot;unxz #{unxz_opt} #{@file_path} | tar #{tar_opt} -&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line103">103</a>           when %r{\.gz$}</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line104">104</a>             opt = parse_flags(&#39;-d&#39;, options, &#39;gunzip&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line105">105</a>             &quot;gunzip #{opt} #{@file_path}&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line106">106</a>           when %r{(\.zip|\.war|\.jar)$}</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line107">107</a>             opt = parse_flags(&#39;-o&#39;, options, &#39;zip&#39;)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line108">108</a>             &quot;unzip #{opt} #{@file_path}&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line109">109</a>           else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line110">110</a>             raise NotImplementedError, &quot;Unknown filetype: #{@file}&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line111">111</a>           end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line112">112</a>         end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line113">113</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line114">114</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line115">115</a>       def parse_flags(default, options, command = nil)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line116">116</a>         case options</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line117">117</a>         when :undef</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line118">118</a>           default</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line119">119</a>         when ::String</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line120">120</a>           options</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line121">121</a>         when ::Hash</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line122">122</a>           options[command]</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line123">123</a>         else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line124">124</a>           raise ArgumentError, &quot;Invalid options for command #{command}: #{options.inspect}&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line125">125</a>         end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line126">126</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line127">127</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line128">128</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line129">129</a> end</pre></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Generated on 2017-08-22 10:02:36 +1000 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.2.3</a></p>
+
+  </body>
+</html>

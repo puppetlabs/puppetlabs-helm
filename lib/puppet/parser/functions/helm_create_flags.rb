@@ -22,8 +22,8 @@ module Puppet::Parser::Functions
       flags << "--kube-context '#{opts['kube_context']}'"
     end
 
-    if opts['tiller_namespace'].to_s != 'undef'
-      flags << "--tiller-namespace '#{opts['tiller_namespace']}'"
+    if opts['starter'].to_s != 'undef'
+      flags << "--starter '#{opts['starter']}"
     end
 
     if opts['tiller_namespace'].to_s != 'undef'

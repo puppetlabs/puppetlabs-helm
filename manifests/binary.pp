@@ -23,7 +23,7 @@ class helm::binary (
     extract_command => "tar xfz %s linux-${arch}/helm --strip-components=1 -O > ${install_path}/helm-${version}",
     extract         => true,
     extract_path    => $install_path,
-    creates         => "${install_path}/helm",
+    creates         => "${install_path}/helm-${version}",
     cleanup         => true,
   }
 

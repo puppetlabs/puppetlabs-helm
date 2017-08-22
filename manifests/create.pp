@@ -5,6 +5,7 @@ define helm::create (
   $home = undef,
   $host = undef,
   $kube_context = undef,
+  $starter = undef,
   $tiller_namespace = 'kube-system',
 ){
 
@@ -17,6 +18,7 @@ define helm::create (
     home => $home,
     host => $host,
     kube_context => $kube_context,
+    starter => $starter,
     tiller_namespace => $tiller_namespace,
   })
 

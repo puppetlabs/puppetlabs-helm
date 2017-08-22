@@ -52,7 +52,7 @@
   $exec_init = "helm ${helm_init_flags}"
   $unless_init = "kubectl get deployment --namespace=${tiller_namespace}  | grep 'tiller-deploy' "
 
-  exec { 'Helm init':
+  exec { 'helm init':
     command     => $exec_init,
     environment => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
     path        => ['/bin', '/usr/bin'],

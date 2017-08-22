@@ -3,7 +3,7 @@ define helm::repo_update (
   $home = undef,
   $host = undef,
   $kube_context = undef,
-  $tiller_namespace = 'kube-system',
+  $tiller_namespace = undef,
   $update = true,
 ){
 
@@ -11,7 +11,7 @@ define helm::repo_update (
 
   if $update {
     $helm_repo_update_flags = helm_repo_update_flags({
-      debug => $false,
+      debug => $debug,
       home => $home,
       host => $host,
       kube_context => $kube_context,
@@ -22,7 +22,7 @@ define helm::repo_update (
 
   $exec_update = "helm repo ${helm_repo_update_flags}"
 
-  exec { 'Helm repo update':
+  exec { 'helm repo update':
     command     => $exec_update,
     environment => 'HOME=/root',
     path        => ['/bin', '/usr/bin'],

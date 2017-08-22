@@ -6,7 +6,7 @@ module Puppet::Parser::Functions
     opts = args[0] || {}
     flags = []
 
-    if opts['ensure'].to_s = 'absent'
+    if opts['ensure'].to_s == 'absent'
       flags << 'remove'
     end
 

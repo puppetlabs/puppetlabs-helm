@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>spec/fixtures/modules/stdlib/lib/puppet/parser/functions/validate_re.rb</title>
+    <link href="./assets/0.2.3/screen.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="./assets/0.2.3/print.css" media="print" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <script type="text/javascript" src="./assets/0.2.3/rcov.js"></script>
+  </head>
+  <body>
+    <h1>Helm C0 Coverage Information - Simploco - RCov</h1>
+    <h2>spec/fixtures/modules/stdlib/lib/puppet/parser/functions/validate_re.rb</h2>
+
+    <div class="report_table_wrapper">
+      <table class='report' id='report_table'>
+        <thead>
+          <tr>
+            <th class="left_align">Name</th>
+            <th class="right_align">Total Lines</th>
+            <th class="right_align">Lines of Code</th>
+            <th class="left_align">Total Coverage</th>
+            <th class="left_align">Code Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="left_align"><a href="spec-fixtures-modules-stdlib-lib-puppet-parser-functions-validate_re_rb.html">spec/fixtures/modules/stdlib/lib/puppet/parser/functions/validate_re.rb</a></td>
+            <td class='right_align'><tt>50</tt></td>
+            <td class='right_align'><tt>9</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>98.00%</tt></div>
+      <div class="percent_graph">
+        <div class="covered" style="width:98px"></div>
+        <div class="uncovered" style="width:2px"></div>
+      </div></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>88.89%</tt></div>
+      <div class="percent_graph">
+        <div class="covered" style="width:89px"></div>
+        <div class="uncovered" style="width:11px"></div>
+      </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Key</h3>
+
+    <div class="key"><pre><span class='marked'>Code reported as executed by Ruby looks like this...</span><span class='marked1'>and this: this line is also marked as covered.</span><span class='inferred'>Lines considered as run by rcov, but not reported by Ruby, look like this,</span><span class='inferred1'>and this: these lines were inferred by rcov (using simple heuristics).</span><span class='uncovered'>Finally, here's a line marked as not executed.</span></pre></div>
+
+    <h3>Coverage Details</h3>
+
+    <table class="details">
+      <tbody>
+        <tr class="marked">
+          <td><pre><a name="line2">2</a> module Puppet::Parser::Functions</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line3">3</a>   newfunction(:validate_re, :doc =&gt; &lt;&lt;-&#39;ENDHEREDOC&#39;) do |args|</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line4">4</a>     Perform simple validation of a string against one or more regular</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line5">5</a>     expressions. The first argument of this function should be a string to</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line6">6</a>     test, and the second argument should be a stringified regular expression</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line7">7</a>     (without the // delimiters) or an array of regular expressions.  If none</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line8">8</a>     of the regular expressions match the string passed in, compilation will</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line9">9</a>     abort with a parse error.</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line10">10</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line11">11</a>     If a third argument is specified, this will be the error message raised and</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line12">12</a>     seen by the user.</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line13">13</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line14">14</a>     The following strings will validate against the regular expressions:</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line15">15</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line16">16</a>         validate_re(&#39;one&#39;, &#39;^one$&#39;)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line17">17</a>         validate_re(&#39;one&#39;, [ &#39;^one&#39;, &#39;^two&#39; ])</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line18">18</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line19">19</a>     The following strings will fail to validate, causing compilation to abort:</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line20">20</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line21">21</a>         validate_re(&#39;one&#39;, [ &#39;^two&#39;, &#39;^three&#39; ])</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line22">22</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line23">23</a>     A helpful error message can be returned like this:</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line24">24</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line25">25</a>         validate_re($::puppetversion, &#39;^2.7&#39;, &#39;The $puppetversion fact value does not match 2.7&#39;)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line26">26</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line27">27</a>     Note: Compilation will also abort, if the first argument is not a String. Always use</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line28">28</a>     quotes to force stringification:</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line29">29</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line30">30</a>         validate_re(&quot;${::operatingsystemmajrelease}&quot;, &#39;^[57]$&#39;)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line31">31</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line32">32</a>     ENDHEREDOC</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line33">33</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line34">34</a>     function_deprecation([:validate_re, &#39;This method is deprecated, please use the stdlib validate_legacy function, with Stdlib::Compat::Re. There is further documentation for validate_legacy function in the README.&#39;])</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line35">35</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line36">36</a>     if (args.length &lt; 2) or (args.length &gt; 3) then</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line37">37</a>       raise Puppet::ParseError, &quot;validate_re(): wrong number of arguments (#{args.length}; must be 2 or 3)&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line38">38</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line39">39</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line40">40</a>     raise Puppet::ParseError, &quot;validate_re(): input needs to be a String, not a #{args[0].class}&quot; unless args[0].is_a? String</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line41">41</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line42">42</a>     msg = args[2] || &quot;validate_re(): #{args[0].inspect} does not match #{args[1].inspect}&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line43">43</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line44">44</a>     # We&#39;re using a flattened array here because we can&#39;t call String#any? in</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line45">45</a>     # Ruby 1.9 like we can in Ruby 1.8</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line46">46</a>     raise Puppet::ParseError, msg unless [args[1]].flatten.any? do |re_str|</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line47">47</a>       args[0] =~ Regexp.compile(re_str)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line48">48</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line49">49</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line50">50</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line51">51</a> end</pre></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Generated on 2017-08-22 10:02:36 +1000 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.2.3</a></p>
+
+  </body>
+</html>
