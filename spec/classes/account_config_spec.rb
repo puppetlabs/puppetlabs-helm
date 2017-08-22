@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe 'helm::account_config', :type => :class do
 
-  let(:params) { { 'env' => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
-                   'path' => [ '/bin','/usr/bin'],
+  let(:params) { {
+                  'env' => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
+                  'path' => [ '/bin','/usr/bin'],
                } }
 
   context 'with default values for all parameters' do
