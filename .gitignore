@@ -1,2 +1,4 @@
 /spec/fixtures
 coverage/
+.bundle/
+vendor/
