@@ -501,6 +501,158 @@ Values: `'true','false'`
 
 Default: `false`
 
+#### `helm::package`
+
+##### `chart_name`
+
+Default: `undef`
+
+The name of the helm chart
+
+##### `chart_path`
+
+The file system location of the chart.
+
+##### `debug`
+
+Enable verbose output
+
+Values `'true','false'`
+
+Default: `false`
+
+##### `home`
+
+Location of your Helm config. Overrrides $HELM_HOME
+
+Default: `undef`
+
+##### `host`
+
+Address of Tiller. Overrides $HELM_HOST
+
+Default: `undef`
+
+##### `kube_context`
+
+Name of the kubeconfig context to use
+
+Default: `undef`
+
+##### `save`
+
+Save packaged chart to local chart repository
+
+Values: `'true','false'`
+
+Default: `true`
+
+##### `sign`
+
+Use a PGP private key to sign this package
+
+Values: `'true','false'`
+
+Default: `false`
+
+##### `tiller_namespace`
+
+Namespace of Tiller
+
+Default: `kube-system`
+
+##### `version`
+
+Set the version of the chart
+
+Default: `undef`
+
+#### `helm::repo`
+
+##### `ca_file`
+
+Verify certificates of HTTPS-enabled servers using this CA bundle
+
+Default: `undef`
+
+##### `cert_file`
+
+Identify HTTPS client using this SSL certificate file
+
+Default: `undef`
+
+##### `debug`
+
+Enable verbose output
+
+Values `'true','false'`
+
+Default: `false`
+
+##### `env`
+
+Sets the environment variables required for helm to connect to the kubernetes cluster
+
+##### `key_file`
+
+Identify  HTTPS client using thie SSL key file
+
+Default: `undef`
+
+##### `no_update`
+
+Raise error if repo is already registered
+
+Values `'true','false'`
+
+Default: `false`
+
+##### `home`
+
+Location of your Helm config. Overrrides $HELM_HOME
+
+Default: `undef`
+
+##### `host`
+
+Address of Tiller. Overrides $HELM_HOST
+
+Default: `undef`
+
+##### `kube_context`
+
+Name of the kubeconfig context to use
+
+Default: `undef`
+
+##### `path`
+
+Values for PATH environment variable
+
+
+
+
+
+##### `tiller_namespace`
+
+Namespace of Tiller
+
+Default: `kube-system`
+
+##### `repo_name`
+
+Name of the remote repository
+
+Default: `undef`
+
+##### `url`
+
+URL for the remote repository
+
+Default: `undef`
+
+
+
 
 
 
