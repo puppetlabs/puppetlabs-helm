@@ -55,7 +55,8 @@ helm::create { 'myapp':
   chart_path => '/tmp',
   chart_name => 'myapp',
   path       => $path,
-}```
+}
+```
 
 To package a chart
 
