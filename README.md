@@ -82,7 +82,7 @@ helm::chart { 'mysql':
 }
 ```
 
-To add a helm repo
+To add a helm repository
 
 ```
 helm::repo { 'myrepo':
@@ -90,11 +90,11 @@ helm::repo { 'myrepo':
   env    => $env,
   path   => $path,
   repo_name => 'myrepo',
-  url       => 'http://myreposerver/'
+  url       => 'http://myserver/charts'
 }
 ```
 
-To update helm repo's
+To update helm repositories
 
 ```
 helm::repo_update { 'update':
@@ -198,6 +198,12 @@ Values `'true','false'`
 
 Default: `false`
 
+##### `env`
+
+Sets the environment variables required for helm to connect to the kubernetes cluster
+
+Default: `undef`
+
 ##### `home`
 
 Location of your Helm config. Overrrides $HELM_HOME
@@ -213,6 +219,12 @@ Default: `undef`
 ##### `kube_context`
 
 Name of the kubeconfig context to use
+
+Default: `undef`
+
+##### `path`
+
+Values for PATH environment variable
 
 Default: `undef`
 
@@ -269,6 +281,12 @@ Values `'true','false'`
 
 Default: `false`
 
+##### `env`
+
+Sets the environment variables required for helm to connect to the kubernetes cluster
+
+Default: `undef`
+
 ##### `key_file`
 
 Identify  HTTPS client using thie SSL key file
@@ -310,6 +328,12 @@ Default: `undef`
 Prevent hooks from running during install
 
 Default: `false`
+
+##### `path`
+
+Values for PATH environment variable
+
+Default: `undef`
 
 ##### `purge`
 
@@ -451,6 +475,12 @@ Values `'true','false'`
 
 Default: `false`
 
+##### `env`
+
+Sets the environment variables required for helm to connect to the kubernetes cluster
+
+Default: `undef`
+
 ##### `home`
 
 Location of your Helm config. Overrrides $HELM_HOME
@@ -482,6 +512,12 @@ Install Tiller with net=host
 Values: `'true','false'`
 
 Default: `false`
+
+##### `path`
+
+Values for PATH environment variable
+
+Default: `undef`
 
 ##### `service_account`
 
@@ -649,6 +685,8 @@ Default: `false`
 
 Sets the environment variables required for helm to connect to the kubernetes cluster
 
+Default: `undef`
+
 ##### `key_file`
 
 Identify  HTTPS client using thie SSL key file
@@ -719,6 +757,12 @@ Values `'true','false'`
 
 Default: `false`
 
+##### `env`
+
+Sets the environment variables required for helm to connect to the kubernetes cluster
+
+Default: `undef`
+
 ##### `home`
 
 Location of your Helm config. Overrrides $HELM_HOME
@@ -734,6 +778,12 @@ Default: `undef`
 ##### `kube_context`
 
 Name of the kubeconfig context to use
+
+Default: `undef`
+
+##### `path`
+
+Values for PATH environment variable
 
 Default: `undef`
 
