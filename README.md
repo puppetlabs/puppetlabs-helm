@@ -629,9 +629,7 @@ Default: `undef`
 
 Values for PATH environment variable
 
-
-
-
+Default: `undef`
 
 ##### `tiller_namespace`
 
@@ -651,23 +649,51 @@ URL for the remote repository
 
 Default: `undef`
 
+#### `helm::repo_update
 
+A define to update helm repos.
 
+Note, as per the default behaviour of helm this updates all repos
 
+##### `debug`
 
+Enable verbose output
 
+Values `'true','false'`
 
+Default: `false`
 
+##### `home`
 
+Location of your Helm config. Overrrides $HELM_HOME
 
+Default: `undef`
 
+##### `host`
 
+Address of Tiller. Overrides $HELM_HOST
 
+Default: `undef`
 
+##### `kube_context`
 
+Name of the kubeconfig context to use
 
+Default: `undef`
 
+##### `tiller_namespace`
 
+Namespace of Tiller
+
+Default: `kube-system`
+
+##### `update`
+
+A flag to set whether the repo should be updated
+
+Values `'true','false'`
+
+Default: `true`
 
 
 ## Limitations
