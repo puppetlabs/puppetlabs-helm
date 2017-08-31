@@ -113,6 +113,7 @@ Configures the service account and cluster role required to deploy helm
 
 Calls the `helm::helm_init` define to deploy tiller to the kubernetes cluster.
 
+
 ### Defines
 
 #### `helm::create`
@@ -137,7 +138,9 @@ Default: `undef`
 
 Enable verbose output
 
-Default: `undef`
+Values `'true','false'`
+
+Default: `false`
 
 ##### `home`
 
@@ -180,29 +183,63 @@ Default: `present`
 
 Verify certificates of HTTPS-enabled servers using this CA bundle
 
+Default: `undef`
+
 ##### `cert_file`
 
 Identify HTTPS client using this SSL certificate file
+
+Default: `undef`
+
+##### `debug`
+
+Enable verbose output
+
+Values `'true','false'`
+
+Default: `false`
 
 ##### `devel`
 
 Use development versions
 
+Default: `false`
+
 ##### `dry_run`
 
 Simulate an install or delete of a deployment
+
+Values `'true','false'`
+
+Default: `false`
 
 ##### `key_file`
 
 Identify  HTTPS client using thie SSL key file
 
+Default: `undef`
+
 ##### `keyring`
 
 Location of the public keys used for verification
 
-##### `name`
+Default: `undef`
 
-Release name
+##### `home`
+
+Location of your Helm config. Overrrides $HELM_HOME
+
+Default: `undef`
+
+##### `host`
+
+Address of Tiller. Overrides $HELM_HOST
+
+Default: `undef`
+
+##### `kube_context`
+
+Name of the kubeconfig context to use
 
 Default: `undef`
 
@@ -210,9 +247,13 @@ Default: `undef`
 
 Template used to name the release
 
+Default: `undef`
+
 ##### `no_hooks`
 
 Prevent hooks from running during install
+
+Default: `false`
 
 ##### `purge`
 
@@ -220,13 +261,23 @@ Remove the release from the store and make its name free for later use
 
 Default: `true`
 
+##### `release_name`
+
+Release name. This value is required
+
+Default: `undef`
+
 ##### `replace`
 
 Reuse the given name
 
+Default: `false`
+
 ##### `repo`
 
 Chart reposistory URL for the requested chart
+
+Default: `undef`
 
 ##### `set`
 
@@ -238,11 +289,223 @@ Default: `[]`
 
 time in seconds to wait for any individual Kubernetes operation
 
+Default: `undef`
+
 ##### `tiller_namespace`
 
 Namespace of Tiller
 
 Default: `kube-system`
+
+##### `tls`
+
+Enable TLS
+
+Default: `false`
+
+##### `tls_ca_cert`
+
+Path to TLS CA certificate file
+
+Default: `undef`
+
+##### `tls_cert`
+
+Path to TLS certificate file
+
+Default: `undef`
+
+##### `tls_key`
+
+Path to TLS key file
+
+Default: `undef`
+
+##### `tls_verify`
+
+Enable TLS for request and verify remote
+
+Default: `undef`
+
+##### `values`
+
+Specify values from a YAML file, can take multiple values in an array
+
+Default: `[]`
+
+##### `verify`
+
+Verify the package before installing it
+
+Default: `false`
+
+##### `version`
+
+Specify the exact chart version to install. If this is not specified, the latest version is installed
+
+Default: `undef`
+
+##### `wait`
+ if set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as `timeout`
+
+Default: `false`
+
+
+#### `helm::helm_init`
+
+Deploys the tiller pod and initialises the helm client
+
+##### `init`
+
+A flag to deploy the tiller pod and initialise the helm client
+
+Values: `'true','false'`
+
+Default: `true`
+
+##### `canary_image`
+
+Use the canary tiller image
+
+Values: `'true','false'`
+
+Default: `false`
+
+##### `client_only`
+
+If true, this does not deploy tiller
+
+Values: `'true','false'`
+
+Default: `false`
+
+##### `debug`
+
+Enable verbose output
+
+Values `'true','false'`
+
+Default: `false`
+
+##### `dry_run`
+
+Simulate an install or delete of a deployment
+
+Values `'true','false'`
+
+Default: `false`
+
+##### `home`
+
+Location of your Helm config. Overrrides $HELM_HOME
+
+Default: `undef`
+
+##### `host`
+
+Address of Tiller. Overrides $HELM_HOST
+
+Default: `undef`
+
+##### `kube_context`
+
+Name of the kubeconfig context to use
+
+Default: `undef`
+
+##### `local_repo_url`
+
+URL for the local repository
+
+Default: `undef`
+
+##### `net_host`
+
+Install Tiller with net=host
+
+Values: `'true','false'`
+
+Default: `false`
+
+##### `service_account`
+
+Name of the service account for the tiller deployment
+
+Default: `false`
+
+##### `skip_refresh`
+
+Do not refresh (download) the local repository cache
+
+Values: `'true','false'`
+
+Default: `false`
+
+##### `stable_repo_url`
+
+URL for stable repository
+
+Default: `undef`
+
+##### `tiller_image`
+
+Override Tiller image
+
+Default: `undef`
+
+##### `tiller_namespace`
+
+Namespace of Tiller 
+
+Default: `kube-system`
+
+##### `tiller_tls`
+
+Install Tiller with TLS enabled
+
+Values: `'true','false'`
+
+Default: `false`
+
+##### `tiller_tls_cert`
+
+Path to TLS certificate file to install with Tiller
+
+Default: `undef`
+
+##### `tiller_tls_key`
+
+Path to TLS key file to install with Tiller
+
+Default: `undef`
+
+##### `tiller_tls_verify`
+
+Install Tiller with TLS enabled and to verify remote certificates
+
+Values: `'true','false'`
+
+Default: `false`
+
+##### `tls_ca_cert`
+
+Path to CA root certificate
+
+Default: `false`
+
+##### `upgrade`
+
+Upgrade if Tiller is already installed
+
+Values: `'true','false'`
+
+Default: `false`
+
+
+
+
+
+
 
 
 

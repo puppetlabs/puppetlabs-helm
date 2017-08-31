@@ -92,18 +92,6 @@ module Puppet::Parser::Functions
       flags << "--tiller-namespace '#{opts['tiller_namespace']}'"
     end
 
-    if opts['tiller_tls']
-      flags << '--tiller-tls'
-    end
-
-    if opts['tiller_tls_cert'].to_s != 'undef'
-      flags << "--tiller-tls-cert '#{opts['tiller_tls_cert']}'"
-    end
-
-    if opts['tiller_tls_key'].to_s != 'undef'
-      flags << "--tiller-tls-key '#{opts['tiller_tls_key']}'"
-    end
-
     if opts['tls']
       flags << "--tls"
     end
