@@ -71,7 +71,7 @@ Default: `[ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']`
 
 A flag to initialise the helm install and deploy the Tiller pod to Kubernetes
 
-Values: 'true', 'false'
+Values: `'true', 'false'`
 
 Default: `true`
 
@@ -98,6 +98,162 @@ Default: `kube-system`
 The version of helm to install
 
 Default: `2.5.1`
+
+### Private classes
+
+#### Class: `helm::binary`
+
+Downloads and extracts the helm binary
+
+#### Class: `helm::account_config`
+
+Configures the service account and cluster role required to deploy helm
+
+#### Class: `helm::config`
+
+Calls the `helm::helm_init` define to deploy tiller to the kubernetes cluster.
+
+### Defines
+
+#### `helm::create`
+
+Creates a new chart by running `helm create`
+
+##### `chart_name`
+
+Default: `undef`
+
+The name of the helm chart
+
+##### `chart_path`
+
+The file system location of the chart.
+
+Note: If directories in the given path do not exist, Helm will attempt to create them as it goes. If the given destination exists and there are files in that directory, conflicting files will be overwritten, but other files will be left alone
+
+Default: `undef`
+
+##### `debug`
+
+Enable verbose output
+
+Default: `undef`
+
+##### `home`
+
+Location of your Helm config. Overrrides $HELM_HOME
+
+Default: `undef`
+
+##### `host`
+
+Address of Tiller. Overrides $HELM_HOST
+
+Default: `undef`
+
+##### `kube_context`
+
+Name of the kubeconfig context to use
+
+Default: `undef`
+
+##### `tiller_namespace`
+
+Namespace of Tiller
+
+Default: `kube-system`
+
+
+#### `helm::chart`
+
+Manages the deployment of helm charts
+
+##### `ensure`
+
+A flag to determine whether a chart should be deployed
+
+Values: `'present','absent'`
+
+Default: `present`
+
+##### `ca_file`
+
+Verify certificates of HTTPS-enabled servers using this CA bundle
+
+##### `cert_file`
+
+Identify HTTPS client using this SSL certificate file
+
+##### `devel`
+
+Use development versions
+
+##### `dry_run`
+
+Simulate an install or delete of a deployment
+
+##### `key_file`
+
+Identify  HTTPS client using thie SSL key file
+
+##### `keyring`
+
+Location of the public keys used for verification
+
+##### `name`
+
+Release name
+
+Default: `undef`
+
+##### `name_template`
+
+Template used to name the release
+
+##### `no_hooks`
+
+Prevent hooks from running during install
+
+##### `purge`
+
+Remove the release from the store and make its name free for later use
+
+Default: `true`
+
+##### `replace`
+
+Reuse the given name
+
+##### `repo`
+
+Chart reposistory URL for the requested chart
+
+##### `set`
+
+Set array of values for the `helm create` command
+
+Default: `[]`
+
+##### `timeout`
+
+time in seconds to wait for any individual Kubernetes operation
+
+##### `tiller_namespace`
+
+Namespace of Tiller
+
+Default: `kube-system`
+
+
+
+
+
+
+
+
+
+
+
 
 ## Limitations
 
