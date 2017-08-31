@@ -1,6 +1,8 @@
 class helm::account_config (
   $env = $helm::env,
   $path = $helm::path,
+  $service_account = $helm::service_account,
+  $tiller_namespace = $helm::tiller_namespace,
 ){
 
   Exec {

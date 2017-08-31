@@ -2,11 +2,11 @@
 
 ## NOTE
 
-At present this module is requires a working kubernetes cluster, with kubectl installed. 
+At present this module is requires a working kubernetes cluster, with kubectl installed.
 In addition to this it is recommended that a service account be setup in the desired namespace
-before installation of helm to use full functionatlity. 
+before installation of helm to use full functionatlity.
 
-See here for more information: 
+See here for more information:
 
 https://github.com/kubernetes/helm/issues/2224
 
@@ -26,76 +26,89 @@ https://github.com/kubernetes/helm/issues/2224
 
 ## Description
 
-Start with a one- or two-sentence summary of what the module does and/or what
-problem it solves. This is your 30-second elevator pitch for your module.
-Consider including OS/Puppet version it works with.
+The helm module installs, configures and manages the helm package manager.
 
-You can give more descriptive information in a second paragraph. This paragraph
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?" If your module has a range of functionality (installation, configuration,
-management, etc.), this is the time to mention it.
+This module manages both the installation of the helm client and helm server. In addition to this it will manage helm deployments
 
 ## Setup
 
-### What helm affects **OPTIONAL**
-
-If it's obvious what your module touches, you can skip this section. For
-example, folks can probably figure out that your mysql_instance module affects
-their MySQL instances.
-
-If there's more that they should know about, though, this is the place to mention:
-
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you might want to include an additional "Upgrading" section
-here.
-
-### Beginning with helm
-
-The very basic steps needed for a user to get the module up and running. This
-can include setup steps, if necessary, or it can be an example of the most
-basic use of the module.
+To install with the default options:
+`include helm`
 
 ## Usage
 
-This section is where you describe how to customize, configure, and do the
-fancy stuff with your module here. It's especially helpful if you include usage
-examples and code samples for doing things with your module.
+To customise options, such as the version of helm, or the service account and namespace of the tiller deployment:
+
+```
+class { 'helm':
+  version => '2.6.0',
+  service_account => 'my_account',
+  tiller_namespace => 'my_namespace',
+}
+```
 
 ## Reference
 
-Users need a complete list of your module's classes, types, defined types providers, facts, and functions, along with the parameters for each. You can provide this list either via Puppet Strings code comments or as a complete list in this Reference section.
+### Public classes
 
-* If you are using Puppet Strings code comments, this Reference section should include Strings information so that your users know how to access your documentation.
+#### Class: `helm`
 
-* If you are not using Puppet Strings, include a list of all of your classes, defined types, and so on, along with their parameters. Each element in this listing should include:
+Guides the basic setup and installation of Helm on your system.
 
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
+When this class is declared with the default options, Puppet:
+
+- Downloads and installs the specified helm version on your system.
+- Creates the cluster role and service accounts required to run tiller.
+- Deploys the helm server (Tiller) into the `kube-system` namespace.
+
+##### `env`
+
+Sets the environment variables required for helm to connect to the kubernetes cluster
+
+Default: `[ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']`
+
+##### `init`
+
+A flag to initialise the helm install and deploy the Tiller pod to Kubernetes
+
+Values: 'true', 'false'
+
+Default: `true`
+
+##### `install_path`
+
+Sets the path variable for exec types in the module
+
+Default: `['bin','/usr/bin']`
+
+##### `service_account`
+
+The name of the service account assigned to the `tiller` deployment
+
+Default: `tiller`
+
+##### `tiller_namespace`
+
+The namespace to deploy tiller into
+
+Default: `kube-system`
+
+##### `version`
+
+The version of helm to install
+
+Default: `2.5.1`
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc. If there
-are Known Issues, you might want to include them under their own heading here.
+This module is only compatible with the `Linux` kernel
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+### Contributing
 
-## Release Notes/Contributors/Etc. **Optional**
+[Puppet][] modules on the [Puppet Forge][] are open projects, and community contributions are essential for keeping them great. We can’t access the huge number of platforms and myriad hardware, software, and deployment configurations that Puppet is intended to serve.
 
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You can also add any additional sections you feel
-are necessary or important to include here. Please use the `## ` header.
+We want to make it as easy as possible to contribute changes so our modules work in your environment, but we also need contributors to follow a few guidelines to help us maintain and improve the modules' quality.
+
+For more information, please read the complete [module contribution guide][] and check out [CONTRIBUTING.md][].

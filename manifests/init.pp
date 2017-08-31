@@ -6,20 +6,29 @@
 # Parameters
 # ----------
 #
-# [*version*]
-# The version of helm to install.
-# Defaults to undefined
-#
-# [*install_path*]
-# The path to extract helm binary to.
-# Defaults to '/usr/bin'
+# [*env*]
+# Environment variables to specify the location of configruation files, or any other custom variables required for helm to run. 
+# Defaults to [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']
 #
 # [*init*]
 # Determines the behaviour of the config function. Setting to true will init the cluster and install tiller.
 # False will install Helm in client only mode.
 # Defaults to true
 #
-# [*service_aocount*]
+# [*install_path*]
+# The path to extract helm binary to.
+# Defaults to '/usr/bin'
+#
+# [*path*]
+# The PATH variable used for exec types
+# Defaults to ['/bin','/usr/bin']
+#
+# [*init*]
+# Determines the behaviour of the config function. Setting to true will init the cluster and install tiller.
+# False will install Helm in client only mode.
+# Defaults to true
+#
+# [*service_account*]
 # The service account for tiller
 # Defaults to 'tiller'
 #
@@ -27,6 +36,11 @@
 # The namespace in which to install tiller
 # Defaults to 'kube-system'
 #
+# [*version*]
+# The version of helm to install.
+# Defaults to 2.5.1
+#
+
 class helm (
   $env = $helm::params::env,
   $init = $helm::params::init,
