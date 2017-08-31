@@ -4,11 +4,13 @@
   $client_only = false,
   $debug = false,
   $dry_run = false,
+  $env = undef,
   $home = undef,
   $host = undef,
   $kube_context = undef,
   $local_repo_url = undef,
   $net_host = false,
+  $path = undef,
   $service_account = undef,
   $skip_refresh = false,
   $stable_repo_url = undef,
@@ -53,11 +55,11 @@
   $unless_init = "kubectl get deployment --namespace=${tiller_namespace}  | grep 'tiller-deploy' "
 
   exec { 'helm init':
-    command     => $exec_init,
-    environment => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
-    path        => ['/bin', '/usr/bin'],
-    logoutput   => true,
-    timeout     => 0,
-    unless      => $unless_init,
+    command   => $exec_init,
+    env       => $env,
+    path      => $path,
+    logoutput => true,
+    timeout   => 0,
+    unless    => $unless_init,
   }
 }

@@ -7,7 +7,7 @@
 # ----------
 #
 # [*env*]
-# Environment variables to specify the location of configruation files, or any other custom variables required for helm to run. 
+# Environment variables to specify the location of configruation files, or any other custom variables required for helm to run.
 # Defaults to [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']
 #
 # [*init*]

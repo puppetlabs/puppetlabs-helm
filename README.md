@@ -47,6 +47,62 @@ class { 'helm':
 }
 ```
 
+To create a helm chart
+
+```
+helm::create { 'myapp':
+  env        => $env,
+  chart_path => '/tmp',
+  chart_name => 'myapp',
+  path       => $path,
+}```
+
+To package a chart
+
+```
+helm::package { 'myapp':
+  chart_path  => '/tmp',
+  chart_name  => 'myapp',
+  destination => '/root',
+  env         => $env,
+  path        => $path,
+  version     => '0.1.0',
+}
+```
+
+To deploy a helm chart
+
+```
+helm::chart { 'mysql':
+  ensure       => present,
+  chart        => 'stable/mysql',
+  env          => $env,
+  path         => $path,
+  release_name => 'mysql',
+}
+```
+
+To add a helm repo
+
+```
+helm::repo { 'myrepo':
+  ensure => present,
+  env    => $env,
+  path   => $path,
+  repo_name => 'myrepo',
+  url       => 'http://myreposerver/'
+}
+```
+
+To update helm repo's
+
+```
+helm::repo_update { 'update':
+  env => $env,
+  path => $path,
+  update => true
+}
+```
 ## Reference
 
 ### Public classes
@@ -455,7 +511,7 @@ Default: `undef`
 
 ##### `tiller_namespace`
 
-Namespace of Tiller 
+Namespace of Tiller
 
 Default: `kube-system`
 

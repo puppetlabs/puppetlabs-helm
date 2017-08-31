@@ -1,8 +1,10 @@
 define helm::repo_update (
   $debug = false,
+  $env = undef,
   $home = undef,
   $host = undef,
   $kube_context = undef,
+  $path = undef,
   $tiller_namespace = undef,
   $update = true,
 ){
@@ -24,8 +26,8 @@ define helm::repo_update (
 
   exec { 'helm repo update':
     command     => $exec_update,
-    environment => 'HOME=/root',
-    path        => ['/bin', '/usr/bin'],
+    environment => $env,
+    path        => $path,
     timeout     => 0,
   }
 }

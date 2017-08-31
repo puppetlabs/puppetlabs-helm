@@ -5,6 +5,7 @@ define helm::chart (
   $chart = undef,
   $devel = false,
   $dry_run = false,
+  $env = undef,
   $key_file = undef,
   $key_ring = undef,
   $home = undef,
@@ -13,6 +14,7 @@ define helm::chart (
   $name_template = undef,
   $namespace = undef,
   $no_hooks = false,
+  $path = undef,
   $purge = true,
   $replace = false,
   $repo = undef,
@@ -24,7 +26,7 @@ define helm::chart (
   $tls_ca_cert = undef,
   $tls_cert = undef,
   $tls_key = undef,
-  $tls_verify = undef,
+  $tls_verify = false,
   $values = [],
   $verify = false,
   $version = undef,
@@ -101,8 +103,8 @@ define helm::chart (
 
   exec { $exec:
     command     => $exec_chart,
-    environment => 'HOME=/root',
-    path        => ['/bin', '/usr/bin'],
+    environment => $env,
+    path        => $path,
     timeout     => 0,
     unless      => $unless_chart,
   }

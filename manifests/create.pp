@@ -2,9 +2,11 @@ define helm::create (
   $chart_name = undef,
   $chart_path = undef,
   $debug = false,
+  $env = undef,
   $home = undef,
   $host = undef,
   $kube_context = undef,
+  $path = undef,
   $starter = undef,
   $tiller_namespace = undef,
 ){
@@ -26,8 +28,8 @@ define helm::create (
 
   exec { "helm create ${chart_name}" :
     command     => $exec_chart,
-    environment => 'HOME=/root',
-    path        => ['/bin', '/usr/bin'],
+    environment => $env,
+    path        => $path,
     timeout     => 0,
     creates     => "${chart_path}/${chart_name}",
   }

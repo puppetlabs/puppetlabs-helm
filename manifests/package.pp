@@ -4,11 +4,13 @@ define helm::package (
   $debug = false,
   $dependency_update = false,
   $destination = undef,
+  $env = undef,
   $home = undef,
   $host = undef,
   $key = undef,
   $keystring = undef,
   $kube_context = undef,
+  $path = undef,
   $save = true,
   $sign = false,
   $tiller_namespace = undef,
@@ -39,8 +41,8 @@ define helm::package (
 
   exec { "helm package ${chart_name}":
     command     => $exec_package,
-    environment => 'HOME=/root',
-    path        => ['/bin', '/usr/bin'],
+    environment => $env,
+    path        => $path,
     timeout     => 0,
     creates     => "${destination}/${chart_name}-${version}.tgz"
   }
