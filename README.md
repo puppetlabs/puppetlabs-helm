@@ -16,9 +16,6 @@ https://github.com/kubernetes/helm/issues/2224
 
 1. [Description](#description)
 1. [Setup - The basics of getting started with helm](#setup)
-    * [What helm affects](#what-helm-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with helm](#beginning-with-helm)
 1. [Usage - Configuration options and additional functionality](#usage)
 1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 1. [Limitations - OS compatibility, etc.](#limitations)
