@@ -6,7 +6,8 @@ describe 'helm::package', :type => :define do
   context 'with chart_name => foo & chart_path => /tmp' do
   let(:params) { {
                   'chart_path' => '/tmp',
-                  'chart_name' => 'foo'
+                  'chart_name' => 'foo',
+                  'path' => [ '/bin','/usr/bin'],
                } }
     it do
       is_expected.to compile.with_all_deps

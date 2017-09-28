@@ -13,11 +13,4 @@ class helm::config (
     service_account  => $service_account,
     tiller_namespace => $tiller_namespace,
   }
-
-  helm::create { 'myapp':
-  chart_path => '/tmp',
-  chart_name => 'myapp',
-}
-
-
 }

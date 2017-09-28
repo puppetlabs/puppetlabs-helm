@@ -55,11 +55,11 @@
   $unless_init = "kubectl get deployment --namespace=${tiller_namespace}  | grep 'tiller-deploy' "
 
   exec { 'helm init':
-    command   => $exec_init,
-    env       => $env,
-    path      => $path,
-    logoutput => true,
-    timeout   => 0,
-    unless    => $unless_init,
+    command     => $exec_init,
+    environment => $env,
+    path        => $path,
+    logoutput   => true,
+    timeout     => 0,
+    unless      => $unless_init,
   }
 }

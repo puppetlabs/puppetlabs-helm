@@ -12,7 +12,9 @@ describe 'helm::chart', :type => :define do
  context 'with ensure => present' do
   let(:params) { {
                  'ensure' => 'present',
+                 'path' => [ '/bin','/usr/bin'],
                  'release_name' => 'foo'
+
                } }
     it do
       is_expected.to compile.with_all_deps
@@ -21,8 +23,10 @@ describe 'helm::chart', :type => :define do
   end
   context 'with ensure => absent' do
   let(:params) { {
-                  'ensure' => 'absent',
-                  'release_name' => 'foo'
+                 'ensure' => 'absent',
+                 'path' => [ '/bin','/usr/bin'],
+                 'release_name' => 'foo'
+
                } }
     it do
       is_expected.to compile.with_all_deps

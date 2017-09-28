@@ -5,6 +5,8 @@ describe 'helm::account_config', :type => :class do
   let(:params) { {
                   'env' => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
                   'path' => [ '/bin','/usr/bin'],
+                  'service_account' => 'tiller',
+                  'tiller_namespace' => 'kube-system',
                } }
 
   context 'with default values for all parameters' do
