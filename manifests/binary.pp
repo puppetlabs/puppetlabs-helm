@@ -10,6 +10,9 @@ class helm::binary (
     'i386': {
       $arch = '386'
     }
+    'x86_64': {
+      $arch = 'amd64'
+    }
     default: {
       fail("${::architecture} is not supported")
     }
