@@ -4,7 +4,8 @@ describe 'helm::create', :type => :define do
   let(:title) { 'helm create' }
   let(:params) { {
                   'chart_path' => '/tmp',
-                  'chart_name' => 'foo'
+                  'chart_name' => 'foo',
+                  'path' => [ '/bin','/usr/bin']
                } }
 
   context 'with chart_path => /tmp and chart_name => foo' do
