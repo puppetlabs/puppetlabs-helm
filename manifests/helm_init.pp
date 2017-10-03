@@ -49,17 +49,17 @@
       tls_ca_cert => $tls_ca_cert,
       upgrade => $upgrade,
     })
-  }
 
-  $exec_init = "helm ${helm_init_flags}"
-  $unless_init = "kubectl get deployment --namespace=${tiller_namespace}  | grep 'tiller-deploy' "
+    $exec_init = "helm ${helm_init_flags}"
+    $unless_init = "kubectl get deployment --namespace=${tiller_namespace}  | grep 'tiller-deploy' "
 
-  exec { 'helm init':
-    command     => $exec_init,
-    environment => $env,
-    path        => $path,
-    logoutput   => true,
-    timeout     => 0,
-    unless      => $unless_init,
+    exec { 'helm init':
+      command     => $exec_init,
+      environment => $env,
+      path        => $path,
+      logoutput   => true,
+      timeout     => 0,
+      unless      => $unless_init,
+    }
   }
 }
