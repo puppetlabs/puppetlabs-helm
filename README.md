@@ -291,7 +291,7 @@ Identify  HTTPS client using thie SSL key file
 
 Default: `undef`
 
-##### `keyring`
+##### `key_ring`
 
 Location of the public keys used for verification
 
