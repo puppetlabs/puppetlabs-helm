@@ -18,6 +18,10 @@ module Puppet::Parser::Functions
       flags << "--cert-file '#{opts['cert_file']}'"
     end
 
+    if opts['debug']
+      flags << '--debug'
+    end
+
     if opts['devel']
       flags << '--devel'
     end

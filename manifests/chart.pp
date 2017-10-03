@@ -3,6 +3,7 @@ define helm::chart (
   $ca_file = undef,
   $cert_file = undef,
   $chart = undef,
+  $debug = false,
   $devel = false,
   $dry_run = false,
   $env = undef,
@@ -45,6 +46,7 @@ define helm::chart (
       ca_file =>$ca_file,
       cert_file => $cert_file,
       chart => $chart,
+      debug => $debug,
       devel => $devel,
       dry_run => $dry_run,
       key_file => $key_file,
@@ -79,6 +81,7 @@ define helm::chart (
   if $ensure == absent {
     $helm_delete_flags = helm_delete_flags({
       ensure => $ensure,
+      debug => $debug,
       dry_run => $dry_run,
       home => $home,
       host => $host,
