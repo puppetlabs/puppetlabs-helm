@@ -226,6 +226,12 @@ Namespace of tiller.
 
 Default: `kube-system`
 
+##### `starter`
+
+Value for starter chart
+
+Default: `undef`
+
 #### `helm::chart`
 
 Manages the deployment of the Helm charts.
@@ -434,6 +440,12 @@ Values `'true','false'`
 
 Default: `false`
 
+##### `chart`
+
+The file system location of the package 
+
+Default: `undef`
+
 #### `helm::helm_init`
 
 Deploys the tiller pod and initialises the Helm client.
@@ -526,7 +538,7 @@ Default: `undef`
 
 Name of the service account for the tiller deployment.
 
-Default: `false`
+Default: `undef`
 
 ##### `skip_refresh`
 
@@ -662,7 +674,47 @@ The version of the chart.
 
 Default: `undef`
 
+##### `dependency_update`
+
+Specify whether to update dependencies
+
+Values: `'true','false'`
+
+Default: `false`
+
+##### `destination`
+
+Specify the location to write.
+
+Default: `undef`
+
+##### `env`
+
+Sets the environment variables required for Helm to connect to the kubernetes cluster.
+
+Default: undef
+
+##### `key`
+
+Specify the key to use.
+
+Default: `undef`
+
+##### `keystring`
+
+Location of the public keys that are used for verification.
+
+Default: `undef`
+
 #### `helm::repo`
+
+##### `ensure`
+
+Specifies whether a repo is added.
+
+Values: `'present','absent'`
+
+Default: `present`
 
 ##### `ca_file`
 
