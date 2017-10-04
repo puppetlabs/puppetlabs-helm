@@ -20,9 +20,8 @@ define helm::repo_update (
       tiller_namespace => $tiller_namespace,
       update => $update,
     })
+    $exec_update = "helm repo ${helm_repo_update_flags}"
   }
-
-  $exec_update = "helm repo ${helm_repo_update_flags}"
 
   exec { 'helm repo update':
     command     => $exec_update,

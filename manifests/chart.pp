@@ -73,7 +73,7 @@ define helm::chart (
       version => $version,
       wait => $wait,
       })
-    $exec = 'helm install'
+    $exec = "helm install ${chart}"
     $exec_chart = "helm ${helm_install_flags}"
     $unless_chart = "helm ls --tiller-namespace ${tiller_namespace} | grep ${release_name}"
   }
@@ -99,7 +99,7 @@ define helm::chart (
       tls_key => $tls_key,
       tls_verify => $tls_verify,
       })
-    $exec = 'helm delete'
+    $exec = "helm delete ${chart}"
     $exec_chart = "helm ${helm_delete_flags}"
     $unless_chart = "helm ls -q --tiller-namespace ${tiller_namespace} | awk '{if(\$1 == \"${release_name}\") exit 1}'"
   }
