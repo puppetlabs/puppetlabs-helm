@@ -127,7 +127,7 @@ Default: `true`
 
 Sets the path variable for exec types in the module.
 
-Default: `['bin','/usr/bin']`
+Default: `'/usr/bin'`
 
 ##### `service_account`
 
