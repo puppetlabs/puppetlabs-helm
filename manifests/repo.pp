@@ -49,7 +49,7 @@ define helm::repo (
     $unless_repo = "helm repo list | awk '{if (\$1 == \"${repo_name}\") exit 1}'"
   }
 
-  exec { 'helm repo':
+  exec { "helm repo ${repo_name}":
     command     => $exec_repo,
     environment => $env,
     path        => $path,
