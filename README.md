@@ -133,7 +133,7 @@ Default: `true`
 
 Sets the path variable for exec types in the module
 
-Default: `['bin','/usr/bin']`
+Default: `'/usr/bin'`
 
 ##### `service_account`
 
@@ -291,7 +291,7 @@ Identify  HTTPS client using thie SSL key file
 
 Default: `undef`
 
-##### `keyring`
+##### `key_ring`
 
 Location of the public keys used for verification
 
