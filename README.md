@@ -666,7 +666,7 @@ Default: `false`
 
 Namespace of tiller.
 
-Default: `kube-system`
+Default: `undef`
 
 ##### `version`
 
@@ -784,7 +784,7 @@ Default: `undef`
 
 Namespace of tiller.
 
-Default: `kube-system`
+Default: `undef`
 
 ##### `repo_name`
 
@@ -844,7 +844,7 @@ Default: `undef`
 
 Namespace of tiller.
 
-Default: `kube-system`
+Default: `undef`
 
 ##### `update`
 
