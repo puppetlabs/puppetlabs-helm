@@ -13,7 +13,7 @@ describe 'helm::repo', :type => :define do
                  } }
     it do
       is_expected.to compile.with_all_deps
-      is_expected.to contain_exec('helm repo').with_command("helm repo add 'foo' 'https://foo.com/bar'")
+      is_expected.to contain_exec('helm repo foo').with_command("helm repo add 'foo' 'https://foo.com/bar'")
     end
   end
   context 'with ensure => absent and repo_name => foo' do
@@ -25,7 +25,7 @@ describe 'helm::repo', :type => :define do
                  } }
     it do
       is_expected.to compile.with_all_deps
-      is_expected.to contain_exec('helm repo').with_command(/helm repo remove 'foo'/)
+      is_expected.to contain_exec('helm repo foo').with_command(/helm repo remove 'foo'/)
     end
   end
 end
