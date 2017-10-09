@@ -3,34 +3,35 @@
 #### Table of Contents
 
 1. [Description](#description)
-1. [Setup - The basics of getting started with helm](#setup)
-1. [Usage - Configuration options and additional functionality](#usage)
-1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-1. [Limitations - OS compatibility, etc.](#limitations)
-1. [Development - Guide for contributing to the module](#development)
+2. [Setup - The basics of getting started with helm](#setup)
+3. [Usage - Configuration options and additional functionality](#usage)
+4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+5. [Limitations - OS compatibility, etc.](#limitations)
+6. [Development - Guide for contributing to the module](#development)
 
 ## Overview
 
-The Helm package manager installs and manages Kubernetes applications. The helm module installs, configures, and manages the helm package manager.
+The Helm package manager installs and manages Kubernetes applications.
 
 ## Description
 
-This module manages the installation of the Helm client (helm) and the Helm server (tiller). It also manages Helm deployments.
+This module installs the the Helm package manager, which consists of the Helm client (Helm) and the Helm server (Tiller), and it also manages the Helm deployments.
 
 ## Setup
 
-Before installing the helm module, create a Kubernetes service account and install a kubernetes cluster including kubectl. 
-For more information about Kubernetes and kubectl, see the [Kubernetes docs](https://github.com/kubernetes/helm/issues/2224).
+Before installing the helm module, create a Kubernetes service account and install a Kubernetes cluster, including kubectl. For more information about Kubernetes and kubectl, see the [Kubernetes docs](https://github.com/kubernetes/helm/issues/2224).
 
-To install the helm module with the default options:
+To install the helm module, include the `helm` class:
+
+```puppet
 `include helm`
+```
 
 ## Usage
 
-To customise options, such as the version, the service account, or the tiller namespace, add the following
-code to the manifest file:
+To customise options, such as the version, the service account, or the Tiller namespace, add the following code to the manifest file:
 
-```
+```puppet
 class { 'helm':
   version => '2.6.0',
   service_account => 'my_account',
@@ -38,9 +39,9 @@ class { 'helm':
 }
 ```
 
-To create a Helm chart, add the following code to the manifest file:
+A Helm chart is a collection of files that describe a related set of Kubernetes resources. To create a Helm chart, add the following code to the manifest file:
 
-```
+```puppet
 helm::create { 'myapp':
   env        => $env,
   chart_path => '/tmp',
@@ -49,9 +50,9 @@ helm::create { 'myapp':
 }
 ```
 
-To package a chart, add the following code to the manifest file:
+To package a Helm chart, add the following code to the manifest file:
 
-```
+```puppet
 helm::package { 'myapp':
   chart_path  => '/tmp',
   chart_name  => 'myapp',
@@ -64,7 +65,7 @@ helm::package { 'myapp':
 
 To deploy a Helm chart, add the following code to the manifest file:
 
-```
+```puppet
 helm::chart { 'mysql':
   ensure       => present,
   chart        => 'stable/mysql',
@@ -74,9 +75,9 @@ helm::chart { 'mysql':
 }
 ```
 
-To add a Helm repository, add the following code to the manifest file:
+To add a Helm chart repository, add the following code to the manifest file:
 
-```
+```puppet
 helm::repo { 'myrepo':
   ensure => present,
   env    => $env,
@@ -86,18 +87,38 @@ helm::repo { 'myrepo':
 }
 ```
 
-To update Helm repositories, add the following code to the manifest file:
+To update a Helm chart repository, add the following code to the manifest file:
 
-```
+```puppet
 helm::repo_update { 'update':
   env => $env,
   path => $path,
   update => true
 }
 ```
+
 ## Reference
 
-### Public classes
+### Classes
+
+#### Public Classes
+
+* [`helm`](#::helm)
+
+#### Private Classes
+
+* `helm::account_config`: Configures the service account and the cluster role that are required to deploy Helm.
+* `helm::binary`: Downloads and extracts the Helm binary.
+* `helm::config`: Calls the `helm::helm_init` define to deploy Tiller to the Kubernetes cluster.
+
+### Defined Types
+
+* [`helm::create`](#::helm::create): Creates a new Helm chart.
+* [`helm::chart`](#::helm::chart): Manages the deployment of the Helm charts.
+* [`helm::helm_init`](#::helm::helm_init): Deploys the Tiller pod and initializes the Helm client.
+* [`helm::package`](#::helm::package): Packages a chart directory into a chart archive.
+* [`helm::repo`](#::helm::repo): Adds a Helm repository.
+* [`helm::repo_update`](#::helm::repo_update): Updates all of the Helm repositories.
 
 #### Class: `helm`
 
@@ -105,132 +126,86 @@ Manages the basic Helm installation and setup.
 
 When the `helm` class is declared, Puppet does the following:
 
-- Downloads and installs Helm onto your system.
-- Creates the cluster role and service accounts required to run tiller.
-- Deploys tiller in the `kube-system` namespace.
+* Downloads and installs Helm onto your system.
+* Creates the cluster role and service accounts required to run tiller.
+* Deploys Tiller in the `kube-system` namespace.
 
-##### `env`
+##### Parameters
 
-Sets the required environment variables for Helm to connect to the kubernetes cluster.
+* `env`: Sets the environment variables for Helm to connect to the Kubernetes cluster. Default: `[ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']`
+* `init`: Specifies whether to initialize the Helm installation and deploy the Tiller pod to Kubernetes. Valid options: `'true', 'false'`. Default: `true`.
+* `install_path`: Sets the path variable for the exec types. Default: `'/usr/bin'`.
+* `service_account`: The service account name assigned to the `tiller` deployment. Default: `tiller`.
+* `tiller_namespace`: The namespace of where tiller is deployed to. Default: `kube-system`.
+* `version`: The version of Helm to install. Default: `2.5.1`.
 
-Default: `[ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']`
+#### Defined type: `helm::create`
 
-##### `init`
-
-Specifies whether to initialize the Helm installation and deploy the tiller pod to Kubernetes.
-
-Values: `'true', 'false'`
-
-Default: `true`
-
-##### `install_path`
-
-Sets the path variable for exec types in the module.
-
-Default: `'/usr/bin'`
-
-##### `service_account`
-
-The service account name assigned to the `tiller` deployment.
-
-Default: `tiller`
-
-##### `tiller_namespace`
-
-The namespace of where tiller is deployed to. 
-
-Default: `kube-system`
-
-##### `version`
-
-The version of Helm to install.
-
-Default: `2.5.1`
-
-### Private classes
-
-#### Class: `helm::binary`
-
-Downloads and extracts the Helm binary.
-
-#### Class: `helm::account_config`
-
-Configures the service account and cluster role required to deploy Helm.
-
-#### Class: `helm::config`
-
-Calls the `helm::helm_init` define to deploy tiller to the kubernetes cluster.
-
-### Defines
-
-#### `helm::create`
-
-Creates a new chart.
+Creates a new Helm chart.
 
 ##### `chart_name`
 
-Default: `undef`
-
 The name of the Helm chart.
+
+Default: `undef`.
 
 ##### `chart_path`
 
-The file system location of the chart.
+The location of the Helm chart.
 
-If directories in the path do not exist, Helm attempts to create them. If the destination exists 
-and the files are in the directory, only the conflicting files are overwritten.
+If the directory in the path does not exist, Helm attempts to create it. If the directory and the files already exist, only the conflicting files are overwritten.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `debug`
 
 Specifies whether to enable verbose output.
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `env`
 
-Sets the required environment variables for Helm to connect to the Kubernetes cluster.
+Sets the environment variables for Helm to connect to the Kubernetes cluster.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `home`
 
-Location of your Helm config. Overrrides $HELM_HOME
+The location of your Helm configuration. This value overrides `$HELM_HOME`.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `host`
 
-Address of tiller. Overrides $HELM_HOST
+Address of Tiller. This value overrides `$HELM_HOST`.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `kube_context`
 
 The name of the kubeconfig context.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `path`
 
-Values for the PATH environment variable.
+The PATH environment variable.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `tiller_namespace`
 
-Namespace of tiller.
+Namespace of Tiller.
 
-Default: `kube-system`
+Default: `kube-system`.
 
 ##### `starter`
 
-Value for starter chart
+Value for the starter chart.
 
-Default: `undef`
+Default: `undef`.
 
 #### `helm::chart`
 
@@ -240,379 +215,383 @@ Manages the deployment of the Helm charts.
 
 Specifies whether a chart is deployed.
 
-Values: `'present','absent'`
+Values: `'present','absent'`.
 
-Default: `present`
+Default: `present`.
 
 ##### `ca_file`
 
-Verify the certificates of HTTPS-enabled servers using the CA bundle.
+Verifies the certificates of the HTTPS-enabled servers using the CA bundle.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `cert_file`
 
 Identifies the HTTPS client using this SSL certificate file.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `debug`
 
 Specifies whether to enable verbose output.
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `devel`
 
 Specifies whether to use development versions.
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `dry_run`
 
 Specifies whether to simulate an installation or delete a deployment.
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `env`
 
-Sets the required environment variables for Helm to connect to the kubernetes cluster.
+Sets the environment variables for Helm to connect to the kubernetes cluster.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `key_file`
 
 Identifies the HTTPS client using thie SSL key file.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `key_ring`
 
 Location of the public keys that are used for verification.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `home`
 
-Location of your Helm config. Overrrides $HELM_HOME
+Location of your Helm config. This value overrides `$HELM_HOME`.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `host`
 
-Address of tiller. Overrides $HELM_HOST
+Address of Tiller. This value overrides `$HELM_HOST`.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `kube_context`
 
-Name of the kubeconfig context to use.
+Name of the kubeconfig context.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `name_template`
 
-Template used to name the release.
+The template used to name the release.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `no_hooks`
 
-Specifies whether to prevent hooks running during installation.
+Specifies whether to prevent hooks running during the installation.
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `path`
 
 Value for the PATH environment variable.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `purge`
 
-Specifies whether to remove the release from the store and make its name free for later use.
+Specifies whether to remove the release from the store, and make its name available for later use.
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `true`
+Default: `true`.
 
 ##### `release_name`
 
-Release name. This value is required.
+**Required.** The release name.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `replace`
 
-Reuse the given name.
+Reuse the release name.
 
-Default: `false`
+Default: `false`.
 
 ##### `repo`
 
-Repository URL for the requested chart.
+The repository URL for a requested chart.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `set`
 
-Set array of values for the `helm create` command.
+The set array of values for the `helm create` command.
 
-Default: `[]`
+Default: `[]`.
 
 ##### `timeout`
 
-The time in seconds to wait for any individual Kubernetes operation.
+The timeout in seconds to wait for a Kubernetes operation.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `tiller_namespace`
 
-Namespace of tiller.
+The Tiller namespace.
 
-Default: `kube-system`
+Default: `kube-system`.
 
 ##### `tls`
 
 Specifies whether to enable TLS.
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `tls_ca_cert`
 
-Path to TLS CA certificate file
+The path to TLS CA certificate file.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `tls_cert`
 
-Path to TLS certificate file
+The path to TLS certificate file.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `tls_key`
 
-Path to TLS key file
+The path to TLS key file.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `tls_verify`
 
 Enable TLS for request and verify remote.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `values`
 
 Specify values from a YAML file. Multiple values in an array are accepted.
 
-Default: `[]`
+Default: `[]`.
 
 ##### `verify`
 
 Specifies whether to verify the package before installing it.
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `version`
 
-Specify the exact chart version to install. Specifying `undef` installs the latest version.
+Specify the version of the chart to install. `undef` installs the latest version.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `wait`
 
-Specifies whether to wait until all Pods, PVCs, Services, and the minimum number of pods of a deployment are in a ready state before marking the release as successful. The duration is for as long as `timeout` value. 
+Before marking the release as successful, specify whether to wait until all the pods, PVCs, services, and the minimum number of deployment pods are in a ready state. The `timeout` value determines the duration. 
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `chart`
 
-The file system location of the package 
+The file system location of the package.
 
-Default: `undef`
+Default: `undef`.
 
-#### `helm::helm_init`
+#### Defined type: `helm::helm_init`
 
-Deploys the tiller pod and initialises the Helm client.
+Deploys the Tiller pod and initialize the Helm client.
 
 ##### `init`
 
 Specifies whether to deploy the tiller pod and initialise the Helm client.
 
-Values: `'true','false'`
+Values: `'true','false'`.
 
-Default: `true`
+Default: `true`.
 
 ##### `canary_image`
 
-Specifies whether to use the canary tiller image.
+Specifies whether to use the canary Tiller image.
 
-Values: `'true','false'`
+Values: `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `client_only`
 
-Specifies whether to deploy tiller.
+Specifies whether to deploy Tiller.
 
-Values: `'true','false'`
+Values: `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `debug`
 
-Specifies whether to enable verbose output.
+Specifies whether to enable the verbose output.
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `dry_run`
 
 Specifies whether to simulate an installation or delete of a deployment.
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `env`
 
 Sets the environment variables required for Helm to connect to the kubernetes cluster.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `home`
 
-Location of your Helm config. Overrrides $HELM_HOME
+The location for your Helm configuration. This value overrides `$HELM_HOME`.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `host`
 
-Address of tiller. Overrides $HELM_HOST
+The host address for Tiller. Overrides `$HELM_HOST`.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `kube_context`
 
-Name of the kubeconfig context to use.
+The name for the kubeconfig context to use.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `local_repo_url`
 
 The local repository URL.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `net_host`
 
-Specifies whether to install tiller with net=host.
+Specifies whether to install Tiller with `net=host`.
 
-Values: `'true','false'`
+Values: `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `path`
 
-Value the for PATH environment variable.
+The value for the PATH environment variable.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `service_account`
 
-Name of the service account for the tiller deployment.
+The name for the service account used for deploying Tiller.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `skip_refresh`
 
-Specifies whether to refresh (download) the local repository cache.
+Specifies whether to refresh or download the local repository cache.
 
-Values: `'true','false'`
+Values: `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `stable_repo_url`
 
-Stable repository URL.
+The stable repository URL.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `tiller_image`
 
-Override tiller image.
+Override the Tiller image.
 
 Default: `undef`
 
 ##### `tiller_namespace`
 
-Namespace of tiller.
+Namespace for Tiller.
 
-Default: `kube-system`
+Default: `kube-system`.
 
 ##### `tiller_tls`
 
-Specifies whether to install tiller with TLS enabled.
+Specifies whether to install Tiller with TLS enabled.
 
-Values: `'true','false'`
+Values: `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `tiller_tls_cert`
 
-Path to the TLS certificate file to install with tiller.
+The path to the TLS certificate file that is installed with Tiller.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `tiller_tls_key`
 
-Path to the TLS key file to install with tiller.
+The path to the TLS key file that is installed with Tiller.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `tiller_tls_verify`
 
-Specifies whether to install tiller with TLS enabled and to verify remote certificates.
+Specifies whether to install Tiller with TLS enabled and to verify remote certificates.
 
-Values: `'true','false'`
+Values: `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `tls_ca_cert`
 
-Path to the CA root certificate.
+Specifies whether to use the path to the CA root certificate.
 
-Default: `false`
+Values: `'true','false'`.
+
+Default: `false`.
 
 ##### `upgrade`
 
 Specifies whether to upgrade if Tiller is installed.
 
-Values: `'true','false'`
+Values: `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
-#### `helm::package`
+#### Defined type: `helm::package`
+
+Packages a chart directory into a chart archive.
 
 ##### `chart_name`
 
-Default: `undef`
+Default: `undef`.
 
 The name of the Helm chart.
 
@@ -624,235 +603,237 @@ The file system location of the chart.
 
 Specifies whether to enable verbose output.
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `home`
 
-Location of your Helm config. Overrrides $HELM_HOME
+Location of your Helm config. This value overrides `$HELM_HOME`.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `host`
 
-Address of tiller. Overrides $HELM_HOST
+The address for Tiller. This value overrides `$HELM_HOST`.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `kube_context`
 
-Name of the kubeconfig context to use.
+The name for the kubeconfig context.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `save`
 
 Specifies whether to save the packaged chart to the local chart repository.
 
-Values: `'true','false'`
+Values: `'true','false'`.
 
-Default: `true`
+Default: `true`.
 
 ##### `sign`
 
 Specifies whether to use a PGP private key to sign the package.
 
-Values: `'true','false'`
+Values: `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `tiller_namespace`
 
-Namespace of tiller.
+The namespace for Tiller.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `version`
 
 The version of the chart.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `dependency_update`
 
-Specify whether to update dependencies
+Specifies whether to update dependencies.
 
-Values: `'true','false'`
+Values: `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `destination`
 
-Specify the location to write.
+The destination location to write to.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `env`
 
 Sets the environment variables required for Helm to connect to the kubernetes cluster.
 
-Default: undef
+Default: `undef`.
 
 ##### `key`
 
 Specify the key to use.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `keystring`
 
-Location of the public keys that are used for verification.
+The location of the public keys that are used for verification.
 
-Default: `undef`
+Default: `undef`.
 
-#### `helm::repo`
+#### Defined type: `helm::repo`
+
+Adds a Helm repository.
 
 ##### `ensure`
 
 Specifies whether a repo is added.
 
-Values: `'present','absent'`
+Values: `'present','absent'`.
 
-Default: `present`
+Default: `present`.
 
 ##### `ca_file`
 
-Verify certificates of HTTPS-enabled servers using this CA bundle.
+Verify the certificates of HTTPS-enabled servers that are using the current CA bundle.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `cert_file`
 
-Identify the HTTPS client using this SSL certificate file.
+Use the SSL certificate file to identify the HTTPS client.
 
-Default: `undef`
-
-##### `debug`
-
-Specifies whether to enable verbose output.
-
-Values `'true','false'`
-
-Default: `false`
-
-##### `env`
-
-Sets the environment variables required for Helm to connect to the kubernetes cluster
-
-Default: `undef`
-
-##### `key_file`
-
-Identify  HTTPS client using thie SSL key file
-
-Default: `undef`
-
-##### `no_update`
-
-Specifies whether to create an error if the repository is already registered.
-
-Values `'true','false'`
-
-Default: `false`
-
-##### `home`
-
-Location of your Helm config. Overrrides $HELM_HOME
-
-Default: `undef`
-
-##### `host`
-
-Address of tiller. Overrides $HELM_HOST
-
-Default: `undef`
-
-##### `kube_context`
-
-Name of the kubeconfig context to use.
-
-Default: `undef`
-
-##### `path`
-
-Values for PATH environment variable
-
-Default: `undef`
-
-##### `tiller_namespace`
-
-Namespace of tiller.
-
-Default: `undef`
-
-##### `repo_name`
-
-Name of the remote repository.
-
-Default: `undef`
-
-##### `url`
-
-The URL for the remote repository.
-
-Default: `undef`
-
-#### `helm::repo_update`
-
-A define to update all the Helm repositories.
+Default: `undef`.
 
 ##### `debug`
 
 Specifies whether to enable verbose output.
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `false`
+Default: `false`.
 
 ##### `env`
 
 Sets the environment variables required for Helm to connect to the kubernetes cluster.
 
-Default: `undef`
+Default: `undef`.
+
+##### `key_file`
+
+Use the SSL key file to identify the HTTPS client.
+
+Default: `undef`.
+
+##### `no_update`
+
+Specifies whether to create an error when the repository is already registered.
+
+Values `'true','false'`.
+
+Default: `false`.
 
 ##### `home`
 
-Location of your Helm config. Overrrides $HELM_HOME
+Location of your Helm config. This value overrrides `$HELM_HOME`.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `host`
 
-Address of tiller. Overrides $HELM_HOST
+The address for Tiller. This value overrides `$HELM_HOST`.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `kube_context`
 
-The name of the kubeconfig context to use.
+The name for the kubeconfig context to use.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `path`
 
-The value for PATH environment variable.
+The values for PATH environment variable.
 
-Default: `undef`
+Default: `undef`.
 
 ##### `tiller_namespace`
 
-Namespace of tiller.
+The namespace for Tiller.
 
-Default: `undef`
+Default: `undef`.
+
+##### `repo_name`
+
+The name for the remote repository.
+
+Default: `undef`.
+
+##### `url`
+
+The URL for the remote repository.
+
+Default: `undef`.
+
+#### Defined type: `helm::repo_update`
+
+Updates all of the Helm repositories.
+
+##### `debug`
+
+Specifies whether to enable verbose output.
+
+Values `'true','false'`.
+
+Default: `false`.
+
+##### `env`
+
+Sets the environment variables required for Helm to connect to the Kubernetes cluster.
+
+Default: `undef`.
+
+##### `home`
+
+The location of your Helm config. This value overrides `$HELM_HOME`.
+
+Default: `undef`.
+
+##### `host`
+
+The address for Tiller. This value overrides `$HELM_HOST`.
+
+Default: `undef`.
+
+##### `kube_context`
+
+The name for the kubeconfig context to use.
+
+Default: `undef`.
+
+##### `path`
+
+The value for the PATH environment variable.
+
+Default: `undef`.
+
+##### `tiller_namespace`
+
+The namespace for Tiller.
+
+Default: `undef`.
 
 ##### `update`
 
-Specifies whether the repo is updated.
+Specifies whether the repository is updated.
 
-Values `'true','false'`
+Values `'true','false'`.
 
-Default: `true`
+Default: `true`.
 
 ## Limitations
 
