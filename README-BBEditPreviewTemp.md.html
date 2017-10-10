@@ -1,0 +1,879 @@
+<h1>helm</h1>
+
+<h4>Table of Contents</h4>
+
+<ol>
+<li><a href="#description">Description</a></li>
+<li><a href="#setup">Setup - The basics of getting started with helm</a></li>
+<li><a href="#usage">Usage - Configuration options and additional functionality</a></li>
+<li><a href="#reference">Reference - An under-the-hood peek at what the module is doing and how</a></li>
+<li><a href="#limitations">Limitations - OS compatibility, etc.</a></li>
+<li><a href="#development">Development - Guide for contributing to the module</a></li>
+</ol>
+
+<h2>Overview</h2>
+
+<p>The Helm package manager installs and manages Kubernetes applications.</p>
+
+<h2>Description</h2>
+
+<p>This module installs the the Helm package manager, which consists of the Helm client (Helm) and the Helm server (Tiller), and it also manages the Helm deployments.</p>
+
+<h2>Setup</h2>
+
+<p>Before installing the helm module, create a Kubernetes service account and install a Kubernetes cluster, including kubectl. For more information about Kubernetes and kubectl, see the <a href="https://github.com/kubernetes/helm/issues/2224">Kubernetes docs</a>.</p>
+
+<p>To install the helm module, include the <code>helm</code> class:</p>
+
+
+
+<pre><code>include 'helm'
+</code></pre>
+
+
+
+<h2>Usage</h2>
+
+<p>To customise options, such as the version, the service account, or the Tiller namespace, add the following code to the manifest file:</p>
+
+
+
+<pre><code>class { 'helm':
+version =&gt; '2.6.0',
+service_account =&gt; 'my_account',
+tiller_namespace =&gt; 'my_namespace',
+}
+</code></pre>
+
+
+
+<p>A Helm chart is a collection of files that describe a related set of Kubernetes resources. To create a Helm chart, add the following code to the manifest file:</p>
+
+
+
+<pre><code>helm::create { 'myapp':
+env        =&gt; $env,
+chart_path =&gt; '/tmp',
+chart_name =&gt; 'myapp',
+path       =&gt; $path,
+}
+</code></pre>
+
+
+
+<p>To package a Helm chart, add the following code to the manifest file:</p>
+
+
+
+<pre><code>helm::package { 'myapp':
+chart_path  =&gt; '/tmp',
+chart_name  =&gt; 'myapp',
+destination =&gt; '/root',
+env         =&gt; $env,
+path        =&gt; $path,
+version     =&gt; '0.1.0',
+}
+</code></pre>
+
+
+
+<p>To deploy a Helm chart, add the following code to the manifest file:</p>
+
+
+
+<pre><code>helm::chart { 'mysql':
+ensure       =&gt; present,
+chart        =&gt; 'stable/mysql',
+env          =&gt; $env,
+path         =&gt; $path,
+release_name =&gt; 'mysql',
+}
+</code></pre>
+
+
+
+<p>To add a Helm chart repository, add the following code to the manifest file:</p>
+
+
+
+<pre><code>helm::repo { 'myrepo':
+ensure =&gt; present,
+env    =&gt; $env,
+path   =&gt; $path,
+repo_name =&gt; 'myrepo',
+url       =&gt; 'http://myserver/charts'
+}
+</code></pre>
+
+
+
+<p>To update a Helm chart repository, add the following code to the manifest file:</p>
+
+
+
+<pre><code>helm::repo_update { 'update':
+env =&gt; $env,
+path =&gt; $path,
+update =&gt; true
+}
+</code></pre>
+
+
+
+<h2>Reference</h2>
+
+<h3>Classes</h3>
+
+<h4>Public Classes</h4>
+
+<ul>
+<li><a href="#::helm"><code>helm</code></a></li>
+</ul>
+
+<h4>Private Classes</h4>
+
+<ul>
+<li><code>helm::account_config</code>: Configures the service account and the cluster role that are required to deploy Helm.</li>
+<li><code>helm::binary</code>: Downloads and extracts the Helm binary.</li>
+<li><code>helm::config</code>: Calls the <code>helm::helm_init</code> define to deploy Tiller to the Kubernetes cluster.</li>
+</ul>
+
+<h3>Defined Types</h3>
+
+<ul>
+<li><a href="#::helm::create"><code>helm::create</code></a>: Creates a new Helm chart.</li>
+<li><a href="#::helm::chart"><code>helm::chart</code></a>: Manages the deployment of the Helm charts.</li>
+<li><a href="#::helm::helm_init"><code>helm::helm_init</code></a>: Deploys the Tiller pod and initializes the Helm client.</li>
+<li><a href="#::helm::package"><code>helm::package</code></a>: Packages a chart directory into a chart archive.</li>
+<li><a href="#::helm::repo"><code>helm::repo</code></a>: Adds a Helm repository.</li>
+<li><a href="#::helm::repo_update"><code>helm::repo_update</code></a>: Updates all of the Helm repositories.</li>
+</ul>
+
+<h4>Class: <code>helm</code></h4>
+
+<p>Manages the basic Helm installation and setup.</p>
+
+<p>When the <code>helm</code> class is declared, Puppet does the following:</p>
+
+<ul>
+<li>Downloads and installs Helm onto your system.</li>
+<li>Creates the cluster role and service accounts required to run tiller.</li>
+<li>Deploys Tiller in the <code>kube-system</code> namespace.</li>
+</ul>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><code>env</code>: Sets the environment variables for Helm to connect to the Kubernetes cluster. Default: <code>[ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']</code></li>
+<li><code>init</code>: Specifies whether to initialize the Helm installation and deploy the Tiller pod to Kubernetes. Valid options: <code>'true', 'false'</code>. Default: <code>true</code>.</li>
+<li><code>install_path</code>: Sets the path variable for the exec types. Default: <code>'/usr/bin'</code>.</li>
+<li><code>service_account</code>: The service account name assigned to the <code>tiller</code> deployment. Default: <code>tiller</code>.</li>
+<li><code>tiller_namespace</code>: The namespace of where tiller is deployed to. Default: <code>kube-system</code>.</li>
+<li><code>version</code>: The version of Helm to install. Default: <code>2.5.1</code>.</li>
+</ul>
+
+<h4>Defined type: <code>helm::create</code></h4>
+
+<p>Creates a new Helm chart.</p>
+
+<h5><code>chart_name</code></h5>
+
+<p>The name of the Helm chart.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>chart_path</code></h5>
+
+<p>The location of the Helm chart.</p>
+
+<p>If the directory in the path does not exist, Helm attempts to create it. If the directory and the files already exist, only the conflicting files are overwritten.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>debug</code></h5>
+
+<p>Specifies whether to enable verbose output.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>env</code></h5>
+
+<p>Sets the environment variables for Helm to connect to the Kubernetes cluster.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>home</code></h5>
+
+<p>The location of your Helm configuration. This value overrides <code>$HELM_HOME</code>.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>host</code></h5>
+
+<p>Address of Tiller. This value overrides <code>$HELM_HOST</code>.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>kube_context</code></h5>
+
+<p>The name of the kubeconfig context.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>path</code></h5>
+
+<p>The PATH environment variable.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>tiller_namespace</code></h5>
+
+<p>Namespace of Tiller.</p>
+
+<p>Default: <code>kube-system</code>.</p>
+
+<h5><code>starter</code></h5>
+
+<p>Value for the starter chart.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h4><code>helm::chart</code></h4>
+
+<p>Manages the deployment of the Helm charts.</p>
+
+<h5><code>ensure</code></h5>
+
+<p>Specifies whether a chart is deployed.</p>
+
+<p>Values: <code>'present','absent'</code>.</p>
+
+<p>Default: <code>present</code>.</p>
+
+<h5><code>ca_file</code></h5>
+
+<p>Verifies the certificates of the HTTPS-enabled servers using the CA bundle.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>cert_file</code></h5>
+
+<p>Identifies the HTTPS client using this SSL certificate file.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>debug</code></h5>
+
+<p>Specifies whether to enable verbose output.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>devel</code></h5>
+
+<p>Specifies whether to use development versions.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>dry_run</code></h5>
+
+<p>Specifies whether to simulate an installation or delete a deployment.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>env</code></h5>
+
+<p>Sets the environment variables for Helm to connect to the kubernetes cluster.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>key_file</code></h5>
+
+<p>Identifies the HTTPS client using thie SSL key file.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>key_ring</code></h5>
+
+<p>Location of the public keys that are used for verification.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>home</code></h5>
+
+<p>Location of your Helm config. This value overrides <code>$HELM_HOME</code>.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>host</code></h5>
+
+<p>Address of Tiller. This value overrides <code>$HELM_HOST</code>.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>kube_context</code></h5>
+
+<p>Name of the kubeconfig context.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>name_template</code></h5>
+
+<p>The template used to name the release.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>no_hooks</code></h5>
+
+<p>Specifies whether to prevent hooks running during the installation.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>path</code></h5>
+
+<p>Value for the PATH environment variable.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>purge</code></h5>
+
+<p>Specifies whether to remove the release from the store, and make its name available for later use.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>true</code>.</p>
+
+<h5><code>release_name</code></h5>
+
+<p><strong>Required.</strong> The release name.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>replace</code></h5>
+
+<p>Reuse the release name.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>repo</code></h5>
+
+<p>The repository URL for a requested chart.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>set</code></h5>
+
+<p>The set array of values for the <code>helm create</code> command.</p>
+
+<p>Default: <code>[]</code>.</p>
+
+<h5><code>timeout</code></h5>
+
+<p>The timeout in seconds to wait for a Kubernetes operation.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>tiller_namespace</code></h5>
+
+<p>The Tiller namespace.</p>
+
+<p>Default: <code>kube-system</code>.</p>
+
+<h5><code>tls</code></h5>
+
+<p>Specifies whether to enable TLS.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>tls_ca_cert</code></h5>
+
+<p>The path to TLS CA certificate file.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>tls_cert</code></h5>
+
+<p>The path to TLS certificate file.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>tls_key</code></h5>
+
+<p>The path to TLS key file.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>tls_verify</code></h5>
+
+<p>Enable TLS for request and verify remote.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>values</code></h5>
+
+<p>Specify values from a YAML file. Multiple values in an array are accepted.</p>
+
+<p>Default: <code>[]</code>.</p>
+
+<h5><code>verify</code></h5>
+
+<p>Specifies whether to verify the package before installing it.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>version</code></h5>
+
+<p>Specify the version of the chart to install. <code>undef</code> installs the latest version.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>wait</code></h5>
+
+<p>Before marking the release as successful, specify whether to wait until all the pods, PVCs, services, and the minimum number of deployment pods are in a ready state. The <code>timeout</code> value determines the duration. </p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>chart</code></h5>
+
+<p>The file system location of the package.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h4>Defined type: <code>helm::helm_init</code></h4>
+
+<p>Deploys the Tiller pod and initialize the Helm client.</p>
+
+<h5><code>init</code></h5>
+
+<p>Specifies whether to deploy the tiller pod and initialise the Helm client.</p>
+
+<p>Values: <code>'true','false'</code>.</p>
+
+<p>Default: <code>true</code>.</p>
+
+<h5><code>canary_image</code></h5>
+
+<p>Specifies whether to use the canary Tiller image.</p>
+
+<p>Values: <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>client_only</code></h5>
+
+<p>Specifies whether to deploy Tiller.</p>
+
+<p>Values: <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>debug</code></h5>
+
+<p>Specifies whether to enable the verbose output.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>dry_run</code></h5>
+
+<p>Specifies whether to simulate an installation or delete of a deployment.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>env</code></h5>
+
+<p>Sets the environment variables required for Helm to connect to the kubernetes cluster.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>home</code></h5>
+
+<p>The location for your Helm configuration. This value overrides <code>$HELM_HOME</code>.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>host</code></h5>
+
+<p>The host address for Tiller. Overrides <code>$HELM_HOST</code>.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>kube_context</code></h5>
+
+<p>The name for the kubeconfig context to use.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>local_repo_url</code></h5>
+
+<p>The local repository URL.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>net_host</code></h5>
+
+<p>Specifies whether to install Tiller with <code>net=host</code>.</p>
+
+<p>Values: <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>path</code></h5>
+
+<p>The value for the PATH environment variable.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>service_account</code></h5>
+
+<p>The name for the service account used for deploying Tiller.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>skip_refresh</code></h5>
+
+<p>Specifies whether to refresh or download the local repository cache.</p>
+
+<p>Values: <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>stable_repo_url</code></h5>
+
+<p>The stable repository URL.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>tiller_image</code></h5>
+
+<p>Override the Tiller image.</p>
+
+<p>Default: <code>undef</code></p>
+
+<h5><code>tiller_namespace</code></h5>
+
+<p>Namespace for Tiller.</p>
+
+<p>Default: <code>kube-system</code>.</p>
+
+<h5><code>tiller_tls</code></h5>
+
+<p>Specifies whether to install Tiller with TLS enabled.</p>
+
+<p>Values: <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>tiller_tls_cert</code></h5>
+
+<p>The path to the TLS certificate file that is installed with Tiller.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>tiller_tls_key</code></h5>
+
+<p>The path to the TLS key file that is installed with Tiller.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>tiller_tls_verify</code></h5>
+
+<p>Specifies whether to install Tiller with TLS enabled and to verify remote certificates.</p>
+
+<p>Values: <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>tls_ca_cert</code></h5>
+
+<p>Specifies whether to use the path to the CA root certificate.</p>
+
+<p>Values: <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>upgrade</code></h5>
+
+<p>Specifies whether to upgrade if Tiller is installed.</p>
+
+<p>Values: <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h4>Defined type: <code>helm::package</code></h4>
+
+<p>Packages a chart directory into a chart archive.</p>
+
+<h5><code>chart_name</code></h5>
+
+<p>Default: <code>undef</code>.</p>
+
+<p>The name of the Helm chart.</p>
+
+<h5><code>chart_path</code></h5>
+
+<p>The file system location of the chart.</p>
+
+<h5><code>debug</code></h5>
+
+<p>Specifies whether to enable verbose output.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>home</code></h5>
+
+<p>Location of your Helm config. This value overrides <code>$HELM_HOME</code>.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>host</code></h5>
+
+<p>The address for Tiller. This value overrides <code>$HELM_HOST</code>.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>kube_context</code></h5>
+
+<p>The name for the kubeconfig context.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>save</code></h5>
+
+<p>Specifies whether to save the packaged chart to the local chart repository.</p>
+
+<p>Values: <code>'true','false'</code>.</p>
+
+<p>Default: <code>true</code>.</p>
+
+<h5><code>sign</code></h5>
+
+<p>Specifies whether to use a PGP private key to sign the package.</p>
+
+<p>Values: <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>tiller_namespace</code></h5>
+
+<p>The namespace for Tiller.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>version</code></h5>
+
+<p>The version of the chart.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>dependency_update</code></h5>
+
+<p>Specifies whether to update dependencies.</p>
+
+<p>Values: <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>destination</code></h5>
+
+<p>The destination location to write to.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>env</code></h5>
+
+<p>Sets the environment variables required for Helm to connect to the kubernetes cluster.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>key</code></h5>
+
+<p>Specify the key to use.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>keystring</code></h5>
+
+<p>The location of the public keys that are used for verification.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h4>Defined type: <code>helm::repo</code></h4>
+
+<p>Adds a Helm repository.</p>
+
+<h5><code>ensure</code></h5>
+
+<p>Specifies whether a repo is added.</p>
+
+<p>Values: <code>'present','absent'</code>.</p>
+
+<p>Default: <code>present</code>.</p>
+
+<h5><code>ca_file</code></h5>
+
+<p>Verify the certificates of HTTPS-enabled servers that are using the current CA bundle.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>cert_file</code></h5>
+
+<p>Use the SSL certificate file to identify the HTTPS client.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>debug</code></h5>
+
+<p>Specifies whether to enable verbose output.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>env</code></h5>
+
+<p>Sets the environment variables required for Helm to connect to the kubernetes cluster.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>key_file</code></h5>
+
+<p>Use the SSL key file to identify the HTTPS client.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>no_update</code></h5>
+
+<p>Specifies whether to create an error when the repository is already registered.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>home</code></h5>
+
+<p>Location of your Helm config. This value overrrides <code>$HELM_HOME</code>.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>host</code></h5>
+
+<p>The address for Tiller. This value overrides <code>$HELM_HOST</code>.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>kube_context</code></h5>
+
+<p>The name for the kubeconfig context to use.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>path</code></h5>
+
+<p>The values for PATH environment variable.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>tiller_namespace</code></h5>
+
+<p>The namespace for Tiller.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>repo_name</code></h5>
+
+<p>The name for the remote repository.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>url</code></h5>
+
+<p>The URL for the remote repository.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h4>Defined type: <code>helm::repo_update</code></h4>
+
+<p>Updates all of the Helm repositories.</p>
+
+<h5><code>debug</code></h5>
+
+<p>Specifies whether to enable verbose output.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>false</code>.</p>
+
+<h5><code>env</code></h5>
+
+<p>Sets the environment variables required for Helm to connect to the Kubernetes cluster.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>home</code></h5>
+
+<p>The location of your Helm config. This value overrides <code>$HELM_HOME</code>.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>host</code></h5>
+
+<p>The address for Tiller. This value overrides <code>$HELM_HOST</code>.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>kube_context</code></h5>
+
+<p>The name for the kubeconfig context to use.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>path</code></h5>
+
+<p>The value for the PATH environment variable.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>tiller_namespace</code></h5>
+
+<p>The namespace for Tiller.</p>
+
+<p>Default: <code>undef</code>.</p>
+
+<h5><code>update</code></h5>
+
+<p>Specifies whether the repository is updated.</p>
+
+<p>Values <code>'true','false'</code>.</p>
+
+<p>Default: <code>true</code>.</p>
+
+<h2>Limitations</h2>
+
+<p>This module is compatible only with the <code>Linux</code> kernel.</p>
+
+<h2>Development</h2>
+
+<h3>Contributing</h3>
+
+<p>If you would like to contribute to this module please follow the rules in the <a href="https://github.com/puppetlabs/puppetlabs-helm/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
