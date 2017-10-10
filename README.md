@@ -24,7 +24,7 @@ Before installing the helm module, create a Kubernetes service account and insta
 To install the helm module, include the `helm` class:
 
 ```puppet
-`include helm`
+include 'helm'
 ```
 
 ## Usage
