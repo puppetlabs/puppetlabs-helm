@@ -8,14 +8,34 @@
   "project_page": null,
   "issues_url": null,
   "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 4.19.0"},
+    {"name":"puppet-archive","version_requirement":">= 2.0.0"}
+  ],
+  "data_provider": null,
+  "operatingsystem_support": [
     {
-      "name": "puppetlabs-stdlib",
-      "version_requirement": ">= 1.0.0"
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7"
+      ]
     },
     {
-      "name": "puppet-archive"
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "16.04"
+      ]
     }
   ],
-  "data_provider": null
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.2.1 < 5.0.0"
+    }
+  ]
 }
-
