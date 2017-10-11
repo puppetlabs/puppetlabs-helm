@@ -4,7 +4,7 @@
   "author": "puppetlabs",
   "summary": "A module to install Helm, a kubernetes package manager",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/puppetlabs/puppetlabs-helm",
   "project_page": null,
   "issues_url": null,
   "dependencies": [
