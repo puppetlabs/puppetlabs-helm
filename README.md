@@ -133,11 +133,11 @@ When the `helm` class is declared, Puppet does the following:
 ##### Parameters
 
 * `env`: Sets the environment variables for Helm to connect to the Kubernetes cluster. Default: `[ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']`
-* `init`: Specifies whether to initialize the Helm installation and deploy the Tiller pod to Kubernetes. Valid options: `'true', 'false'`. Default: `true`.
-* `install_path`: Sets the path variable for the exec types. Default: `'/usr/bin'`.
+* `init`: Specifies whether to initialize the Helm installation and deploy the Tiller pod to Kubernetes. Valid options: `true`, `false`. Default: `true`.
+* `install_path`: Sets the path variable for the exec types. Default: '/usr/bin'.
 * `service_account`: The service account name assigned to the `tiller` deployment. Default: `tiller`.
 * `tiller_namespace`: The namespace of where tiller is deployed to. Default: `kube-system`.
-* `version`: The version of Helm to install. Default: `2.5.1`.
+* `version`: The version of Helm to install. Default: '2.5.1'.
 
 #### Defined type: `helm::create`
 
@@ -161,7 +161,7 @@ Default: `undef`.
 
 Specifies whether to enable verbose output.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -199,7 +199,7 @@ Default: `undef`.
 
 Namespace of Tiller.
 
-Default: `kube-system`.
+Default: 'kube-system'.
 
 ##### `starter`
 
@@ -215,9 +215,9 @@ Manages the deployment of the Helm charts.
 
 Specifies whether a chart is deployed.
 
-Values: `'present','absent'`.
+Values: 'present', 'absent'.
 
-Default: `present`.
+Default: 'present'.
 
 ##### `ca_file`
 
@@ -235,7 +235,7 @@ Default: `undef`.
 
 Specifies whether to enable verbose output.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -243,7 +243,7 @@ Default: `false`.
 
 Specifies whether to use development versions.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -251,7 +251,7 @@ Default: `false`.
 
 Specifies whether to simulate an installation or delete a deployment.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -301,7 +301,7 @@ Default: `undef`.
 
 Specifies whether to prevent hooks running during the installation.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -315,7 +315,7 @@ Default: `undef`.
 
 Specifies whether to remove the release from the store, and make its name available for later use.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `true`.
 
@@ -341,7 +341,7 @@ Default: `undef`.
 
 The set array of values for the `helm create` command.
 
-Default: `[]`.
+Default: '[]'.
 
 ##### `timeout`
 
@@ -353,13 +353,13 @@ Default: `undef`.
 
 The Tiller namespace.
 
-Default: `kube-system`.
+Default: 'kube-system'.
 
 ##### `tls`
 
 Specifies whether to enable TLS.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -391,13 +391,13 @@ Default: `undef`.
 
 Specify values from a YAML file. Multiple values in an array are accepted.
 
-Default: `[]`.
+Default: '[]'.
 
 ##### `verify`
 
 Specifies whether to verify the package before installing it.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -411,7 +411,7 @@ Default: `undef`.
 
 Before marking the release as successful, specify whether to wait until all the pods, PVCs, services, and the minimum number of deployment pods are in a ready state. The `timeout` value determines the duration. 
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -429,7 +429,7 @@ Deploys the Tiller pod and initialize the Helm client.
 
 Specifies whether to deploy the tiller pod and initialise the Helm client.
 
-Values: `'true','false'`.
+Values: `true`, `false`.
 
 Default: `true`.
 
@@ -437,7 +437,7 @@ Default: `true`.
 
 Specifies whether to use the canary Tiller image.
 
-Values: `'true','false'`.
+Values: `true`, `false`.
 
 Default: `false`.
 
@@ -445,7 +445,7 @@ Default: `false`.
 
 Specifies whether to deploy Tiller.
 
-Values: `'true','false'`.
+Values: `true`, `false`.
 
 Default: `false`.
 
@@ -453,7 +453,7 @@ Default: `false`.
 
 Specifies whether to enable the verbose output.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -461,7 +461,7 @@ Default: `false`.
 
 Specifies whether to simulate an installation or delete of a deployment.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -499,7 +499,7 @@ Default: `undef`.
 
 Specifies whether to install Tiller with `net=host`.
 
-Values: `'true','false'`.
+Values: `true`, `false`.
 
 Default: `false`.
 
@@ -519,7 +519,7 @@ Default: `undef`.
 
 Specifies whether to refresh or download the local repository cache.
 
-Values: `'true','false'`.
+Values: `true`, `false`.
 
 Default: `false`.
 
@@ -539,13 +539,13 @@ Default: `undef`
 
 Namespace for Tiller.
 
-Default: `kube-system`.
+Default: 'kube-system'.
 
 ##### `tiller_tls`
 
 Specifies whether to install Tiller with TLS enabled.
 
-Values: `'true','false'`.
+Values: `true`, `false`.
 
 Default: `false`.
 
@@ -565,7 +565,7 @@ Default: `undef`.
 
 Specifies whether to install Tiller with TLS enabled and to verify remote certificates.
 
-Values: `'true','false'`.
+Values: `true`, `false`.
 
 Default: `false`.
 
@@ -573,7 +573,7 @@ Default: `false`.
 
 Specifies whether to use the path to the CA root certificate.
 
-Values: `'true','false'`.
+Values: `true`, `false`.
 
 Default: `false`.
 
@@ -581,7 +581,7 @@ Default: `false`.
 
 Specifies whether to upgrade if Tiller is installed.
 
-Values: `'true','false'`.
+Values: `true`, `false`.
 
 Default: `false`.
 
@@ -603,7 +603,7 @@ The file system location of the chart.
 
 Specifies whether to enable verbose output.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -629,7 +629,7 @@ Default: `undef`.
 
 Specifies whether to save the packaged chart to the local chart repository.
 
-Values: `'true','false'`.
+Values: `true`, `false`.
 
 Default: `true`.
 
@@ -637,7 +637,7 @@ Default: `true`.
 
 Specifies whether to use a PGP private key to sign the package.
 
-Values: `'true','false'`.
+Values: `true`, `false`.
 
 Default: `false`.
 
@@ -657,7 +657,7 @@ Default: `undef`.
 
 Specifies whether to update dependencies.
 
-Values: `'true','false'`.
+Values: `true`, `false`.
 
 Default: `false`.
 
@@ -693,9 +693,9 @@ Adds a Helm repository.
 
 Specifies whether a repo is added.
 
-Values: `'present','absent'`.
+Values: 'present', 'absent'.
 
-Default: `present`.
+Default: 'present'.
 
 ##### `ca_file`
 
@@ -713,7 +713,7 @@ Default: `undef`.
 
 Specifies whether to enable verbose output.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -733,7 +733,7 @@ Default: `undef`.
 
 Specifies whether to create an error when the repository is already registered.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -787,7 +787,7 @@ Updates all of the Helm repositories.
 
 Specifies whether to enable verbose output.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `false`.
 
@@ -831,7 +831,7 @@ Default: `undef`.
 
 Specifies whether the repository is updated.
 
-Values `'true','false'`.
+Values `true`, `false`.
 
 Default: `true`.
 
