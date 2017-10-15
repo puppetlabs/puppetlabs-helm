@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-helm.svg?branch=master)](https://travis-ci.org/puppetlabs/puppetlabs-helm)
+
 # helm
 
 #### Table of Contents
