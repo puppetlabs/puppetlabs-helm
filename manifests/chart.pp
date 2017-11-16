@@ -109,6 +109,8 @@ define helm::chart (
     environment => $env,
     path        => $path,
     timeout     => 0,
+    tries       => 10,
+    try_sleep   => 10,
     unless      => $unless_chart,
   }
 }
