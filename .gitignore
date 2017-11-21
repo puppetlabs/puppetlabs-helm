@@ -2,3 +2,6 @@
 coverage/
 .bundle/
 vendor/
+.vagrant/
+Gemfile.lock
+log

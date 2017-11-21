@@ -5,5 +5,5 @@ class helm::params {
   $path = [ '/bin','/usr/bin']
   $service_account = 'tiller'
   $tiller_namespace = 'kube-system'
-  $version = '2.5.1'
+  $version = '2.7.2'
 }
