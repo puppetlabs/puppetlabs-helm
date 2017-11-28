@@ -75,7 +75,20 @@ define helm::chart (
       })
     $exec = "helm install ${chart}"
     $exec_chart = "helm ${helm_install_flags}"
-    $unless_chart = "helm ls --tiller-namespace ${tiller_namespace} | grep ${release_name}"
+    $helm_ls_flags = helm_ls_flags({
+      ls => true,
+      home => $home,
+      host => $host,
+      kube_context => $kube_context,
+      tiller_namespace => $tiller_namespace,
+      short => false,
+      tls => $tls,
+      tls_ca_cert => $tls_ca_cert,
+      tls_cert => $tls_cert,
+      tls_key => $tls_key,
+      tls_verify => $tls_verify,
+    })
+    $unless_chart = "helm ${helm_ls_flags} | grep ${release_name}"
   }
 
   if $ensure == absent {
@@ -101,7 +114,20 @@ define helm::chart (
       })
     $exec = "helm delete ${chart}"
     $exec_chart = "helm ${helm_delete_flags}"
-    $unless_chart = "helm ls -q --tiller-namespace ${tiller_namespace} | awk '{if(\$1 == \"${release_name}\") exit 1}'"
+    $helm_ls_flags = helm_ls_flags({
+      ls => true,
+      home => $home,
+      host => $host,
+      kube_context => $kube_context,
+      tiller_namespace => $tiller_namespace,
+      short => true,
+      tls => $tls,
+      tls_ca_cert => $tls_ca_cert,
+      tls_cert => $tls_cert,
+      tls_key => $tls_key,
+      tls_verify => $tls_verify,
+    })
+    $unless_chart = "helm ${helm_ls_flags} | awk '{if(\$1 == \"${release_name}\") exit 1}'"
   }
 
   exec { $exec:
