@@ -81,14 +81,14 @@ define helm::chart (
       host => $host,
       kube_context => $kube_context,
       tiller_namespace => $tiller_namespace,
-      short => false,
+      short => true,
       tls => $tls,
       tls_ca_cert => $tls_ca_cert,
       tls_cert => $tls_cert,
       tls_key => $tls_key,
       tls_verify => $tls_verify,
     })
-    $unless_chart = "helm ${helm_ls_flags} | grep ${release_name}"
+    $unless_chart = "helm ${helm_ls_flags} | grep -q '^${release_name}$'"
   }
 
   if $ensure == absent {
