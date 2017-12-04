@@ -265,13 +265,19 @@ Sets the environment variables for Helm to connect to the kubernetes cluster.
 
 Default: `undef`.
 
+##### `install`
+
+if a release by this name doesn't already exist, run an install
+
+Default: `true`.
+
 ##### `key_file`
 
 Identifies the HTTPS client using thie SSL key file.
 
 Default: `undef`.
 
-##### `key_ring`
+##### `keyring`
 
 Location of the public keys that are used for verification.
 
@@ -295,9 +301,21 @@ Name of the kubeconfig context.
 
 Default: `undef`.
 
-##### `name_template`
+##### `recreate_pods`
 
-The template used to name the release.
+Performs pods restart for the resource if applicable
+
+Default: `undef`.
+
+##### `reset_values`
+
+When upgrading, reset the values to the ones built into the chart
+
+Default: `undef`.
+
+##### `reuse_values`
+
+when upgrading, reuse the last release's values, and merge in any new values. If '--reset-values' is specified, this is ignored.
 
 Default: `undef`.
 
@@ -328,12 +346,6 @@ Default: `true`.
 **Required.** The release name.
 
 Default: `undef`.
-
-##### `replace`
-
-Reuse the release name.
-
-Default: `false`.
 
 ##### `repo`
 
