@@ -1,4 +1,11 @@
-define helm::chart (
+# Class: helm::chart::update
+# ===========================
+#
+# A module to update Helm charts.
+
+# Cfr. README for parameter documentation
+
+define helm::chart_update (
   $ensure = present,
   $ca_file = undef,
   $cert_file = undef,
@@ -8,18 +15,20 @@ define helm::chart (
   $dry_run = false,
   $env = undef,
   $key_file = undef,
-  $key_ring = undef,
+  $keyring = undef,
   $home = undef,
   $host = undef,
+  $install = true,
   $kube_context = undef,
-  $name_template = undef,
   $namespace = undef,
   $no_hooks = false,
   $path = undef,
   $purge = true,
-  $replace = false,
   $repo = undef,
   $release_name = undef,
+  $recreate_pods = undef,
+  $reset_values = undef,
+  $reuse_values = undef,
   $set = [],
   $timeout = undef,
   $tiller_namespace = 'kube-system',
@@ -41,7 +50,7 @@ define helm::chart (
   }
 
   if $ensure == present {
-    $helm_install_flags = helm_install_flags({
+    $helm_chart_update_flags = helm_chart_update_flags({
       ensure => $ensure,
       ca_file =>$ca_file,
       cert_file => $cert_file,
@@ -50,14 +59,16 @@ define helm::chart (
       devel => $devel,
       dry_run => $dry_run,
       key_file => $key_file,
-      key_ring => $key_ring,
+      keyring => $keyring,
       home => $home,
       host => $host,
+      install => $install,
       kube_context => $kube_context,
-      name_template => $name_template,
       namespace => $namespace,
       no_hooks => $no_hooks,
-      replace => $replace,
+      recreate_pods => $recreate_pods,
+      reset_values => $reset_values,
+      reuse_values => $reuse_values,
       repo => $repo,
       release_name => $release_name,
       set => $set,
@@ -73,22 +84,9 @@ define helm::chart (
       version => $version,
       wait => $wait,
       })
-    $exec = "helm install ${chart}"
-    $exec_chart = "helm ${helm_install_flags}"
-    $helm_ls_flags = helm_ls_flags({
-      ls => true,
-      home => $home,
-      host => $host,
-      kube_context => $kube_context,
-      tiller_namespace => $tiller_namespace,
-      short => true,
-      tls => $tls,
-      tls_ca_cert => $tls_ca_cert,
-      tls_cert => $tls_cert,
-      tls_key => $tls_key,
-      tls_verify => $tls_verify,
-    })
-    $unless_chart = "helm ${helm_ls_flags} | grep -q '^${release_name}$'"
+    $exec = "helm upgrade ${chart}"
+    $exec_chart = "helm ${helm_chart_update_flags}"
+    $unless_chart = "false"
   }
 
   if $ensure == absent {
@@ -99,7 +97,6 @@ define helm::chart (
       home => $home,
       host => $host,
       kube_context => $kube_context,
-      name_template => $name_template,
       namespace => $namespace,
       no_hooks => $no_hooks,
       purge => $purge,

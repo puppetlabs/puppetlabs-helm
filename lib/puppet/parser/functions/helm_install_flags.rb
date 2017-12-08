@@ -7,19 +7,7 @@ module Puppet::Parser::Functions
     flags = []
 
     if opts['ensure'].to_s == 'present'
-      flags << 'upgrade'
-    end
-
-    if opts['release_name'].to_s != 'undef'
-      flags << "'#{opts['release_name']}'"
-    end
-
-    if opts['chart'].to_s != 'undef'
-      flags << "'#{opts['chart']}'"
-    end
-
-    if opts['install']
-      flags << '--install'
+      flags << "install"
     end
 
     if opts['ca_file'].to_s != 'undef'
@@ -46,8 +34,8 @@ module Puppet::Parser::Functions
       flags << "--key-file '#{opts['key_file']}'"
     end
 
-    if opts['keyring'].to_s != 'undef'
-      flags << "--keyring '#{opts['keyring']}'"
+    if opts['key_ring'].to_s != 'undef'
+      flags << "--key-ring '#{opts['key_ring']}'"
     end
 
     if opts['home'].to_s != 'undef'
@@ -62,6 +50,14 @@ module Puppet::Parser::Functions
       flags << "--kube-context '#{opts['kube_context']}'"
     end
 
+    if opts['release_name'].to_s != 'undef'
+      flags << "--name '#{opts['release_name']}'"
+    end
+
+    if opts['name_template'].to_s != 'undef'
+      flags << "--name-template '#{opts['name_template']}'"
+    end
+
     if opts['namespace'].to_s != 'undef'
       flags << "--namespace '#{opts['namespace']}'"
     end
@@ -70,16 +66,8 @@ module Puppet::Parser::Functions
       flags << '--no-hooks'
     end
 
-    if opts['recreate_pods']
-      flags << '--recreate-pods'
-    end
-
-    if opts['reset_values']
-      flags << '--reset-values'
-    end
-
-    if opts['reuse_values']
-      flags << '--reuse-values'
+    if opts['replace']
+      flags << '--replace'
     end
 
     if opts['repo'].to_s != 'undef'
@@ -109,7 +97,7 @@ module Puppet::Parser::Functions
     end
 
     if opts['tls']
-      flags << '--tls'
+      flags << "--tls"
     end
 
     if opts['tls_ca_cert'].to_s != 'undef'
@@ -120,7 +108,7 @@ module Puppet::Parser::Functions
       flags << "--tls-cert '#{opts['tls_cert']}'"
     end
 
-    if opts['tls_key'].to_s != 'undef'
+     if opts['tls_key'].to_s != 'undef'
       flags << "--tls-key '#{opts['tls_key']}'"
     end
 
@@ -140,6 +128,10 @@ module Puppet::Parser::Functions
       flags << '--wait'
     end
 
-    flags.flatten.join(' ')
+    if opts['chart'].to_s != 'undef'
+      flags << "'#{opts['chart']}'"
+    end
+
+   flags.flatten.join(" ")
   end
 end
