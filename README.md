@@ -143,6 +143,7 @@ When the `helm` class is declared, Puppet does the following:
 * `service_account`: The service account name assigned to the `tiller` deployment. Default: `tiller`.
 * `tiller_namespace`: The namespace of where tiller is deployed to. Default: `kube-system`.
 * `version`: The version of Helm to install. Default: '2.5.1'.
+* `client_only`: Specifies whether helm need to configure helm server or not. Default: `false`.
 
 #### Defined type: `helm::create`
 

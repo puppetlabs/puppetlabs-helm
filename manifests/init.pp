@@ -49,6 +49,7 @@ class helm (
   $service_account = $helm::params::service_account,
   $tiller_namespace = $helm::params::tiller_namespace,
   $version = $helm::params::version,
+  $client_only = false,
 ) inherits helm::params {
 
   validate_string($version)
@@ -58,16 +59,18 @@ class helm (
   validate_string($tiller_namespace)
   validate_re($::kernel, 'Linux','This module only supports the Linux kernel')
 
-  include helm::binary
-  include helm::account_config
-  include helm::config
-
   contain helm::binary
-  contain helm::account_config
   contain helm::config
 
-  Class['helm::binary']
-    -> Class['helm::account_config']
-    -> Class['helm::config']
+  if $client_only == false {
+    contain helm::account_config
+    Class['helm::binary']
+      -> Class['helm::account_config']
+      -> Class['helm::config']
+  }
+  else{
+    Class['helm::binary']
+      -> Class['helm::config']
+  }
 
 }
