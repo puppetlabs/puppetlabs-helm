@@ -119,6 +119,7 @@ helm::repo_update { 'update':
 
 * [`helm::create`](#::helm::create): Creates a new Helm chart.
 * [`helm::chart`](#::helm::chart): Manages the deployment of the Helm charts.
+* [`helm::chart_update`](#::helm::chart_update): Update deployed Helm charts.
 * [`helm::helm_init`](#::helm::helm_init): Deploys the Tiller pod and initializes the Helm client.
 * [`helm::package`](#::helm::package): Packages a chart directory into a chart archive.
 * [`helm::repo`](#::helm::repo): Adds a Helm repository.
@@ -142,6 +143,7 @@ When the `helm` class is declared, Puppet does the following:
 * `service_account`: The service account name assigned to the `tiller` deployment. Default: `tiller`.
 * `tiller_namespace`: The namespace of where tiller is deployed to. Default: `kube-system`.
 * `version`: The version of Helm to install. Default: '2.5.1'.
+* `client_only`: Specifies whether helm need to configure helm server or not. Default: `false`.
 
 #### Defined type: `helm::create`
 
@@ -413,7 +415,233 @@ Default: `undef`.
 
 ##### `wait`
 
-Before marking the release as successful, specify whether to wait until all the pods, PVCs, services, and the minimum number of deployment pods are in a ready state. The `timeout` value determines the duration. 
+Before marking the release as successful, specify whether to wait until all the pods, PVCs, services, and the minimum number of deployment pods are in a ready state. The `timeout` value determines the duration.
+
+Values `true`, `false`.
+
+Default: `false`.
+
+##### `chart`
+
+The file system location of the package.
+
+Default: `undef`.
+
+#### `helm::chart_update`
+
+Update deployed charts.
+
+##### `ensure`
+
+Specifies whether a chart must be updated.
+
+Values: 'present', 'absent'.
+
+Default: 'present'.
+
+##### `ca_file`
+
+Verifies the certificates of the HTTPS-enabled servers using the CA bundle.
+
+Default: `undef`.
+
+##### `cert_file`
+
+Identifies the HTTPS client using this SSL certificate file.
+
+Default: `undef`.
+
+##### `debug`
+
+Specifies whether to enable verbose output.
+
+Values `true`, `false`.
+
+Default: `false`.
+
+##### `devel`
+
+Specifies whether to use development versions.
+
+Values `true`, `false`.
+
+Default: `false`.
+
+##### `dry_run`
+
+Specifies whether to simulate a chart update.
+
+Values `true`, `false`.
+
+Default: `false`.
+
+##### `env`
+
+Sets the environment variables for Helm to connect to the kubernetes cluster.
+
+Default: `undef`.
+
+##### `install`
+
+If a release by this name doesn't already exist, run an install
+
+Default: `true`.
+
+##### `key_file`
+
+Identifies the HTTPS client using the SSL key file.
+
+Default: `undef`.
+
+##### `keyring`
+
+Location of the public keys that are used for verification.
+
+Default: `undef`.
+
+##### `home`
+
+Location of your Helm config. This value overrides `$HELM_HOME`.
+
+Default: `undef`.
+
+##### `host`
+
+Address of Tiller. This value overrides `$HELM_HOST`.
+
+Default: `undef`.
+
+##### `kube_context`
+
+Name of the kubeconfig context.
+
+Default: `undef`.
+
+##### `recreate_pods`
+
+Performs pods restart for the resource if applicable
+
+Default: `undef`.
+
+##### `reset_values`
+
+When upgrading, reset the values to the ones built into the chart
+
+Default: `undef`.
+
+##### `reuse_values`
+
+when upgrading, reuse the last release's values, and merge in any new values. If '--reset-values' is specified, this is ignored.
+
+Default: `undef`.
+
+##### `no_hooks`
+
+Specifies whether to prevent hooks running during the installation.
+
+Values `true`, `false`.
+
+Default: `false`.
+
+##### `path`
+
+Value for the PATH environment variable.
+
+Default: `undef`.
+
+##### `purge`
+
+Specifies whether to remove the release from the store, and make its name available for later use.
+
+Values `true`, `false`.
+
+Default: `true`.
+
+##### `release_name`
+
+**Required.** The release name.
+
+Default: `undef`.
+
+##### `repo`
+
+The repository URL for a requested chart.
+
+Default: `undef`.
+
+##### `set`
+
+The set array of values for the `helm create` command.
+
+Default: '[]'.
+
+##### `timeout`
+
+The timeout in seconds to wait for a Kubernetes operation.
+
+Default: `undef`.
+
+##### `tiller_namespace`
+
+The Tiller namespace.
+
+Default: 'kube-system'.
+
+##### `tls`
+
+Specifies whether to enable TLS.
+
+Values `true`, `false`.
+
+Default: `false`.
+
+##### `tls_ca_cert`
+
+The path to TLS CA certificate file.
+
+Default: `undef`.
+
+##### `tls_cert`
+
+The path to TLS certificate file.
+
+Default: `undef`.
+
+##### `tls_key`
+
+The path to TLS key file.
+
+Default: `undef`.
+
+##### `tls_verify`
+
+Enable TLS for request and verify remote.
+
+Default: `undef`.
+
+##### `values`
+
+Specify values from a YAML file. Multiple values in an array are accepted.
+
+Default: '[]'.
+
+##### `verify`
+
+Specifies whether to verify the package before installing it.
+
+Values `true`, `false`.
+
+Default: `false`.
+
+##### `version`
+
+Specify the version of the chart to install. `undef` installs the latest version.
+
+Default: `undef`.
+
+##### `wait`
+
+Before marking the release as successful, specify whether to wait until all the pods, PVCs, services, and the minimum number of deployment pods are in a ready state. The `timeout` value determines the duration.
 
 Values `true`, `false`.
 

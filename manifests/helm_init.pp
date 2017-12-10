@@ -50,8 +50,21 @@
       upgrade => $upgrade,
     })
 
+    if $home != undef {
+      $is_client_init_cmd = "test -d ${home}/plugins"
+    }
+    else {
+      $is_client_init_cmd = 'test -d ~/.helm/plugins'
+    }
+
+    if $client_only == false {
+      $is_server_init_cmd = "kubectl get deployment --namespace=${tiller_namespace}  | grep 'tiller-deploy'"
+    } else {
+      $is_server_init_cmd = "true"
+  }
+
     $exec_init = "helm ${helm_init_flags}"
-    $unless_init = "kubectl get deployment --namespace=${tiller_namespace}  | grep 'tiller-deploy' "
+    $unless_init = "${is_client_init_cmd} && ${is_server_init_cmd}"
 
     exec { 'helm init':
       command     => $exec_init,
