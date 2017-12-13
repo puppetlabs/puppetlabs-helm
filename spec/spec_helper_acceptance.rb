@@ -44,8 +44,7 @@ RSpec.configure do |c|
       # shell('echo "#{vmhostname}" > /etc/hostname')
       # shell("hostname #{vmhostname}")
       hosts_file = <<-EOS
-127.0.0.1 localhost.localdomain local host
-127.0.0.1 #{vmhostname}
+127.0.0.1 localhost #{vmhostname} kubernetes
 #{vmipaddr} #{vmhostname}
 #{vmipaddr} kubernetes
       EOS
