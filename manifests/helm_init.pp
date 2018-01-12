@@ -60,7 +60,7 @@
     if $client_only == false {
       $is_server_init_cmd = "kubectl get deployment --namespace=${tiller_namespace}  | grep 'tiller-deploy'"
     } else {
-      $is_server_init_cmd = "true"
+      $is_server_init_cmd = true
   }
 
     $exec_init = "helm ${helm_init_flags}"
