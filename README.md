@@ -848,3 +848,5 @@ This module is compatible only with the `Linux` kernel.
 ### Contributing
 
 If you would like to contribute to this module please follow the rules in the [CONTRIBUTING.md](https://github.com/puppetlabs/puppetlabs-helm/blob/master/CONTRIBUTING.md).
+
+test
