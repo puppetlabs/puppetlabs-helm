@@ -4,6 +4,7 @@ cache: bundler
 language: ruby
 bundler_args: --without development acceptance
 script: bundle exec rake test
+script: bundle exec rubocop lib
 matrix:
   fast_finish: true
   include:
