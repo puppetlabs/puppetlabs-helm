@@ -16,7 +16,7 @@ describe 'helm::helm_init', :type => :define do
 
   context 'with upgrade => true' do
   let(:params) { {
-                  'upgrade' => 'true',
+                  'upgrade' => true,
                   'path' => [ '/bin','/usr/bin'],
                   'service_account' => 'tiller'
                   } }
