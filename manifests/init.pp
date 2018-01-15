@@ -42,22 +42,21 @@
 #
 
 class helm (
-  $env = $helm::params::env,
-  $init = $helm::params::init,
-  $install_path = $helm::params::install_path,
-  $path = $helm::params::path,
-  $service_account = $helm::params::service_account,
-  $tiller_namespace = $helm::params::tiller_namespace,
-  $version = $helm::params::version,
-  $client_only = false,
+  Array $env               = $helm::params::env,
+  Boolean $init            = $helm::params::init,
+  String $install_path     = $helm::params::install_path,
+  Array $path              = $helm::params::path,
+  String $service_account  = $helm::params::service_account,
+  String $tiller_namespace = $helm::params::tiller_namespace,
+  String $version          = $helm::params::version,
+  Boolean $client_only     = false,
 ) inherits helm::params {
 
-  validate_string($version)
-  validate_string($install_path)
-  validate_bool($init)
-  validate_string($service_account)
-  validate_string($tiller_namespace)
-  validate_re($::kernel, 'Linux','This module only supports the Linux kernel')
+  if $::kernel {
+    assert_type(Pattern[/Linux/], $::kernel) |$a, $b| {
+      fail('This module only supports the Linux kernel')
+    }
+  }
 
   contain helm::binary
   contain helm::config

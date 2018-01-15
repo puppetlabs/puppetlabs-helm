@@ -1,6 +1,6 @@
 class helm::binary (
-  $version = $helm::version,
-  $install_path = $helm::install_path,
+  String $version      = $helm::version,
+  String $install_path = $helm::install_path,
 ){
 
   case $::architecture {

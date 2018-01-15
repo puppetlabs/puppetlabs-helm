@@ -1,9 +1,9 @@
 class helm::config (
-  $env = $helm::env,
-  $init = $helm::init,
-  $path = $helm::path,
-  $service_account = $helm::service_account,
-  $tiller_namespace = $helm::tiller_namespace,
+  Array $env               = $helm::env,
+  Boolean $init            = $helm::init,
+  Array $path              = $helm::path,
+  String $service_account  = $helm::service_account,
+  String $tiller_namespace = $helm::tiller_namespace,
 ){
 
   helm::helm_init { 'kube-master':

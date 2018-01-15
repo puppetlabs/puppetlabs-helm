@@ -1,12 +1,12 @@
 define helm::repo_update (
-  $debug = false,
-  $env = undef,
-  $home = undef,
-  $host = undef,
-  $kube_context = undef,
-  $path = undef,
-  $tiller_namespace = undef,
-  $update = true,
+  Boolean $debug                     = false,
+  Optional[Array] $env               = undef,
+  Optional[String] $home             = undef,
+  Optional[String] $host             = undef,
+  Optional[String] $kube_context     = undef,
+  Optional[Array] $path              = undef,
+  Optional[String] $tiller_namespace = undef,
+  Boolean $update                    = true,
 ){
 
   include helm::params

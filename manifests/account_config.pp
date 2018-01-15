@@ -1,8 +1,8 @@
 class helm::account_config (
-  $env = $helm::env,
-  $path = $helm::path,
-  $service_account = $helm::service_account,
-  $tiller_namespace = $helm::tiller_namespace,
+  Array $env               = $helm::env,
+  Array $path              = $helm::path,
+  String $service_account  = $helm::service_account,
+  String $tiller_namespace = $helm::tiller_namespace,
 ){
 
   Exec {
@@ -42,4 +42,3 @@ class helm::account_config (
     require     => File['/etc/kubernetes/tiller-clusterrole.yaml'],
   }
 }
-

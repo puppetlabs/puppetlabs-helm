@@ -1,14 +1,14 @@
 define helm::create (
-  $chart_name = undef,
-  $chart_path = undef,
-  $debug = false,
-  $env = undef,
-  $home = undef,
-  $host = undef,
-  $kube_context = undef,
-  $path = undef,
-  $starter = undef,
-  $tiller_namespace = undef,
+  Optional[String] $chart_name       = undef,
+  Optional[String] $chart_path       = undef,
+  Boolean $debug                     = false,
+  Optional[Array] $env               = undef,
+  Optional[String] $home             = undef,
+  Optional[String] $host             = undef,
+  Optional[String] $kube_context     = undef,
+  Optional[Array] $path              = undef,
+  Optional[String] $starter          = undef,
+  Optional[String] $tiller_namespace = undef,
 ){
 
   include helm::params
