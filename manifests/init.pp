@@ -54,7 +54,7 @@ class helm (
 
   if $::kernel {
     assert_type(Pattern[/Linux/], $::kernel) |$a, $b| {
-      fail(translate('This module only supports the Linux kernel'))
+      fail('This module only supports the Linux kernel')
     }
   }
 

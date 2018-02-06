@@ -4,3 +4,5 @@ fixtures:
       repo: "puppetlabs/stdlib"
     archive:
       repo: "puppet/archive"
+    translate:
+      repo: "puppetlabs/translate"

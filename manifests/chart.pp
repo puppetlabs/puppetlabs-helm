@@ -37,7 +37,7 @@ define helm::chart (
   include helm::params
 
   if ($release_name == undef) {
-    fail(translate("\nYou must specify a name for the service with the release_name attribute \neg: release_name => 'mysql'"))
+    fail("\nYou must specify a name for the service with the release_name attribute \neg: release_name => 'mysql'")
   }
 
   if $ensure == present {
