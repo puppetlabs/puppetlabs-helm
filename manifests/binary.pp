@@ -14,7 +14,7 @@ class helm::binary (
       $arch = 'amd64'
     }
     default: {
-      fail("${::architecture} is not supported")
+      fail(translate("${::architecture} is not supported"))
     }
   }
 
