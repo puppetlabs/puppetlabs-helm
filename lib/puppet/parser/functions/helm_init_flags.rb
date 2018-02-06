@@ -20,6 +20,7 @@ module Puppet::Parser::Functions
     flags << "--service-account '#{opts['service_account']}'" if opts['service_account'].to_s != 'undef'
     flags << '--skip-refresh' if opts['skip_refresh']
     flags << "--stable-repo-url '#{opts['stable_repo_url']}'" if opts['stable_repo_url'].to_s != 'undef'
+    flags << "--override #{opts['overrides'].join(',')}" if opts['overrides'].to_s != 'undef'
     flags << "--tiller-image '#{opts['tiller_image']}'" if opts['tiller_image'].to_s != 'undef'
     flags << "--tiller-namespace '#{opts['tiller_namespace']}'" if opts['tiller_namespace'].to_s != 'undef'
     flags << '--tiller-tls' if opts['tiller_tls']
