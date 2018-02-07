@@ -1,3 +1,4 @@
+# == helm::repo_update
 define helm::repo_update (
   Boolean $debug                     = false,
   Optional[Array] $env               = undef,

@@ -1,3 +1,4 @@
+# == helm::package 
 define helm::package (
   Optional[String] $chart_name        = undef,
   Optional[String] $chart_path        = undef,

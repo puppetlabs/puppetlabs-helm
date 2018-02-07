@@ -1,4 +1,5 @@
- define helm::helm_init (
+# == helm::helm_init 
+define helm::helm_init (
   Boolean $init                      = true,
   Boolean $canary_image              = false,
   Boolean $client_only               = false,
