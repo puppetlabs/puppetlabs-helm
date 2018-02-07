@@ -1,3 +1,4 @@
+# == Class: helm::config 
 class helm::config (
   Array $env               = $helm::env,
   Boolean $init            = $helm::init,

@@ -1,3 +1,4 @@
+# == helm::repo
 define helm::repo (
   String $ensure                     = present,
   Optional[String] $ca_file          = undef,

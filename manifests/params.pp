@@ -1,3 +1,4 @@
+# == Class: helm::params
 class helm::params {
   $env              = [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']
   $init             = true

@@ -1,3 +1,4 @@
+# == helm::chart 
 define helm::chart (
   String $ensure                      = present,
   Optional[String] $ca_file           = undef,
