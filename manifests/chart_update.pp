@@ -84,7 +84,7 @@ define helm::chart_update (
       version => $version,
       wait => $wait,
       })
-    $exec = "helm upgrade ${chart}"
+    $exec = "helm upgrade ${release_name}"
     $exec_chart = "helm ${helm_chart_update_flags}"
     $unless_chart = false
   }
@@ -109,7 +109,7 @@ define helm::chart_update (
       tls_key => $tls_key,
       tls_verify => $tls_verify,
       })
-    $exec = "helm delete ${chart}"
+    $exec = "helm delete ${release_name}"
     $exec_chart = "helm ${helm_delete_flags}"
     $helm_ls_flags = helm_ls_flags({
       ls => true,
