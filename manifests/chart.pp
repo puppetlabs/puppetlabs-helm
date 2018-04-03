@@ -74,7 +74,7 @@ define helm::chart (
       version => $version,
       wait => $wait,
       })
-    $exec = "helm install ${chart}"
+    $exec = "helm install ${release_name}"
     $exec_chart = "helm ${helm_install_flags}"
     $helm_ls_flags = helm_ls_flags({
       ls => true,
@@ -113,7 +113,7 @@ define helm::chart (
       tls_key => $tls_key,
       tls_verify => $tls_verify,
       })
-    $exec = "helm delete ${chart}"
+    $exec = "helm delete ${release_name}"
     $exec_chart = "helm ${helm_delete_flags}"
     $helm_ls_flags = helm_ls_flags({
       ls => true,
