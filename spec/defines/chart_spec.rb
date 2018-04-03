@@ -18,7 +18,7 @@ describe 'helm::chart', :type => :define do
                } }
     it do
       is_expected.to compile.with_all_deps
-      is_expected.to contain_exec('helm install ')
+      is_expected.to contain_exec('helm install helm chart')
     end
   end
   context 'with ensure => absent' do
@@ -30,7 +30,7 @@ describe 'helm::chart', :type => :define do
                } }
     it do
       is_expected.to compile.with_all_deps
-      is_expected.to contain_exec('helm delete ')
+      is_expected.to contain_exec('helm delete helm chart')
     end
   end
 end
