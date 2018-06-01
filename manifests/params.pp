@@ -4,7 +4,7 @@ class helm::params {
   $client_only          = false
   $debug                = false
   $dry_run              = false
-  $env                  = [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']
+  $env                  = [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf']
   $home                 = undef
   $host                 = undef
   $init                 = true

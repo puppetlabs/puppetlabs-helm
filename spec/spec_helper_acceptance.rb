@@ -32,7 +32,6 @@ RSpec.configure do |c|
       os = fact_on(host, 'osfamily')
 
       copy_module_to(host, :source => proj_root, :module_name => 'helm')
-
       if fact_on(host, 'operatingsystem') == 'RedHat'
         on(host, 'mv /etc/yum.repos.d/redhat.repo /etc/yum.repos.d/internal-mirror.repo')
       end
@@ -46,9 +45,10 @@ RSpec.configure do |c|
       # shell('echo "#{vmhostname}" > /etc/hostname')
       # shell("hostname #{vmhostname}")
       hosts_file = <<-EOS
-127.0.0.1 localhost #{vmhostname} kubernetes
+127.0.0.1 localhost #{vmhostname} kubernetes kube-master
 #{vmipaddr} #{vmhostname}
 #{vmipaddr} kubernetes
+#{vmipaddr} kube-master
       EOS
 
       nginx = <<-EOS
@@ -88,14 +88,30 @@ spec:
     protocol: TCP
   selector:
     run: my-nginx
-    EOS
+EOS
+
+      hiera = <<-EOS
+:backends:
+  - yaml
+:hierarchy:
+  - "%{::hostname}"
+  - "%{::osfamily}"
+:yaml:  
+  :datadir: /etc/puppetlabs/code/environments/production/hieradata
+EOS
+
+
         if fact('osfamily') == 'Debian'
+          runtime = 'cri_containerd'
+          cni = 'weave'
           #Installing rubydev environment
           on(host, "apt install ruby-bundler --yes", acceptable_exit_codes: [0]).stdout
           on(host, "apt-get install ruby-dev --yes", acceptable_exit_codes: [0]).stdout
           on(host, "apt-get install build-essential curl git m4 python-setuptools ruby texinfo libbz2-dev libcurl4-openssl-dev libexpat-dev libncurses-dev zlib1g-dev --yes", acceptable_exit_codes: [0]).stdout
         end
         if fact('osfamily') == 'RedHat'
+          runtime = 'cri_containerd'
+          cni = 'flannel'
           #Installing rubydev environment
           on(host, "yum install -y ruby-devel git zlib-devel gcc-c++ lib yaml-devel libffi-devel make bzip2 libtool curl openssl-devel readline-devel", acceptable_exit_codes: [0]).stdout
           on(host, "gem install bundler", acceptable_exit_codes: [0]).stdout
@@ -108,17 +124,23 @@ spec:
         end
 
         # Installing go, cfssl
+        on(host, "cd  /etc/puppetlabs/code/environments/production/modules/kubernetes;rm -rf Gemfile.lock;bundle install --path vendor/bundle", acceptable_exit_codes: [0]).stdout
         on(host, "curl -o go.tar.gz https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz", acceptable_exit_codes: [0]).stdout
         on(host, "tar -C /usr/local -xzf go.tar.gz", acceptable_exit_codes: [0]).stdout
         on(host, "export PATH=$PATH:/usr/local/go/bin;go get -u github.com/cloudflare/cfssl/cmd/...", acceptable_exit_codes: [0]).stdout
         # Creating certs
-        on(host, "source ~/.bash_profile;rbenv global 2.3.1;rbenv local 2.3.1;export PATH=$PATH:/usr/local/go/bin;export PATH=$PATH:/root/go/bin;cd /etc/puppetlabs/code/environments/production/modules/kubernetes/tooling;./kube_tool.rb -o #{os} -v 1.9.2 -r cri_containerd -c weave -f kubernetes -i #{vmipaddr} -b #{vmipaddr} -e \"etcd-#{vmhostname}=http://#{vmipaddr}:2380\" -t \"#{vmipaddr}\" -a \"#{vmipaddr}\" -d true", acceptable_exit_codes: [0]).stdout
+        on(host, "source ~/.bash_profile;rbenv global 2.3.1;rbenv local 2.3.1;export PATH=$PATH:/usr/local/go/bin;export PATH=$PATH:/root/go/bin;cd  /etc/puppetlabs/code/environments/production/modules/kubernetes/tooling;./kube_tool.rb -o #{os} -v 1.10.2 -r #{runtime} -c #{cni} -i \"#{vmhostname}:#{vmipaddr}\" -t \"#{vmipaddr}\" -a \"#{vmipaddr}\" -d true", acceptable_exit_codes: [0]).stdout
         create_remote_file(host, "/etc/hosts", hosts_file)
         create_remote_file(host, "/tmp/nginx.yml", nginx)
-        on(host, 'cp /etc/puppetlabs/code/environments/production/modules/kubernetes/tooling/kubernetes.yaml /etc/puppetlabs/code/environments/production/hieradata/common.yaml', acceptable_exit_codes: [0]).stdout
-        on(host, 'sed -i /cni_network_provider/d /etc/puppetlabs/code/environments/production/hieradata/common.yaml', acceptable_exit_codes: [0]).stdout
-        on(host, 'echo "kubernetes::cni_network_provider: https://cloud.weave.works/k8s/net?k8s-version=\$(kubectl version | base64 | tr -d \"\n\")\&env.IPALLOC_RANGE=100.32.0.0/12" >> /etc/puppetlabs/code/environments/production/hieradata/common.yaml', acceptable_exit_codes: [0]).stdout
-        on(host, 'echo "kubernetes::taint_master: false"  >> /etc/puppetlabs/code/environments/production/hieradata/common.yaml', acceptable_exit_codes: [0]).stdout
+        create_remote_file(host,"/etc/puppetlabs/puppet/hiera.yaml", hiera)
+        on(host, 'cp /etc/puppetlabs/code/environments/production/modules/kubernetes/tooling/*.yaml /etc/puppetlabs/code/environments/production/hieradata/', acceptable_exit_codes: [0]).stdout
+
+        if fact('osfamily') == 'Debian'
+          on(host, 'sed -i /cni_network_provider/d /etc/puppetlabs/code/environments/production/hieradata/Debian.yaml', acceptable_exit_codes: [0]).stdout
+          on(host, 'echo "kubernetes::cni_network_provider: https://cloud.weave.works/k8s/net?k8s-version=\$(kubectl version | base64 | tr -d \"\n\")\&env.IPALLOC_RANGE=100.32.0.0/12" >> /etc/puppetlabs/code/environments/production/hieradata/Debian.yaml', acceptable_exit_codes: [0]).stdout
+          on(host, 'echo "kubernetes::schedule_on_controller: true"  >> /etc/puppetlabs/code/environments/production/hieradata/Debian.yaml', acceptable_exit_codes: [0]).stdout          
+        end
+
         # Disable swap
         on(host, 'swapoff -a')
     end

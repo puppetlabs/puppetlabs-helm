@@ -7,7 +7,6 @@ describe 'the helm module' do
       let(:pp) {"
       class {'kubernetes':
         controller => true,
-        bootstrap_controller => true,
       }
       "}
       it 'should run' do
@@ -17,7 +16,7 @@ describe 'the helm module' do
         shell('kubectl', :acceptable_exit_codes => [0])
       end
       it 'should install kube-dns' do
-        shell('KUBECONFIG=/root/admin.conf kubectl get deploy --namespace kube-system kube-dns', :acceptable_exit_codes => [0])
+        shell('KUBECONFIG=/etc/kubernetes/admin.conf kubectl get deploy --namespace kube-system kube-dns', :acceptable_exit_codes => [0])
         sleep(60)
       end
     end
@@ -38,7 +37,7 @@ describe 'the helm module' do
     context 'it should install the module' do
       let(:pp) {"
       helm::create { 'myapptest':
-        env        => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
+        env        => [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
         chart_path => '/tmp',
         chart_name => 'myapptest',
         path       =>  ['/bin','/usr/bin'],
@@ -58,7 +57,7 @@ describe 'the helm module' do
          chart_path  => '/tmp',
          chart_name  => 'myapptest',
          destination => '/root',
-         env         => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'] ,
+         env         => [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'] ,
          path        => ['/bin','/usr/bin'],
          version     => '0.1.0',
       }
@@ -76,7 +75,7 @@ describe 'the helm module' do
       helm::chart { 'myapptest':
           ensure       => present,
           chart        => '/root/myapptest-0.1.0.tgz',
-          env          => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
+          env          => [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
           path         => ['/bin','/usr/bin'],
           release_name => 'myapprelease',
       }
@@ -85,7 +84,7 @@ describe 'the helm module' do
         apply_manifest(pp, :catch_failures => true)
       end
       it 'should deploy a package' do
-        shell('export KUBECONFIG=/root/admin.conf;helm ls | grep myapprelease', :acceptable_exit_codes => [0])
+        shell('export KUBECONFIG=/etc/kubernetes/admin.conf;helm ls | grep myapprelease', :acceptable_exit_codes => [0])
       end
     end
 
@@ -94,7 +93,7 @@ describe 'the helm module' do
       helm::chart { 'myapptest':
           ensure       => absent,
           chart        => 'local/myapptest',
-          env          => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
+          env          => [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
           path         => ['/bin','/usr/bin'],
           release_name => 'myapprelease',
       }
@@ -103,7 +102,7 @@ describe 'the helm module' do
         apply_manifest(pp, :catch_failures => true)
       end
       it 'should remove a deployment' do
-        shell('export KUBECONFIG=/root/admin.conf;helm ls | grep myapprelease', :acceptable_exit_codes => [1])
+        shell('export KUBECONFIG=/etc/kubernetes/admin.conf;helm ls | grep myapprelease', :acceptable_exit_codes => [1])
       end
     end
 
@@ -111,7 +110,7 @@ describe 'the helm module' do
       let(:pp) {"
       helm::repo { 'myrepo':
           ensure => present,
-          env    => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
+          env    => [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
           path   => ['/bin','/usr/bin'],
           repo_name => 'myrepo',
           url       => 'https://raw.githubusercontent.com/sheenaajay/helmchart/master/charts/'
@@ -121,7 +120,7 @@ describe 'the helm module' do
         apply_manifest(pp, :catch_failures => true)
       end
       it 'should add helm repo' do
-        shell('export KUBECONFIG=/root/admin.conf;helm repo list | grep git', :acceptable_exit_codes => [0])
+        shell('export KUBECONFIG=/etc/kubernetes/admin.conf;helm repo list | grep git', :acceptable_exit_codes => [0])
       end
     end
 
@@ -129,7 +128,7 @@ describe 'the helm module' do
       let(:pp) {"
         helm::repo { 'myrepo':
           ensure => absent,
-          env    => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
+          env    => [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
           path   => ['/bin','/usr/bin'],
           repo_name => 'myrepo',
           url       => 'https://raw.githubusercontent.com/sheenaajay/helmchart/master/charts/'
@@ -139,7 +138,7 @@ describe 'the helm module' do
         apply_manifest(pp, :catch_failures => true)
       end
       it 'should remove helm repo' do
-        shell('export KUBECONFIG=/root/admin.conf;helm repo list | grep git', :acceptable_exit_codes => [1])
+        shell('export KUBECONFIG=/etc/kubernetes/admin.conf;helm repo list | grep git', :acceptable_exit_codes => [1])
       end
     end
   end
