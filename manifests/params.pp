@@ -11,6 +11,7 @@ class helm::params {
   $install_path         = '/usr/bin'
   $kube_context         = undef
   $local_repo_url       = undef
+  $proxy                = undef
   $net_host             = false
   $node_selectors       = undef
   $overrides            = undef

@@ -129,6 +129,7 @@ class helm (
   String $install_path                      = $helm::params::install_path,
   Optional[String] $kube_context            = $helm::params::kube_context,
   Optional[String] $local_repo_url          = $helm::params::local_repo_url,
+  Optional[String] $proxy                   = $helm::params::proxy,
   Optional[Boolean] $net_host               = $helm::params::net_host,
   Optional[Array] $node_selectors           = $helm::params::node_selectors,
   Optional[Array] $overrides                = $helm::params::overrides,
