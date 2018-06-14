@@ -31,7 +31,7 @@ class helm::account_config (
 
   $tiller_namespaces.each |$ns| {
     exec {"create ${ns} tiller service account":
-      command     => "kubectl create -n ${ns} -f tiller-serviceaccount.yaml",
+      command     => "kubectl apply -n ${ns} -f tiller-serviceaccount.yaml",
       refreshonly => true,
       subscribe   => File['/etc/kubernetes/tiller-serviceaccount.yaml'],
     }
@@ -50,7 +50,7 @@ class helm::account_config (
     }
 
     exec {'create cluster role':
-      command     => 'kubectl create -f tiller-clusterrole.yaml',
+      command     => 'kubectl apply -f tiller-clusterrole.yaml',
       refreshonly => true,
       subscribe   => File['/etc/kubernetes/tiller-clusterrole.yaml'],
     }
@@ -68,7 +68,7 @@ class helm::account_config (
       }
 
       exec {"create ${ns} tiller role and binding":
-        command     => "kubectl create -f tiller-${ns}-role.yaml",
+        command     => "kubectl apply -f tiller-${ns}-role.yaml",
         refreshonly => true,
         subscribe   => File["/etc/kubernetes/tiller-${ns}-role.yaml"],
       }

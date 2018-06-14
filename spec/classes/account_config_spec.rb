@@ -15,12 +15,12 @@ describe 'helm::account_config', :type => :class do
       is_expected.to contain_file('/etc/kubernetes/tiller-serviceaccount.yaml').with({ :ensure => 'file', :owner => 'root', :group => 'root', :mode => '0644' })
       is_expected.to contain_file('/etc/kubernetes/tiller-clusterrole.yaml').with({ :ensure => 'file', :owner => 'root', :group => 'root', :mode => '0644' })
       is_expected.to contain_exec('create kube-system tiller service account').with({
-        'command'     => 'kubectl create -n kube-system -f tiller-serviceaccount.yaml',
+        'command'     => 'kubectl apply -n kube-system -f tiller-serviceaccount.yaml',
         'subscribe'   => 'File[/etc/kubernetes/tiller-serviceaccount.yaml]',
         'refreshonly' => 'true',
       })
       is_expected.to contain_exec('create cluster role').with({
-        'command'     => 'kubectl create -f tiller-clusterrole.yaml',
+        'command'     => 'kubectl apply -f tiller-clusterrole.yaml',
         'subscribe'   => 'File[/etc/kubernetes/tiller-clusterrole.yaml]',
         'refreshonly' => 'true',
       })
