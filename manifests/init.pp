@@ -136,6 +136,7 @@ class helm (
   String $service_account                   = $helm::params::service_account,
   Boolean $skip_refresh                     = $helm::params::skip_refresh,
   Optional[String] $stable_repo_url         = $helm::params::stable_repo_url,
+  Optional[String] $tiller_image            = $helm::params::tiller_image,
   String $tiller_namespace                  = $helm::params::tiller_namespace,
   Optional[String] $tiller_tls_cert         = $helm::params::tiller_tls_cert,
   Optional[String] $tiller_tls_key          = $helm::params::tiller_tls_key,
