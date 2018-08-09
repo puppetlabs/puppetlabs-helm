@@ -130,7 +130,7 @@ class helm (
   Optional[String] $kube_context            = $helm::params::kube_context,
   Optional[String] $local_repo_url          = $helm::params::local_repo_url,
   Optional[Boolean] $net_host               = $helm::params::net_host,
-  Optional[Array] $node_selectors           = $helm::params::node_selectors,
+  Optional[String] $node_selectors          = $helm::params::node_selectors,
   Optional[Array] $overrides                = $helm::params::overrides,
   Array $path                               = $helm::params::path,
   String $service_account                   = $helm::params::service_account,
