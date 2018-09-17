@@ -1,23 +1,31 @@
 ---
-require:
- - rubocop-rspec
- - rubocop-i18n
+require: rubocop-rspec
 AllCops:
-  TargetRubyVersion: '2.1'
+  DisplayCopNames: true
+  TargetRubyVersion: '2.2'
   Include:
   - "./**/*.rb"
   Exclude:
   - bin/*
   - ".vendor/**/*"
-  - Gemfile
-  - Rakefile
+  - "**/Gemfile"
+  - "**/Rakefile"
   - pkg/**/*
   - spec/fixtures/**/*
   - vendor/**/*
+  - "**/Puppetfile"
+  - "**/Vagrantfile"
+  - "**/Guardfile"
+  - spec/defines/*
+  - spec/classes/*
+  - spec/*
+  - spec/acceptance/*
+  - rakelib/*
+  - tasks/*
+inherit_from: ".rubocop_todo.yml"
 Metrics/LineLength:
   Description: People have wide screens, use them.
   Max: 200
-  Enabled: false
 RSpec/BeforeAfterAll:
   Description: Beware of using after(:all) as it may cause state to leak between tests.
     A necessary evil in acceptance testing.
@@ -39,9 +47,6 @@ Style/EmptyElse:
 Style/FormatString:
   Description: Following the main puppet project's style, prefer the % format format.
   EnforcedStyle: percent
-  Exclude:
-  - lib/**/**/**/helm_install_flags.rb
-  - lib/**/**/**/helm_chart_update_flags.rb
 Style/FormatStringToken:
   Description: Following the main puppet project's style, prefer the simpler template
     tokens over annotated ones.
@@ -49,10 +54,6 @@ Style/FormatStringToken:
 Style/Lambda:
   Description: Prefer the keyword for easier discoverability.
   EnforcedStyle: literal
-  Enabled: true
-  Exclude:
-  - lib/**/**/**/helm_install_flags.rb
-  - lib/**/**/**/helm_chart_update_flags.rb 
 Style/RegexpLiteral:
   Description: Community preference. See https://github.com/voxpupuli/modulesync_config/issues/168
   EnforcedStyle: percent_r
@@ -72,17 +73,27 @@ Style/TrailingCommaInLiteral:
 Style/SymbolArray:
   Description: Using percent style obscures symbolic intent of array's contents.
   EnforcedStyle: brackets
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+Style/Documentation:
+  Exclude:
+  - lib/puppet/parser/functions/**/*
+  - spec/**/*
+Style/WordArray:
+  EnforcedStyle: brackets
 Style/CollectionMethods:
   Enabled: true
 Style/MethodCalledOnDoEndBlock:
   Enabled: true
 Style/StringMethods:
   Enabled: true
+Layout/EndOfLine:
+  Enabled: false
+Layout/IndentHeredoc:
+  Enabled: false
 Metrics/AbcSize:
   Enabled: false
 Metrics/BlockLength:
-  Enabled: false
-Metrics/LineLength:
   Enabled: false
 Metrics/ClassLength:
   Enabled: false
@@ -98,7 +109,13 @@ Metrics/PerceivedComplexity:
   Enabled: false
 RSpec/DescribeClass:
   Enabled: false
+RSpec/ExampleLength:
+  Enabled: false
 RSpec/MessageExpectation:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/NestedGroups:
   Enabled: false
 Style/AsciiComments:
   Enabled: false
@@ -106,5 +123,3 @@ Style/IfUnlessModifier:
   Enabled: false
 Style/SymbolProc:
   Enabled: false
-Style/HashSyntax:
-  UseHashRocketsWithSymbolValues: true 

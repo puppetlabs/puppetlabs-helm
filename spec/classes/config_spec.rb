@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'helm::config', :type => :class do
-
   context 'with default values for all parameters' do
     let(:params) { {
                     'canary_image'       => false,
@@ -30,6 +29,7 @@ describe 'helm::config', :type => :class do
                     'tls_ca_cert'        => 'ca_cert',
                     'upgrade'            => false,
                  } }
+
     it do
       is_expected.to compile
       is_expected.to contain_helm__helm_init('kube-master').with({
