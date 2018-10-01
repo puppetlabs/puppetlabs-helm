@@ -27,7 +27,7 @@ define helm::helm_init (
   Boolean $upgrade                   = false,
 ){
 
-  include helm::params
+  include ::helm::params
 
   if $init {
     $helm_init_flags = helm_init_flags({

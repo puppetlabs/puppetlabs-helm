@@ -152,11 +152,11 @@ class helm (
     }
   }
 
-  contain helm::binary
-  contain helm::config
+  contain ::helm::binary
+  contain ::helm::config
 
   if $client_only == false {
-    contain helm::account_config
+    contain ::helm::account_config
     Class['helm::binary']
       -> Class['helm::account_config']
       -> Class['helm::config']

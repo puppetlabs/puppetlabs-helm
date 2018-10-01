@@ -41,12 +41,4 @@ def ensure_module_defined(module_name)
   end
 end
 
-desc 'Run syntax, lint and  metadata tests'
-task :test => [
-  :syntax,
-  :lint,
-  :metadata_lint,
-  :spec,
-]
-
 # 'spec_overrides' from sync.yml will appear below this line

@@ -18,7 +18,7 @@ define helm::package (
   Optional[String] $version           = undef,
 ){
 
-  include helm::params
+  include ::helm::params
 
   $helm_package_flags = helm_package_flags({
     chart_name => $chart_name,
@@ -45,6 +45,6 @@ define helm::package (
     environment => $env,
     path        => $path,
     timeout     => 0,
-    creates     => "${destination}/${chart_name}-${version}.tgz"
+    creates     => "${destination}/${chart_name}-${version}.tgz",
   }
 }
