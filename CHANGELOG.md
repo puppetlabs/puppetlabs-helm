@@ -1,3 +1,10 @@
+# Version 1.10
+Fixes bugs:
+- #54 adds missing parameter to init.pp
+- Fixes incorrect type for node selectory
+
+Adds in PDK compliance
+
 # Version 1.0.1
 Updates environment variable for use with upstream kubernetes module 
 
