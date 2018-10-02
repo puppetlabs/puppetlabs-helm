@@ -12,7 +12,7 @@ define helm::create (
   Optional[String] $tiller_namespace = undef,
 ){
 
-  include helm::params
+  include ::helm::params
 
   $helm_create_flags = helm_create_flags({
     chart_name => $chart_name,

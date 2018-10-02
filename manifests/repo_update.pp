@@ -10,7 +10,7 @@ define helm::repo_update (
   Boolean $update                    = true,
 ){
 
-  include helm::params
+  include ::helm::params
 
   if $update {
     $helm_repo_update_flags = helm_repo_update_flags({
