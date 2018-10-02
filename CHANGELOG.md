@@ -1,4 +1,5 @@
 # Version 1.1.0
+
 Fixes bugs:
 - #54 adds missing parameter to init.pp
 - Fixes incorrect type for node selectory
