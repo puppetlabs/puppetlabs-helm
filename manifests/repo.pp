@@ -16,7 +16,7 @@ define helm::repo (
   Optional[String] $url              = undef,
 ){
 
-  include helm::params
+  include ::helm::params
 
   if $ensure == present {
     $helm_repo_add_flags = helm_repo_add_flags({

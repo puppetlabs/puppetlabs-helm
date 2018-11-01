@@ -34,7 +34,7 @@ class helm::binary (
   file { "${install_path}/helm-${version}" :
     owner   => 'root',
     mode    => '0755',
-    require => Archive['helm']
+    require => Archive['helm'],
   }
 
   file { "${install_path}/helm":
