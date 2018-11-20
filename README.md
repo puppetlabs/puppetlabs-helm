@@ -39,7 +39,7 @@ To customise options, such as the version, the service account, or the Tiller na
 class { 'helm':
   version => '2.6.0',
   service_account => 'my_account',
-  tiller_namespace => 'my_namespace',
+  tiller_namespaces => ['my_namespace'],
 }
 ```
 
@@ -132,16 +132,17 @@ Manages the basic Helm installation and setup.
 When the `helm` class is declared, Puppet does the following:
 
 * Downloads and installs Helm onto your system.
-* Creates the cluster role and service accounts required to run tiller.
-* Deploys Tiller in the `kube-system` namespace.
+* Creates roles and service accounts required to run tiller.
+* Deploys Tiller in one or more namespaces.
 
 ##### Parameters
 
 * `env`: Sets the environment variables for Helm to connect to the Kubernetes cluster. Default: `[ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']`
 * `init`: Specifies whether to initialize the Helm installation and deploy the Tiller pod to Kubernetes. Valid options: `true`, `false`. Default: `true`.
 * `install_path`: Sets the path variable for the exec types. Default: '/usr/bin'.
+* `proxy`: Specifies internet proxy if necessary. Default: `undef`.
 * `service_account`: The service account name assigned to the `tiller` deployment. Default: `tiller`.
-* `tiller_namespace`: The namespace of where tiller is deployed to. Default: `kube-system`.
+* `tiller_namespaces`: The namespaces where tiller is deployed into. Default: `['kube-system']`.
 * `version`: The version of Helm to install. Default: '2.5.1'.
 * `client_only`: Specifies whether helm need to configure helm server or not. Default: `false`.
 

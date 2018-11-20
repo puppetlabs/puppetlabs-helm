@@ -64,8 +64,12 @@
 # Defaults to undef
 #
 # [*path*]
-# The PATH variable used for exec types
+# The PATH variable used for exec types.
 # Defaults to ['/bin','/usr/bin']
+#
+# [*proxy*]
+# Specify an internet proxy if necessary.
+# Defaults to undef
 #
 # [*service_account*]
 # The service account for tiller
@@ -83,9 +87,9 @@
 # Specify the image for the tiller install in the default init.
 # Defaults to undef
 # 
-# [*tiller_namespace*]
-# The namespace in which to install tiller
-# Defaults to 'kube-system'
+# [*tiller_namespaces*]
+# Array of namespaces in which to install tiller
+# Defaults to ['kube-system']
 #
 # [*tiller_tls*]
 # Enable TLS for tiller in the default init.
