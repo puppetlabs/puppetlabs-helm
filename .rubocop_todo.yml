@@ -1,0 +1,18 @@
+Style/HashSyntax:
+  UseHashRocketsWithSymbolValues: true
+Style/FormatString:
+  Description: Following the main puppet project's style, prefer the % format format.
+  EnforcedStyle: percent
+  Exclude:
+  - lib/**/**/**/helm_install_flags.rb
+  - lib/**/**/**/helm_chart_update_flags.rb
+Style/Lambda:
+  Description: Prefer the keyword for easier discoverability.
+  EnforcedStyle: literal
+  Enabled: true
+  Exclude:
+  - lib/**/**/**/helm_install_flags.rb
+  - lib/**/**/**/helm_chart_update_flags.rb 
+Metrics/LineLength:
+  Enabled: false
+
