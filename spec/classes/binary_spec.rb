@@ -8,6 +8,7 @@ describe 'helm::binary', :type => :class do
     let(:params) { {
                     'install_path' => '/usr/bin',
                     'version' => '2.5.1',
+                    'archive_baseurl' => 'https://kubernetes-helm.storage.googleapis.com',
                  } }
     it do
       is_expected.to compile

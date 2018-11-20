@@ -27,4 +27,5 @@ class helm::params {
   $tls_ca_cert          = undef
   $upgrade              = false
   $version              = '2.7.2'
+  $archive_baseurl      = 'https://kubernetes-helm.storage.googleapis.com'
 }
