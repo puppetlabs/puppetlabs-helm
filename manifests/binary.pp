@@ -3,6 +3,7 @@ class helm::binary (
   String $version         = $helm::version,
   String $install_path    = $helm::install_path,
   Optional[String] $proxy = $helm::proxy,
+  String $archive_baseurl = $helm::archive_baseurl,
 ){
 
   case $::architecture {
@@ -24,7 +25,7 @@ class helm::binary (
 
   archive { 'helm':
     path            => "/tmp/${archive}",
-    source          => "https://kubernetes-helm.storage.googleapis.com/${archive}",
+    source          => "${archive_baseurl}/${archive}",
     extract_command => "tar xfz %s linux-${arch}/helm --strip-components=1 -O > ${install_path}/helm-${version}",
     extract         => true,
     extract_path    => $install_path,

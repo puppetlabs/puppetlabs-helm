@@ -6,9 +6,10 @@ describe 'helm::binary', :type => :class do
 
   context 'with install_path => /usr/bin and version => 2.5.1 and proxy => https://proxy values for all parameters' do
     let(:params) { {
-                    'install_path' => '/usr/bin',
-                    'version'      => '2.5.1',
-                    'proxy'        => 'https://proxy'
+                    'install_path'    => '/usr/bin',
+                    'version'         => '2.5.1',
+                    'proxy'           => 'https://proxy',
+                    'archive_baseurl' => 'https://kubernetes-helm.storage.googleapis.com',
                  } }
     it do
       is_expected.to compile

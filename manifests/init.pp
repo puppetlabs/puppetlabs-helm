@@ -120,7 +120,11 @@
 # The version of helm to install.
 # Defaults to 2.5.1
 #
-
+# [*archive_baseurl*]
+# The base URL for downloading the helm archive, must contain file helm-v${version}-linux-${arch}.tar.gz
+# Defaults to https://kubernetes-helm.storage.googleapis.com
+# URLs supported by puppet/archive module will work, e.g. puppet:///modules/helm_files
+#
 class helm (
   Boolean $canary_image                     = $helm::params::canary_image,
   Boolean $client_only                      = $helm::params::client_only,
@@ -149,6 +153,7 @@ class helm (
   Optional[String]  $tls_ca_cert            = $helm::params::tls_ca_cert,
   Boolean $upgrade                          = $helm::params::upgrade,
   String $version                           = $helm::params::version,
+  String $archive_baseurl                   = $helm::params::archive_baseurl,
 ) inherits helm::params {
 
   if $::kernel {
