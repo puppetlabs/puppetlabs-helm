@@ -8,10 +8,10 @@ module Puppet::Parser::Functions
     opts = args[0] || {}
     flags = []
     flags << '--debug' if opts['debug']
-    flags << "--home '#{opts['home']}'" if opts['home'].to_s != 'undef'
-    flags << "--host '#{opts['host']}'" if opts['host'].to_s != 'undef'
-    flags << "--kube-context '#{opts['kube_context']}'" if opts['kube_context'].to_s != 'undef'
-    flags << "--tiller-namespace '#{opts['tiller_namespace']}'" if opts['tiller_namespace'].to_s != 'undef'
+    flags << "--home '#{opts['home']}'" if opts['home'] && opts['home'].to_s != 'undef'
+    flags << "--host '#{opts['host']}'" if opts['host'] && opts['host'].to_s != 'undef'
+    flags << "--kube-context '#{opts['kube_context']}'" if opts['kube_context'] && opts['kube_context'].to_s != 'undef'
+    flags << "--tiller-namespace '#{opts['tiller_namespace']}'" if opts['tiller_namespace'] && opts['tiller_namespace'].to_s != 'undef'
     flags << 'update' if opts['update']
     flags.flatten.join(' ')
   end
