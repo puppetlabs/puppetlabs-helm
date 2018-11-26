@@ -71,7 +71,7 @@ define helm::helm_init (
     $exec_init = "helm ${helm_init_flags}"
     $unless_init = "${is_client_init_cmd} && ${is_server_init_cmd}"
 
-    exec { 'helm init':
+    exec { "helm ${tiller_namespace} init":
       command     => $exec_init,
       environment => $env,
       path        => $path,

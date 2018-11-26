@@ -21,7 +21,7 @@ describe 'helm::config', :type => :class do
                     'skip_refresh'       => false,
                     'stable_repo_url'    => 'stable.com',
                     'tiller_image'       => 'my_image',
-                    'tiller_namespace'   => 'kube-system',
+                    'tiller_namespaces'  => ['kube-system'],
                     'tiller_tls'         => false,
                     'tiller_tls_cert'    => 'cert',
                     'tiller_tls_key'     => 'key',
@@ -32,7 +32,7 @@ describe 'helm::config', :type => :class do
 
     it do
       is_expected.to compile
-      is_expected.to contain_helm__helm_init('kube-master').with({
+      is_expected.to contain_helm__helm_init('helm-kube-system-master').with({
         'canary_image'       => 'false',
         'client_only'        => 'false',
         'debug'              => 'false',

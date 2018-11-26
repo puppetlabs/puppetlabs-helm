@@ -13,7 +13,7 @@ describe 'helm', :type => :class do
                   'install_path' => '/usr/bin',
                   'path' => [ '/bin','/usr/bin'],
                   'service_account' => 'tiller',
-                  'tiller_namespace' => 'kube-system',
+                  'tiller_namespaces' => ['kube-system'],
                   'version' => '2.5.1',
                } }
 

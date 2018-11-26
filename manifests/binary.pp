@@ -2,6 +2,7 @@
 class helm::binary (
   String $version         = $helm::version,
   String $install_path    = $helm::install_path,
+  Optional[String] $proxy = $helm::proxy,
   String $archive_baseurl = $helm::archive_baseurl,
 ){
 
@@ -30,6 +31,7 @@ class helm::binary (
     extract_path    => $install_path,
     creates         => "${install_path}/helm-${version}",
     cleanup         => true,
+    proxy_server    => $proxy,
   }
 
   file { "${install_path}/helm-${version}" :

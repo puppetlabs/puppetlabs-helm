@@ -11,6 +11,7 @@ class helm::params {
   $install_path         = '/usr/bin'
   $kube_context         = undef
   $local_repo_url       = undef
+  $proxy                = undef
   $net_host             = false
   $node_selectors       = undef
   $overrides            = undef
@@ -19,7 +20,7 @@ class helm::params {
   $skip_refresh         = false
   $stable_repo_url      = undef
   $tiller_image         = undef
-  $tiller_namespace     = 'kube-system'
+  $tiller_namespaces    = ['kube-system']
   $tiller_tls           = false
   $tiller_tls_cert      = undef
   $tiller_tls_key       = undef

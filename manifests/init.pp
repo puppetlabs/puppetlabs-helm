@@ -64,8 +64,12 @@
 # Defaults to undef
 #
 # [*path*]
-# The PATH variable used for exec types
+# The PATH variable used for exec types.
 # Defaults to ['/bin','/usr/bin']
+#
+# [*proxy*]
+# Specify an internet proxy if necessary.
+# Defaults to undef
 #
 # [*service_account*]
 # The service account for tiller
@@ -83,9 +87,9 @@
 # Specify the image for the tiller install in the default init.
 # Defaults to undef
 # 
-# [*tiller_namespace*]
-# The namespace in which to install tiller
-# Defaults to 'kube-system'
+# [*tiller_namespaces*]
+# Array of namespaces in which to install tiller
+# Defaults to ['kube-system']
 #
 # [*tiller_tls*]
 # Enable TLS for tiller in the default init.
@@ -133,6 +137,7 @@ class helm (
   String $install_path                      = $helm::params::install_path,
   Optional[String] $kube_context            = $helm::params::kube_context,
   Optional[String] $local_repo_url          = $helm::params::local_repo_url,
+  Optional[String] $proxy                   = $helm::params::proxy,
   Optional[Boolean] $net_host               = $helm::params::net_host,
   Optional[String] $node_selectors          = $helm::params::node_selectors,
   Optional[Array] $overrides                = $helm::params::overrides,
@@ -140,8 +145,8 @@ class helm (
   String $service_account                   = $helm::params::service_account,
   Boolean $skip_refresh                     = $helm::params::skip_refresh,
   Optional[String] $stable_repo_url         = $helm::params::stable_repo_url,
+  Array[String] $tiller_namespaces          = $helm::params::tiller_namespaces,
   Optional[String] $tiller_image            = $helm::params::tiller_image,
-  String $tiller_namespace                  = $helm::params::tiller_namespace,
   Optional[String] $tiller_tls_cert         = $helm::params::tiller_tls_cert,
   Optional[String] $tiller_tls_key          = $helm::params::tiller_tls_key,
   Boolean $tiller_tls_verify                = $helm::params::tiller_tls_verify,
