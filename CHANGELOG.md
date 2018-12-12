@@ -1,3 +1,10 @@
+# Version 2.0.0
+- Puppet 6 Support
+- Multi tiller installs
+- Speficy helm archive location
+
+A list of PR's can be found [here](https://github.com/puppetlabs/puppetlabs-helm/milestone/2?closed=1)
+
 # Version 1.1.0
 
 Fixes bugs:
@@ -7,7 +14,7 @@ Fixes bugs:
 Adds in PDK compliance
 
 # Version 1.0.1
-Updates environment variable for use with upstream kubernetes module 
+Updates environment variable for use with upstream kubernetes module
 
 # Version 1.0.0
 Officially supported release of puppetlabs-helm
