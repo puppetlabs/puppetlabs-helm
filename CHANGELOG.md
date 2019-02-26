@@ -1,3 +1,9 @@
+# Version 2.0.1
+
+Updating module dependencies
+
+Fixing GO version in acceptance tests
+
 # Version 2.0.0
 - Puppet 6 Support
 - Multi tiller installs
