@@ -1,3 +1,7 @@
+# Version 2.0.2
+
+Fixes error with dependency boundaries
+
 # Version 2.0.1
 
 Updating module dependencies
