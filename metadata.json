@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-helm",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "puppetlabs",
   "summary": "A module to install Helm, a kubernetes package manager",
   "license": "Apache-2.0",
@@ -10,7 +10,7 @@
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
-      "version_requirement": ">= 4.19.0 < 5.2.0"
+      "version_requirement": ">= 4.19.0 <= 5.2.0"
     },
     {
       "name": "puppet-archive",
@@ -18,7 +18,7 @@
     },
     {
       "name": "puppetlabs/translate",
-      "version_requirement": ">= 0.0.1 < 1.2.0"
+      "version_requirement": ">= 0.0.1 <= 1.2.0"
     }
   ],
   "operatingsystem_support": [
