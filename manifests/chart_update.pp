@@ -86,7 +86,7 @@ define helm::chart_update (
       })
     $exec = "helm upgrade ${name}"
     $exec_chart = "helm ${helm_chart_update_flags}"
-    $unless_chart = false
+    $unless_chart = undef
   }
 
   if $ensure == absent {
