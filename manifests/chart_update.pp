@@ -21,7 +21,7 @@ define helm::chart_update (
   Boolean $install                = true,
   Optional[String] $kube_context  = undef,
   Optional[String] $namespace     = undef,
-  Optional[String] $no_hooks      = false,
+  Boolean $no_hooks               = false,
   Array $path                     = undef,
   Boolean $purge                  = true,
   Optional[String] $repo          = undef,
@@ -39,7 +39,7 @@ define helm::chart_update (
   Boolean $tls_verify             = false,
   Optional[Array] $values         = [],
   Boolean $verify                 = false,
-  String $version                 = undef,
+  Optional[String] $version       = undef,
   Boolean $wait                   = false,
 ){
 
@@ -84,7 +84,7 @@ define helm::chart_update (
       version => $version,
       wait => $wait,
       })
-    $exec = "helm upgrade ${chart}"
+    $exec = "helm upgrade ${name}"
     $exec_chart = "helm ${helm_chart_update_flags}"
     $unless_chart = false
   }
@@ -109,7 +109,7 @@ define helm::chart_update (
       tls_key => $tls_key,
       tls_verify => $tls_verify,
       })
-    $exec = "helm delete ${chart}"
+    $exec = "helm delete ${name}"
     $exec_chart = "helm ${helm_delete_flags}"
     $helm_ls_flags = helm_ls_flags({
       ls => true,
