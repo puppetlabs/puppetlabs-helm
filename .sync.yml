@@ -7,10 +7,16 @@
     -
       env: PUPPET_GEM_VERSION="~> 4.0" CHECK=parallel_spec
       rvm: 2.1.9
+      bundler_args: 
+        - 'bundle exec rake $CHECK'
   includes:
     -
       env: PUPPET_GEM_VERSION="~> 4.0" CHECK=parallel_spec
       rvm: 2.3.3
+      bundler_args: 
+        - 'bundle exec rake $CHECK'
+        - 'bundle exec rake test'
+
 
 Gemfile:
   required:
@@ -22,9 +28,6 @@ Gemfile:
       - gem: 'semantic_puppet'
       - gem: 'beaker-rspec'
         from_env: BEAKER_RSPEC_VERSION  
-      - gem: "beaker"
-        version: '~> 2.0'
-        from_env: BEAKER_VERSION
       - gem: 'puppet-module-posix-system-r#{minor_version}'
         platforms: ruby
       - gem: 'rspec'
@@ -33,6 +36,9 @@ Gemfile:
       - gem: 'rake'
         version: '~> 10.0'
         condition: "Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('1.8.7') && Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new('1.9')"
+      - gem: 'github_changelog_generator'
+        git: 'https://github.com/skywinder/github-changelog-generator'
+        ref: '20ee04ba1234e9e83eb2ffb5056e23d641c7a018'
 
 Rakefile:
   requires:
