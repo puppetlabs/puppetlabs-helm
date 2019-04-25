@@ -7,6 +7,10 @@ describe 'the helm module' do
       let(:pp) {"
       class {'kubernetes':
         controller => true,
+        schedule_on_controller => true,
+        environment  => ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
+        kubernetes_version => '1.13.5',
+        ignore_preflight_errors => ['NumCPU'],
       }
       "}
       it 'should run' do
@@ -16,7 +20,7 @@ describe 'the helm module' do
         shell('kubectl', :acceptable_exit_codes => [0])
       end
       it 'should install kube-dns' do
-        shell('KUBECONFIG=/etc/kubernetes/admin.conf kubectl get deploy --namespace kube-system kube-dns', :acceptable_exit_codes => [0])
+        shell('KUBECONFIG=/etc/kubernetes/admin.conf kubectl get deploy --namespace kube-system coredns', :acceptable_exit_codes => [0])
         sleep(60)
       end
     end
