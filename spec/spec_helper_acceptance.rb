@@ -1,7 +1,6 @@
 require 'beaker-rspec/spec_helper'
 require 'beaker-rspec/helpers/serverspec'
 require 'beaker/puppet_install_helper'
-require 'rspec/retry'
 
 begin
   require 'pry'
@@ -16,11 +15,6 @@ RSpec.configure do |c|
 
   # Readable test descriptions
   c.formatter = :documentation
-
-  # show retry status in spec process
-  c.verbose_retry = true
-  # show exception that triggers a retry if verbose_retry is set to true
-  c.display_try_failure_messages = true
 
   # Configure all nodes in nodeset
   c.before :suite do
@@ -113,12 +107,6 @@ EOS
           #Installing rubydev environment
           on(host, "yum install -y ruby-devel git zlib-devel gcc-c++ lib yaml-devel libffi-devel make bzip2 libtool curl openssl-devel readline-devel", acceptable_exit_codes: [0]).stdout
           on(host, "gem install bundler", acceptable_exit_codes: [0]).stdout
-          on(host, "git clone git://github.com/sstephenson/rbenv.git .rbenv", acceptable_exit_codes: [0]).stdout
-          on(host, "echo 'export PATH=\"$HOME/.rbenv/bin:$PATH\"' >> ~/.bash_profile", acceptable_exit_codes: [0]).stdout
-          on(host, "echo 'eval \"$(rbenv init -)\"' >> ~/.bash_profile" ,acceptable_exit_codes: [0]).stdout
-          on(host, "git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build", acceptable_exit_codes: [0]).stdout
-          on(host, "echo 'export PATH=\"$HOME/.rbenv/plugins/ruby-build/bin:$PATH\"' >> ~/.bash_profile", acceptable_exit_codes: [0]).stdout
-          on(host, "source ~/.bash_profile;rbenv install -v 2.3.1;rbenv global 2.3.1;rbenv local 2.3.1", acceptable_exit_codes: [0]).stdout
         end
 
         # Installing go, cfssl
@@ -127,10 +115,11 @@ EOS
         on(host, "tar -C /usr/local -xzf go.tar.gz", acceptable_exit_codes: [0]).stdout
         on(host, "export PATH=$PATH:/usr/local/go/bin;go get -u github.com/cloudflare/cfssl/cmd/...", acceptable_exit_codes: [0]).stdout
         # Creating certs
-        on(host, "source ~/.bash_profile;rbenv global 2.3.1;rbenv local 2.3.1;export PATH=$PATH:/usr/local/go/bin;export PATH=$PATH:/root/go/bin;cd  /etc/puppetlabs/code/environments/production/modules/kubernetes/tooling;./kube_tool.rb -o #{os} -v 1.13.5 -r #{runtime} -c #{cni} -i \"#{vmhostname}:#{vmipaddr}\" -t \"#{vmipaddr}\" -a \"#{vmipaddr}\" -d true", acceptable_exit_codes: [0]).stdout
+        on(host, "export PATH=$PATH:/usr/local/go/bin;export PATH=$PATH:/root/go/bin;cd  /etc/puppetlabs/code/environments/production/modules/kubernetes/tooling;./kube_tool.rb -o #{os} -v 1.13.5 -r #{runtime} -c #{cni} -i \"#{vmhostname}:#{vmipaddr}\" -t \"#{vmipaddr}\" -a \"#{vmipaddr}\" -d true", acceptable_exit_codes: [0]).stdout
         create_remote_file(host, "/etc/hosts", hosts_file)
         create_remote_file(host, "/tmp/nginx.yml", nginx)
         create_remote_file(host,"/etc/puppetlabs/puppet/hiera.yaml", hiera)
+        on(host, 'mkdir -p /etc/puppetlabs/code/environments/production/hieradata', acceptable_exit_codes: [0]).stdout
         on(host, 'cp /etc/puppetlabs/code/environments/production/modules/kubernetes/tooling/*.yaml /etc/puppetlabs/code/environments/production/hieradata/', acceptable_exit_codes: [0]).stdout
 
         if fact('osfamily') == 'Debian'
