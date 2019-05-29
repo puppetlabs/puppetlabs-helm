@@ -14,7 +14,7 @@ module Puppet::Parser::Functions
     flags << "--kube-context '#{opts['kube_context']}'" if opts['kube_context'].to_s != 'undef'
     flags << '--no-hooks' if opts['no_hooks']
     flags << '--purge' if opts['purge']
-    flags << "--timeout '#{opts['timeout']}'" if opts['timeout'].to_s != 'undef'
+    flags << "--timeout '#{opts['timeout']}'" if opts['timeout'] && opts['timeout'].to_s != 'undef'
     flags << "--tiller-namespace '#{opts['tiller_namespace']}'" if opts['tiller_namespace'].to_s != 'undef'
     flags << '--tls' if opts['tls']
     flags << "--tls-ca-cert '#{opts['tls_ca_cert']}'" if opts['tls_ca_cert'].to_s != 'undef'
