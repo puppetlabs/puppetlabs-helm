@@ -6,15 +6,25 @@
 
 #### Table of Contents
 
-1. [Description](#description)
-2. [Setup - The basics of getting started with helm](#setup)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-   * [Public classes](#public-classes)
-   * [Private classes](#private-classes)
-   * [Defined types](#defined-types)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+- [Helm](#helm)
+      - [Table of Contents](#table-of-contents)
+  - [Description](#description)
+  - [Setup](#setup)
+  - [Usage](#usage)
+  - [Reference](#reference)
+    - [Public Classes](#public-classes)
+    - [Private Classes](#private-classes)
+    - [Defined Types](#defined-types)
+      - [`helm::create`](#helmcreate)
+      - [`helm::chart`](#helmchart)
+      - [`helm::chart_update`](#helmchartupdate)
+      - [`helm::helm_init`](#helmhelminit)
+      - [`helm::package`](#helmpackage)
+      - [`helm::repo`](#helmrepo)
+      - [`helm::repo_update`](#helmrepoupdate)
+  - [Limitations](#limitations)
+  - [Development](#development)
+    - [Contributing](#contributing)
 
 
 ## Description
@@ -1255,4 +1265,4 @@ This module is compatible only with the `Linux` kernel.
 
 ### Contributing
 
-If you would like to contribute to this module please follow the rules in the [CONTRIBUTING.md](https://github.com/puppetlabs/puppetlabs-helm/blob/master/CONTRIBUTING.md).
+If you would like to contribute to this module please follow the rules in the [CONTRIBUTING.md](https://github.com/puppetlabs/puppetlabs-helm/blob/master/CONTRIBUTING.md). For more information, see our [module contribution guide.](https://puppet.com/docs/puppet/latest/contributing.html)
