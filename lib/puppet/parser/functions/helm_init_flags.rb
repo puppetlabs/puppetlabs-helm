@@ -28,7 +28,7 @@ module Puppet::Parser::Functions
     flags << "--tiller-tls-cert '#{opts['tiller_tls_cert']}'" if opts['tiller_tls_cert'] && opts['tiller_tls_cert'].to_s != 'undef'
     flags << "--tiller-tls-key '#{opts['tiller_tls_key']}'" if opts['tiller_tls_key'] && opts['tiller_tls_key'].to_s != 'undef'
     flags << '--tiller-tls-verify' if opts['tiller_tls_verify']
-    flags << "--tls_ca_cert '#{opts['tls_ca_cert']}'" if opts['tls_ca_cert'] && opts['tls_ca_cert'].to_s != 'undef'
+    flags << "--tls-ca-cert '#{opts['tls_ca_cert']}'" if opts['tls_ca_cert'] && opts['tls_ca_cert'].to_s != 'undef'
     flags << '--upgrade' if opts['upgrade']
     flags.flatten.join(' ')
   end
