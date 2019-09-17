@@ -3,17 +3,19 @@ require 'spec_helper'
 describe 'helm::repo', :type => :define do
   let(:title) { 'helm repo' }
 
-  context 'with ensure => present and repo_name => foo' do
+  context 'with ensure => present and repo_name => foo and username => bar and password => bar' do
     let(:params) { {
                     'ensure' => 'present',
                     'env' => ['HOME=/root', 'KUBECONFIG=/root/admin.conf'],
                     'path' => [ '/bin','/usr/bin'],
+                    'username' => 'bar',
+                    'password' => 'bar',
                     'repo_name' => 'foo',
                     'url' => 'https://foo.com/bar'
                  } }
     it do
       is_expected.to compile.with_all_deps
-      is_expected.to contain_exec('helm repo foo').with_command("helm repo add 'foo' 'https://foo.com/bar'")
+      is_expected.to contain_exec('helm repo foo').with_command("helm repo add --username 'bar' --password 'bar' 'foo' 'https://foo.com/bar'")
     end
   end
   context 'with ensure => absent and repo_name => foo' do

@@ -12,6 +12,8 @@ define helm::repo (
   Optional[String] $kube_context     = undef,
   Optional[Array] $path              = undef,
   Optional[String] $tiller_namespace = undef,
+  Optional[String] $username         = undef,
+  Optional[String] $password         = undef,
   Optional[String] $repo_name        = undef,
   Optional[String] $url              = undef,
 ){
@@ -30,6 +32,8 @@ define helm::repo (
       host => $host,
       kube_context => $kube_context,
       tiller_namespace => $tiller_namespace,
+      username => $username,
+      password => $password,
       repo_name => $repo_name,
       url => $url,
     })

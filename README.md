@@ -37,8 +37,8 @@ To customise options, such as the version, the service account, or the Tiller na
 
 ```puppet
 class { 'helm':
-  version => '2.6.0',
-  service_account => 'my_account',
+  version           => '2.6.0',
+  service_account   => 'my_account',
   tiller_namespaces => ['my_namespace'],
 }
 ```
@@ -83,9 +83,11 @@ To add a Helm chart repository, add the following code to the manifest file:
 
 ```puppet
 helm::repo { 'myrepo':
-  ensure => present,
-  env    => $env,
-  path   => $path,
+  ensure    => present,
+  env       => $env,
+  path      => $path,
+  username  => 'username',
+  password  => 'password',
   repo_name => 'myrepo',
   url       => 'http://myserver/charts'
 }
@@ -95,8 +97,8 @@ To update a Helm chart repository, add the following code to the manifest file:
 
 ```puppet
 helm::repo_update { 'update':
-  env => $env,
-  path => $path,
+  env    => $env,
+  path   => $path,
   update => true
 }
 ```
@@ -1174,6 +1176,18 @@ Defaults to ['/bin','/usr/bin']
 `tiller_namespace`
 
 The namespace for Tiller.
+
+Defaults to `undef`.
+
+`username`
+
+The username for the remote repository
+
+Defaults to `undef`.
+
+`password`
+
+The password for the remote repository.
 
 Defaults to `undef`.
 
