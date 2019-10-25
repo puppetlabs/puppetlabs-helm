@@ -147,6 +147,7 @@ class helm (
   Optional[String] $stable_repo_url         = $helm::params::stable_repo_url,
   Array[String] $tiller_namespaces          = $helm::params::tiller_namespaces,
   Optional[String] $tiller_image            = $helm::params::tiller_image,
+  Boolean $tiller_tls                       = $helm::params::tiller_tls,
   Optional[String] $tiller_tls_cert         = $helm::params::tiller_tls_cert,
   Optional[String] $tiller_tls_key          = $helm::params::tiller_tls_key,
   Boolean $tiller_tls_verify                = $helm::params::tiller_tls_verify,
