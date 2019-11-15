@@ -27,7 +27,7 @@ class helm::account_config (
     mode    => '0644',
     content => epp('helm/tiller-serviceaccount.yaml.epp', {
       'service_account'    => $service_account,
-      'image_pull_secrets' => $tiller_image_pull_secrets, 
+      'image_pull_secrets' => $tiller_image_pull_secrets,
     }),
   }
 
