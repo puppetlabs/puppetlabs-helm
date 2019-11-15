@@ -1,10 +1,10 @@
 # == Class: helm::account_config 
 class helm::account_config (
-  Array $env                                 = $helm::env,
-  Array $path                                = $helm::path,
-  String $service_account                    = $helm::service_account,
-  Optional[Array] $tiller_image_pull_secrets = $helm::tiller_image_pull_secrets,
-  Array[String] $tiller_namespaces           = $helm::tiller_namespaces,
+  Array $env                                         = $helm::env,
+  Array $path                                        = $helm::path,
+  String $service_account                            = $helm::service_account,
+  Optional[Array[String]] $tiller_image_pull_secrets = $helm::tiller_image_pull_secrets,
+  Array[String] $tiller_namespaces                   = $helm::tiller_namespaces,
 ){
 
   if (count($tiller_namespaces) > 1) {
