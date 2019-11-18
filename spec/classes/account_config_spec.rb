@@ -7,6 +7,7 @@ describe 'helm::account_config', :type => :class do
                   'path' => [ '/bin','/usr/bin'],
                   'service_account' => 'tiller',
                   'tiller_namespaces' => ['kube-system'],
+                  'tiller_image_pull_secrets' => ['secret'],
                } }
 
   context 'with default values for all parameters' do

@@ -38,7 +38,7 @@
 # Determines the behaviour of the config function. Setting to true will init the cluster and install tiller.
 # False will install Helm in client only mode.
 # Defaults to true
-
+#
 # [*install_path*]
 # The path to extract helm binary to.
 # Defaults to '/usr/bin'
@@ -87,6 +87,9 @@
 # Specify the image for the tiller install in the default init.
 # Defaults to undef
 # 
+# [*tiller_image_pull_secrets*]
+# Optionnaly put imagePullSecret(s) in tiller's serviceaccount.
+#
 # [*tiller_namespaces*]
 # Array of namespaces in which to install tiller
 # Defaults to ['kube-system']
@@ -94,7 +97,6 @@
 # [*tiller_tls*]
 # Enable TLS for tiller in the default init.
 # Defaults to false
-#
 #
 # [*tiller_tls_cert*]
 # Specify a TLS cert for tiller in the default init.
@@ -126,35 +128,36 @@
 # URLs supported by puppet/archive module will work, e.g. puppet:///modules/helm_files
 #
 class helm (
-  Boolean $canary_image                     = $helm::params::canary_image,
-  Boolean $client_only                      = $helm::params::client_only,
-  Boolean $debug                            = $helm::params::debug,
-  Boolean $dry_run                          = $helm::params::dry_run,
-  Array $env                                = $helm::params::env,
-  Optional[String] $home                    = $helm::params::home,
-  Optional[String] $host                    = $helm::params::host,
-  Boolean $init                             = $helm::params::init,
-  String $install_path                      = $helm::params::install_path,
-  Optional[String] $kube_context            = $helm::params::kube_context,
-  Optional[String] $local_repo_url          = $helm::params::local_repo_url,
-  Optional[String] $proxy                   = $helm::params::proxy,
-  Optional[Boolean] $net_host               = $helm::params::net_host,
-  Optional[String] $node_selectors          = $helm::params::node_selectors,
-  Optional[Array] $overrides                = $helm::params::overrides,
-  Array $path                               = $helm::params::path,
-  String $service_account                   = $helm::params::service_account,
-  Boolean $skip_refresh                     = $helm::params::skip_refresh,
-  Optional[String] $stable_repo_url         = $helm::params::stable_repo_url,
-  Array[String] $tiller_namespaces          = $helm::params::tiller_namespaces,
-  Optional[String] $tiller_image            = $helm::params::tiller_image,
-  Boolean $tiller_tls                       = $helm::params::tiller_tls,
-  Optional[String] $tiller_tls_cert         = $helm::params::tiller_tls_cert,
-  Optional[String] $tiller_tls_key          = $helm::params::tiller_tls_key,
-  Boolean $tiller_tls_verify                = $helm::params::tiller_tls_verify,
-  Optional[String]  $tls_ca_cert            = $helm::params::tls_ca_cert,
-  Boolean $upgrade                          = $helm::params::upgrade,
-  String $version                           = $helm::params::version,
-  String $archive_baseurl                   = $helm::params::archive_baseurl,
+  Boolean $canary_image                              = $helm::params::canary_image,
+  Boolean $client_only                               = $helm::params::client_only,
+  Boolean $debug                                     = $helm::params::debug,
+  Boolean $dry_run                                   = $helm::params::dry_run,
+  Array $env                                         = $helm::params::env,
+  Optional[String] $home                             = $helm::params::home,
+  Optional[String] $host                             = $helm::params::host,
+  Boolean $init                                      = $helm::params::init,
+  String $install_path                               = $helm::params::install_path,
+  Optional[String] $kube_context                     = $helm::params::kube_context,
+  Optional[String] $local_repo_url                   = $helm::params::local_repo_url,
+  Optional[String] $proxy                            = $helm::params::proxy,
+  Optional[Boolean] $net_host                        = $helm::params::net_host,
+  Optional[String] $node_selectors                   = $helm::params::node_selectors,
+  Optional[Array] $overrides                         = $helm::params::overrides,
+  Array $path                                        = $helm::params::path,
+  String $service_account                            = $helm::params::service_account,
+  Boolean $skip_refresh                              = $helm::params::skip_refresh,
+  Optional[String] $stable_repo_url                  = $helm::params::stable_repo_url,
+  Optional[String] $tiller_image                     = $helm::params::tiller_image,
+  Optional[Array[String]] $tiller_image_pull_secrets = $helm::params::tiller_image_pull_secrets,
+  Array[String] $tiller_namespaces                   = $helm::params::tiller_namespaces,
+  Boolean $tiller_tls                                = $helm::params::tiller_tls,
+  Optional[String] $tiller_tls_cert                  = $helm::params::tiller_tls_cert,
+  Optional[String] $tiller_tls_key                   = $helm::params::tiller_tls_key,
+  Boolean $tiller_tls_verify                         = $helm::params::tiller_tls_verify,
+  Optional[String]  $tls_ca_cert                     = $helm::params::tls_ca_cert,
+  Boolean $upgrade                                   = $helm::params::upgrade,
+  String $version                                    = $helm::params::version,
+  String $archive_baseurl                            = $helm::params::archive_baseurl,
 ) inherits helm::params {
 
   if $::kernel {

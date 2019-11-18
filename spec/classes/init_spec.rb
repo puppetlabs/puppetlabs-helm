@@ -14,6 +14,7 @@ describe 'helm', :type => :class do
                   'path' => [ '/bin','/usr/bin'],
                   'service_account' => 'tiller',
                   'tiller_namespaces' => ['kube-system'],
+                  'tiller_image_pull_secrets' => ['secret'],
                   'version' => '2.5.1',
                } }
 

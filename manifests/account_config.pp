@@ -1,9 +1,10 @@
 # == Class: helm::account_config 
 class helm::account_config (
-  Array $env                       = $helm::env,
-  Array $path                      = $helm::path,
-  String $service_account          = $helm::service_account,
-  Array[String] $tiller_namespaces = $helm::tiller_namespaces,
+  Array $env                                         = $helm::env,
+  Array $path                                        = $helm::path,
+  String $service_account                            = $helm::service_account,
+  Optional[Array[String]] $tiller_image_pull_secrets = $helm::tiller_image_pull_secrets,
+  Array[String] $tiller_namespaces                   = $helm::tiller_namespaces,
 ){
 
   if (count($tiller_namespaces) > 1) {
@@ -25,7 +26,8 @@ class helm::account_config (
     group   => 'root',
     mode    => '0644',
     content => epp('helm/tiller-serviceaccount.yaml.epp', {
-      'service_account' => $service_account,
+      'service_account'    => $service_account,
+      'image_pull_secrets' => $tiller_image_pull_secrets,
     }),
   }
 
