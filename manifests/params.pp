@@ -20,7 +20,7 @@ class helm::params {
   $skip_refresh              = false
   $stable_repo_url           = undef
   $tiller_image              = undef
-  $tiller_image_pull_secrets = undef
+  $tiller_image_pull_secrets = []
   $tiller_namespaces         = ['kube-system']
   $tiller_tls                = false
   $tiller_tls_cert           = undef
