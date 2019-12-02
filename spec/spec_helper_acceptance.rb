@@ -138,9 +138,6 @@ EOS
             on(host, 'rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm')
           end
           on(host, 'yum update -y -q') if fact_on(host, 'osfamily') == 'RedHat'
-          on(host, "yum install -y python-pip", acceptable_exit_codes: [0]).stdout
-          on(host, "pip install docker-compose", acceptable_exit_codes: [0]).stdout 
-          on(host, "yum upgrade python*", acceptable_exit_codes: [0]).stdout
         end
 
         # Installing go, cfssl
