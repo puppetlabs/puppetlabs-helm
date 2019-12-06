@@ -18,6 +18,8 @@
           - spec/acceptance/*
           - rakelib/*
 ".travis.yml":
+  deploy_to_forge:
+    enabled: false
   branches:
   - release
   simplecov: true
