@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v3.1.0](https://github.com/puppetlabs/puppetlabs-helm/tree/v3.1.0) (2019-12-06)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-helm/compare/v3.0.0...v3.1.0)
+
+### Added
+
+- Adding the possibility to add imagePullSecrets [\#98](https://github.com/puppetlabs/puppetlabs-helm/pull/98) ([zonArt](https://github.com/zonArt))
+- add username and password flags in helm\_repo\_add\_flags [\#89](https://github.com/puppetlabs/puppetlabs-helm/pull/89) ([AblionGE](https://github.com/AblionGE))
+
+### Fixed
+
+- Use subscribe instead of require to gain autoupdating [\#82](https://github.com/puppetlabs/puppetlabs-helm/pull/82) ([walkamongus](https://github.com/walkamongus))
+
 ## [v3.0.0](https://github.com/puppetlabs/puppetlabs-helm/tree/v3.0.0) (2019-08-01)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-helm/compare/2.0.2...v3.0.0)
