@@ -23,6 +23,10 @@
   branches:
   - release
   simplecov: true
+  notifications:
+    slack:
+      secure: >-
+        QP9Q/DEttUPMI6dEtfoSFdT1L0u8nvxNJ4GOMPl40hOY6xI2eRoaGTi9bnuxx7Eb7JkC8dW747+iSEaj85VmHMt4rX90f6MqWpp7nHi1qCC/OG0uXqDMEOEsejUBgpt/1ajVvdioG1G8WQTwOIpCMAhy0wuZXMV92gdKGGazIwDi2Ed4KkT49ueF/ul6/xH474ijAYPz2i7D8TNY1Jj2PACTN5bd51IseP+j3hrTAe0G93SkWc+bSy9+mM7U4q/jStkfjL/O3d+4ODAyRAgTuTCfVtCdZiZ7vRP6o2UAekzxFlvbbLn0AuBz7+3bqC7c/TItPBsC7uu1sXbbM1Wk8aoWPUvP9vzdMF2NZoVp++UJ3XXQLwppCp4kvxt3f2pH3H/XdX9YFBV9kf9sRhWRXN4dG1+Vh9a4KPa+ikXvV6PE6Sz7gED16an5pHJlTtYxrATD/gMKWixvtcTEtVBMAfWtVZsjZriiieL8wYKBQyWU4vrvEc/6y5HnhGh1V5qxMbrmhA+KJaPpp8+fqth2UYa5x6ndlY302T8TigL/QZUKFGH2l+CNdXoM4Fh/VGN1OdOOIq1FyLa6NKSGtQZrp62/VP+8wR9RQVeQRDzEfKywDoBlcs0V7VFUVQZ1IDOWG8Ui43gzvzVr3nDTdUdmntmjyOTUBDoNLdaQC4xsajg=
 appveyor.yml:
   delete: true
 Gemfile:
