@@ -11,7 +11,8 @@ describe 'helm::repo', :type => :define do
                     'username' => 'bar',
                     'password' => 'bar',
                     'repo_name' => 'foo',
-                    'url' => 'https://foo.com/bar'
+                    'url' => 'https://foo.com/bar',
+                    'version' => '2.7.2'
                  } }
     it do
       is_expected.to compile.with_all_deps
@@ -23,7 +24,8 @@ describe 'helm::repo', :type => :define do
                     'ensure' => 'absent',
                     'env' => ['HOME=/root', 'KUBECONFIG=/root/admin.conf'],
                     'path' => [ '/bin','/usr/bin'],
-                    'repo_name' => 'foo'
+                    'repo_name' => 'foo',
+                    'version' => '2.7.2'
                  } }
     it do
       is_expected.to compile.with_all_deps

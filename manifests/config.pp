@@ -25,6 +25,8 @@ class helm::config (
   Boolean $tiller_tls_verify                = $helm::tiller_tls_verify,
   Optional[String] $tls_ca_cert             = $helm::tls_ca_cert,
   Boolean $upgrade                          = $helm::upgrade,
+  Optional[String] $version                 = $helm::version,
+  Optional[String] $install_path            = $helm::install_path,
 ){
 
   $tiller_namespaces.each |$ns| {
@@ -53,6 +55,8 @@ class helm::config (
       tiller_tls_key   => $tiller_tls_key,
       tls_ca_cert      => $tls_ca_cert,
       upgrade          => $upgrade,
+      version          => $version,
+      install_path     => $install_path,
     }
   }
 }
