@@ -21,7 +21,7 @@ _Private Classes_
 * [`helm::chart`](#helmchart): Manages the deployment of helm charts.
 * [`helm::chart_update`](#helmchart_update): Update the deployed Helm charts.
 * [`helm::create`](#helmcreate): Creates a new Helm chart.
-* [`helm::helm_init`](#helmhelm_init): Deploys the Tiller pod and initializes the Helm client.
+* [`helm::helm_init`](#helmhelm_init): Deploys the Tiller pod and initializes the Helm client (only for Helm versions < 3).
 * [`helm::package`](#helmpackage): Packages a chart directory ino a chart archive..
 * [`helm::repo`](#helmrepo): Adds a Helm repository.
 * [`helm::repo_update`](#helmrepo_update): Updates all of the Helm repositories.

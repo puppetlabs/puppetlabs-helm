@@ -3,8 +3,8 @@ require 'spec_helper'
 describe 'helm', :type => :class do
 
   let(:facts) { {
-                  :kernel       => 'Linux',
-                  :architecture => 'amd64'
+                 :kernel       => 'Linux',
+                 :architecture => 'amd64'
               } }
 
   let(:params) { {

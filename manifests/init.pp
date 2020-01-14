@@ -116,7 +116,7 @@
 #
 # @param version
 #   The version of helm to install.
-#   Defaults to 2.5.1
+#   Defaults to 2.7.2
 #
 # @param archive_baseurl
 #   The base URL for downloading the helm archive, must contain file helm-v${version}-linux-${arch}.tar.gz
