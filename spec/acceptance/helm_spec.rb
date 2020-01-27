@@ -27,13 +27,13 @@ describe 'the helm module' do
         }
   MANIFEST
       it 'should run' do
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp)
       end
       it 'should install kubectl' do
-        shell('kubectl', :acceptable_exit_codes => [0])
+        run_shell('kubectl')
       end
       it 'should install kube-dns' do
-        shell('KUBECONFIG=/etc/kubernetes/admin.conf kubectl get deploy --namespace kube-system coredns', :acceptable_exit_codes => [0])
+        run_shell('KUBECONFIG=/etc/kubernetes/admin.conf kubectl get deploy --namespace kube-system coredns')
         sleep(60)
       end
     end
@@ -45,10 +45,10 @@ describe 'the helm module' do
       include helm
       "}
       it 'should run' do
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp)
       end
       it 'should install helm' do
-        shell('helm', :acceptable_exit_codes => [0])
+        run_shell('helm')
       end
     end
     context 'it should install the module' do
@@ -61,10 +61,10 @@ describe 'the helm module' do
       }
       "}
       it 'should run' do
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp)
       end
       it 'should create chart' do
-        shell('ls /tmp/myapptest', :acceptable_exit_codes => [0])
+        run_shell('ls /tmp/myapptest')
       end
     end
 
@@ -80,10 +80,10 @@ describe 'the helm module' do
       }
       "}
       it 'should run' do
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp,)
       end
       it 'should package chart' do
-        shell('ls /root/.helm/repository/local/myapptest-0.1.0.tgz', :acceptable_exit_codes => [0])
+        run_shell('ls /root/.helm/repository/local/myapptest-0.1.0.tgz')
       end
     end
 
@@ -98,10 +98,10 @@ describe 'the helm module' do
       }
       "}
       it 'should run' do
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp)
       end
       it 'should deploy a package' do
-        shell('export KUBECONFIG=/etc/kubernetes/admin.conf;helm ls | grep myapprelease', :acceptable_exit_codes => [0])
+        run_shell('export KUBECONFIG=/etc/kubernetes/admin.conf;helm ls | grep myapprelease')
       end
     end
 
@@ -116,10 +116,10 @@ describe 'the helm module' do
       }
       "}
       it 'should run' do
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp)
       end
       it 'should remove a deployment' do
-        shell('export KUBECONFIG=/etc/kubernetes/admin.conf;helm ls | grep myapprelease', :acceptable_exit_codes => [1])
+        run_shell('export KUBECONFIG=/etc/kubernetes/admin.conf;helm ls | grep myapprelease', expect_failures: true)
       end
     end
 
@@ -134,10 +134,10 @@ describe 'the helm module' do
       }
       "}
       it 'should run' do
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp)
       end
       it 'should add helm repo' do
-        shell('export KUBECONFIG=/etc/kubernetes/admin.conf;helm repo list | grep git', :acceptable_exit_codes => [0])
+        run_shell('export KUBECONFIG=/etc/kubernetes/admin.conf;helm repo list | grep git')
       end
     end
 
@@ -152,10 +152,10 @@ describe 'the helm module' do
         }
       "}
       it 'should run' do
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp)
       end
       it 'should remove helm repo' do
-        shell('export KUBECONFIG=/etc/kubernetes/admin.conf;helm repo list | grep git', :acceptable_exit_codes => [1])
+        run_shell('export KUBECONFIG=/etc/kubernetes/admin.conf;helm repo list | grep git', expect_failures: true)
       end
     end
   end
