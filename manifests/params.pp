@@ -1,4 +1,6 @@
-# == Class: helm::params
+# @summary
+#   This module installs Helm, the Kubernetes package manager.
+#
 class helm::params {
   $canary_image              = false
   $client_only               = false

@@ -1,4 +1,7 @@
-# == Class: helm::binary
+# @summary
+# helm::binary
+#
+# @api private
 class helm::binary (
   String $version         = $helm::version,
   String $install_path    = $helm::install_path,

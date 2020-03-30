@@ -1,4 +1,89 @@
-# == helm::helm_init 
+
+# Defined Type helm::helm_init
+#
+# @summary
+#   Deploys the Tiller pod and initializes the Helm client.
+#
+# @param init
+#   Specifies whether to deploy the tiller pod and initialise the Helm client.
+#   Valid values are `true`, `false`.
+# 
+# @param canary_image
+#   Specifies whether to use the canary Tiller image.
+#   Valid values are `true`, `false`.
+# 
+# @param client_only
+#   Specifies whether to deploy Tiller.
+#   Valid values are `true`, `false`.
+# 
+# @param debug
+#   Specifies whether to enable the verbose output.
+#   Values `true`, `false`.
+# 
+# @param dry_run
+#   Specifies whether to simulate an installation or delete of a deployment.
+#   Values `true`, `false`.
+# 
+# @param env
+#   Sets the environment variables required for Helm to connect to the kubernetes cluster.
+# 
+# @param home
+#   The location for your Helm configuration. This value overrides `$HELM_HOME`.
+#
+# @param host
+#   The host address for Tiller. Overrides `$HELM_HOST`.
+# 
+# @param kube_context
+#   The name for the kubeconfig context to use.
+# 
+# @param local_repo_url
+#   The local repository URL.
+# 
+# @param net_host
+#   Specifies whether to install Tiller with `net=host`.
+#   Valid values are `true`, `false`.
+# 
+# @param path
+#   The PATH variable used for exec types.
+# 
+# @param service_account
+#   The name for the service account used for deploying Tiller.
+# 
+# @param skip_refresh
+#   Specifies whether to refresh or download the local repository cache.
+#   Valid values are `true`, `false`.
+# 
+# @param stable_repo_url
+#   The stable repository URL.
+# 
+# @param tiller_image
+#   Override the Tiller image.
+# 
+# @param tiller_namespace
+#   Namespace for Tiller.
+# 
+# @param tiller_tls
+#   Specifies whether to install Tiller with TLS enabled.
+#   Valid values are `true`, `false`.
+# 
+# @param tiller_tls_cert
+#   The path to the TLS certificate file that is installed with Tiller.
+# 
+# @param tiller_tls_key
+#   The path to the TLS key file that is installed with Tiller.
+# 
+# @param tiller_tls_verify
+#   Specifies whether to install Tiller with TLS enabled and to verify remote certificates.
+#   Valid values are `true`, `false`.
+# 
+# @param tls_ca_cert
+#   Specifies whether to use the path to the CA root certificate.
+#   Valid values are `true`, `false`.
+# 
+# @param upgrade
+#   Specifies whether to upgrade if Tiller is installed.
+#   Valid values are `true`, `false`.
+# 
 define helm::helm_init (
   Boolean $init                      = true,
   Boolean $canary_image              = false,

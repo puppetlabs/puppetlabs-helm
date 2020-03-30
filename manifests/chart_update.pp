@@ -1,10 +1,120 @@
-# Class: helm::chart::update
-# ===========================
+
+# Defined Type helm::chart::update
 #
-# A module to update Helm charts.
-
-# Cfr. README for parameter documentation
-
+# @summary
+#   Update the deployed Helm charts.
+#
+# @param ensure
+#   Specifies whether a chart must be updated.
+#   Valid values are 'present', 'absent'.
+# 
+# @param ca_file
+#   Verifies the certificates of the HTTPS-enabled servers using the CA bundle.
+# 
+# @param cert_file
+#   Identifies the HTTPS client using this SSL certificate file.
+# 
+# @param debug
+#   Specifies whether to enable verbose output.
+#   Values `true`, `false`.
+# 
+# @param devel
+#   Specifies whether to use development versions.
+#   Values `true`, `false`.
+# 
+# @param dry_run
+#   Specifies whether to simulate a chart update.
+#   Values `true`, `false`.
+# 
+# @param env
+#   Sets the environment variables for Helm to connect to the kubernetes cluster.
+# 
+# @param install
+#   If a release by this name doesn't already exist, run an install
+# 
+# @param key_file
+#   Identifies the HTTPS client using the SSL key file.
+# 
+# @param keyring
+#   Location of the public keys that are used for verification.
+# 
+# @param home
+#   Location of your Helm config. This value overrides `$HELM_HOME`.
+# 
+# @param host
+#   Address of Tiller. This value overrides `$HELM_HOST`.
+# 
+# @param kube_context
+#   Name of the kubeconfig context.
+# 
+# @param recreate_pods
+#   Performs pods restart for the resource if applicable
+# 
+# @param reset_values
+#   When upgrading, reset the values to the ones built into the chart
+# 
+# @param reuse_values
+#   when upgrading, reuse the last release's values, and merge in any new values. If '--reset-values' is specified, this is ignored.
+# 
+# @param no_hooks# @param 
+#   Specifies whether to prevent hooks running during the installation.
+#   Values `true`, `false`.
+# 
+# @param path
+#   The PATH variable used for exec types.
+# 
+# @param purge
+#   Specifies whether to remove the release from the store, and make its name available for later use.
+#   Values `true`, `false`.
+# 
+# @param release_name
+#   **Required.** The release name.
+# 
+# @param repo
+#   The repository URL for a requested chart.
+# 
+# @param set
+#   The set array of values for the `helm create` command.
+# 
+# @param timeout
+#   The timeout in seconds to wait for a Kubernetes operation.
+# 
+# @param tiller_namespace
+#   The Tiller namespace.
+# 
+# @param tls
+#   Specifies whether to enable TLS.
+#   Values `true`, `false`.
+# 
+# @param tls_ca_cert
+#   The path to TLS CA certificate file.
+# 
+# @param tls_cert
+#   The path to TLS certificate file.
+# 
+# @param tls_key
+#   The path to TLS key file.
+# 
+# @param tls_verify
+#   Enable TLS for request and verify remote.
+# 
+# @param values
+#   Specify values from a YAML file. Multiple values in an array are accepted.
+# 
+# @param verify
+#   Specifies whether to verify the package before installing it.
+#   Values `true`, `false`.
+# 
+# @param version
+#   Specify the version of the chart to install. `undef` installs the latest version.
+# 
+# @param wait
+#   Before marking the release as successful, specify whether to wait until all the pods, PVCs, services, and the minimum number of deployment pods are in a ready state. The `timeout` value determines the duration.
+#   Values `true`, `false`.
+# 
+# @param chart
+#   The file system location of the package.
+#
 define helm::chart_update (
   String $ensure                  = present,
   Optional[String] $ca_file       = undef,
