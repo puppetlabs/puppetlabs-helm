@@ -1,4 +1,7 @@
-# == Class: helm::config 
+# @summary
+# helm::config
+#
+# @api private
 class helm::config (
   Boolean $canary_image                     = $helm::canary_image,
   Boolean $client_only                      = $helm::client_only,

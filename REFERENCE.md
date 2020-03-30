@@ -5,21 +5,26 @@
 
 **Classes**
 
-* [`helm`](#helm): Class: helm ===========================  A module to install Helm, the Kubernetes package manager.  Parameters ----------  [*canary_image] Us
-* [`helm::account_config`](#helmaccount_config): == Class: helm::account_config
-* [`helm::binary`](#helmbinary): == Class: helm::binary
-* [`helm::config`](#helmconfig): == Class: helm::config
-* [`helm::params`](#helmparams): == Class: helm::params
+_Public Classes_
+
+* [`helm`](#helm): A module to install Helm, the Kubernetes package manager.
+* [`helm::params`](#helmparams): This module installs Helm, the Kubernetes package manager.
+
+_Private Classes_
+
+* `helm::account_config`: helm::account_config
+* `helm::binary`: helm::binary
+* `helm::config`: helm::config
 
 **Defined types**
 
-* [`helm::chart`](#helmchart): == helm::chart
-* [`helm::chart_update`](#helmchart_update): 
-* [`helm::create`](#helmcreate): == helm::create
-* [`helm::helm_init`](#helmhelm_init): == helm::helm_init
-* [`helm::package`](#helmpackage): == helm::package
-* [`helm::repo`](#helmrepo): == helm::repo
-* [`helm::repo_update`](#helmrepo_update): == helm::repo_update
+* [`helm::chart`](#helmchart): Manages the deployment of helm charts.
+* [`helm::chart_update`](#helmchart_update): Update the deployed Helm charts.
+* [`helm::create`](#helmcreate): Creates a new Helm chart.
+* [`helm::helm_init`](#helmhelm_init): Deploys the Tiller pod and initializes the Helm client.
+* [`helm::package`](#helmpackage): Packages a chart directory ino a chart archive..
+* [`helm::repo`](#helmrepo): Adds a Helm repository.
+* [`helm::repo_update`](#helmrepo_update): Updates all of the Helm repositories.
 
 **Functions**
 
@@ -38,134 +43,7 @@
 
 ### helm
 
-Class: helm
-===========================
-
 A module to install Helm, the Kubernetes package manager.
-
-Parameters
-----------
-
-[*canary_image]
-Use the helm canary image for the default init of helm.
-Defaults to false
-
-[*client_only]
-Make the default init install the client only.
-Defaults to false
-
-[*debug*]
-Set output logging to debug for the default init.
-Defaults to false
-
-[*dry_run*]
-Make the default init run in dry-run mode.
-Defaults to false
-
-[*env*]
-Environment variables to specify the location of configruation files, or any other custom variables required for helm to run.
-Defaults to [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']
-
-[*home*]
-Set the HELM_HOME variable for the default init.
-Defaults to undef
-
-[*host*]
-Specify the HELM_HOST for the default init.
-Defaults to undef
-
-[*init*]
-Determines the behaviour of the config function. Setting to true will init the cluster and install tiller.
-False will install Helm in client only mode.
-Defaults to true
-
-[*install_path*]
-The path to extract helm binary to.
-Defaults to '/usr/bin'
-
-[*kube_context*]
-Specify the kube_context for the default init.
-Defaults to undef
-
-[*local_repo_url*]
-Specify the local_repo_url for the default init.
-Defaults to undef
-
-[*net_host*]
-Enable net_host mode for the default init.
-Defaults to false
-
-[*node_selectors*]
-Specify node selectors for the helm init on the default init.
-Defaults to undef
-
-[*overrides*]
-Specify override parameters for the default init.
-Defaults to undef
-
-[*path*]
-The PATH variable used for exec types.
-Defaults to ['/bin','/usr/bin']
-
-[*proxy*]
-Specify an internet proxy if necessary.
-Defaults to undef
-
-[*service_account*]
-The service account for tiller
-Defaults to 'tiller'
-
-[*skip_refresh*]
-Enable skip refresh mode for the default init.
-Defaults to false
-
-[*stable_repo_url*]
-Specify the stable repo url for the default init.
-Defaults to undef
-
-[*tiller_image*]
-Specify the image for the tiller install in the default init.
-Defaults to undef
-
-[*tiller_image_pull_secrets*]
-Optionnaly put imagePullSecret(s) in tiller's serviceaccount.
-
-[*tiller_namespaces*]
-Array of namespaces in which to install tiller
-Defaults to ['kube-system']
-
-[*tiller_tls*]
-Enable TLS for tiller in the default init.
-Defaults to false
-
-[*tiller_tls_cert*]
-Specify a TLS cert for tiller in the default init.
-Defaults to undef
-
-[*tiller_tls_key*]
-Specify a TLS key for tiller in the default init.
-Defaults to undef
-
-[*tiller_tls_verify*]
-Enable TLS verification for tiller in the default init.
-Defaults to undef
-
-[*tls_ca_cert*]
-Specify a TLS CA certificate for tiller in the default init.
-Defaults to undef
-
-[*upgrade*]
-Whether to upgrade tiller in the default init.
-Defaults to false
-
-[*version*]
-The version of helm to install.
-Defaults to 2.5.1
-
-[*archive_baseurl*]
-The base URL for downloading the helm archive, must contain file helm-v${version}-linux-${arch}.tar.gz
-Defaults to https://kubernetes-helm.storage.googleapis.com
-URLs supported by puppet/archive module will work, e.g. puppet:///modules/helm_files
 
 #### Parameters
 
@@ -175,7 +53,8 @@ The following parameters are available in the `helm` class.
 
 Data type: `Boolean`
 
-
+Use the helm canary image for the default init of helm.
+Defaults to false
 
 Default value: $helm::params::canary_image
 
@@ -183,7 +62,8 @@ Default value: $helm::params::canary_image
 
 Data type: `Boolean`
 
-
+Make the default init install the client only.
+Defaults to false
 
 Default value: $helm::params::client_only
 
@@ -191,7 +71,8 @@ Default value: $helm::params::client_only
 
 Data type: `Boolean`
 
-
+Set output logging to debug for the default init.
+Defaults to false
 
 Default value: $helm::params::debug
 
@@ -199,7 +80,8 @@ Default value: $helm::params::debug
 
 Data type: `Boolean`
 
-
+Make the default init run in dry-run mode.
+Defaults to false
 
 Default value: $helm::params::dry_run
 
@@ -207,7 +89,8 @@ Default value: $helm::params::dry_run
 
 Data type: `Array`
 
-
+Environment variables to specify the location of configruation files, or any other custom variables required for helm to run.
+Defaults to [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']
 
 Default value: $helm::params::env
 
@@ -215,7 +98,8 @@ Default value: $helm::params::env
 
 Data type: `Optional[String]`
 
-
+Set the HELM_HOME variable for the default init.
+Defaults to undef
 
 Default value: $helm::params::home
 
@@ -223,7 +107,8 @@ Default value: $helm::params::home
 
 Data type: `Optional[String]`
 
-
+Specify the HELM_HOST for the default init.
+Defaults to undef
 
 Default value: $helm::params::host
 
@@ -231,7 +116,9 @@ Default value: $helm::params::host
 
 Data type: `Boolean`
 
-
+Determines the behaviour of the config function. Setting to true will init the cluster and install tiller.
+False will install Helm in client only mode.
+Defaults to true
 
 Default value: $helm::params::init
 
@@ -239,7 +126,8 @@ Default value: $helm::params::init
 
 Data type: `String`
 
-
+The path to extract helm binary to.
+Defaults to '/usr/bin'
 
 Default value: $helm::params::install_path
 
@@ -247,7 +135,8 @@ Default value: $helm::params::install_path
 
 Data type: `Optional[String]`
 
-
+Specify the kube_context for the default init.
+Defaults to undef
 
 Default value: $helm::params::kube_context
 
@@ -255,23 +144,17 @@ Default value: $helm::params::kube_context
 
 Data type: `Optional[String]`
 
-
+Specify the local_repo_url for the default init.
+Defaults to undef
 
 Default value: $helm::params::local_repo_url
-
-##### `proxy`
-
-Data type: `Optional[String]`
-
-
-
-Default value: $helm::params::proxy
 
 ##### `net_host`
 
 Data type: `Optional[Boolean]`
 
-
+Enable net_host mode for the default init.
+Defaults to false
 
 Default value: $helm::params::net_host
 
@@ -279,7 +162,8 @@ Default value: $helm::params::net_host
 
 Data type: `Optional[String]`
 
-
+Specify node selectors for the helm init on the default init.
+Defaults to undef
 
 Default value: $helm::params::node_selectors
 
@@ -287,7 +171,8 @@ Default value: $helm::params::node_selectors
 
 Data type: `Optional[Array]`
 
-
+Specify override parameters for the default init.
+Defaults to undef
 
 Default value: $helm::params::overrides
 
@@ -295,15 +180,26 @@ Default value: $helm::params::overrides
 
 Data type: `Array`
 
-
+The PATH variable used for exec types.
+Defaults to ['/bin','/usr/bin']
 
 Default value: $helm::params::path
+
+##### `proxy`
+
+Data type: `Optional[String]`
+
+Specify an internet proxy if necessary.
+Defaults to undef
+
+Default value: $helm::params::proxy
 
 ##### `service_account`
 
 Data type: `String`
 
-
+The service account for tiller
+Defaults to 'tiller'
 
 Default value: $helm::params::service_account
 
@@ -311,7 +207,8 @@ Default value: $helm::params::service_account
 
 Data type: `Boolean`
 
-
+Enable skip refresh mode for the default init.
+Defaults to false
 
 Default value: $helm::params::skip_refresh
 
@@ -319,7 +216,8 @@ Default value: $helm::params::skip_refresh
 
 Data type: `Optional[String]`
 
-
+Specify the stable repo url for the default init.
+Defaults to undef
 
 Default value: $helm::params::stable_repo_url
 
@@ -327,7 +225,8 @@ Default value: $helm::params::stable_repo_url
 
 Data type: `Optional[String]`
 
-
+Specify the image for the tiller install in the default init.
+Defaults to undef
 
 Default value: $helm::params::tiller_image
 
@@ -335,7 +234,7 @@ Default value: $helm::params::tiller_image
 
 Data type: `Optional[Array[String]]`
 
-
+Optionnaly put imagePullSecret(s) in tiller's serviceaccount.
 
 Default value: $helm::params::tiller_image_pull_secrets
 
@@ -343,7 +242,8 @@ Default value: $helm::params::tiller_image_pull_secrets
 
 Data type: `Array[String]`
 
-
+Array of namespaces in which to install tiller
+Defaults to ['kube-system']
 
 Default value: $helm::params::tiller_namespaces
 
@@ -351,7 +251,8 @@ Default value: $helm::params::tiller_namespaces
 
 Data type: `Boolean`
 
-
+Enable TLS for tiller in the default init.
+Defaults to false
 
 Default value: $helm::params::tiller_tls
 
@@ -359,7 +260,8 @@ Default value: $helm::params::tiller_tls
 
 Data type: `Optional[String]`
 
-
+Specify a TLS cert for tiller in the default init.
+Defaults to undef
 
 Default value: $helm::params::tiller_tls_cert
 
@@ -367,7 +269,8 @@ Default value: $helm::params::tiller_tls_cert
 
 Data type: `Optional[String]`
 
-
+Specify a TLS key for tiller in the default init.
+Defaults to undef
 
 Default value: $helm::params::tiller_tls_key
 
@@ -375,7 +278,8 @@ Default value: $helm::params::tiller_tls_key
 
 Data type: `Boolean`
 
-
+Enable TLS verification for tiller in the default init.
+Defaults to undef
 
 Default value: $helm::params::tiller_tls_verify
 
@@ -383,7 +287,8 @@ Default value: $helm::params::tiller_tls_verify
 
 Data type: `Optional[String]`
 
-
+Specify a TLS CA certificate for tiller in the default init.
+Defaults to undef
 
 Default value: $helm::params::tls_ca_cert
 
@@ -391,7 +296,8 @@ Default value: $helm::params::tls_ca_cert
 
 Data type: `Boolean`
 
-
+Whether to upgrade tiller in the default init.
+Defaults to false
 
 Default value: $helm::params::upgrade
 
@@ -399,7 +305,8 @@ Default value: $helm::params::upgrade
 
 Data type: `String`
 
-
+The version of helm to install.
+Defaults to 2.5.1
 
 Default value: $helm::params::version
 
@@ -407,315 +314,21 @@ Default value: $helm::params::version
 
 Data type: `String`
 
-
+The base URL for downloading the helm archive, must contain file helm-v${version}-linux-${arch}.tar.gz
+Defaults to https://kubernetes-helm.storage.googleapis.com
+URLs supported by puppet/archive module will work, e.g. puppet:///modules/helm_files
 
 Default value: $helm::params::archive_baseurl
 
-### helm::account_config
-
-== Class: helm::account_config
-
-#### Parameters
-
-The following parameters are available in the `helm::account_config` class.
-
-##### `env`
-
-Data type: `Array`
-
-
-
-Default value: $helm::env
-
-##### `path`
-
-Data type: `Array`
-
-
-
-Default value: $helm::path
-
-##### `service_account`
-
-Data type: `String`
-
-
-
-Default value: $helm::service_account
-
-##### `tiller_image_pull_secrets`
-
-Data type: `Optional[Array[String]]`
-
-
-
-Default value: $helm::tiller_image_pull_secrets
-
-##### `tiller_namespaces`
-
-Data type: `Array[String]`
-
-
-
-Default value: $helm::tiller_namespaces
-
-### helm::binary
-
-== Class: helm::binary
-
-#### Parameters
-
-The following parameters are available in the `helm::binary` class.
-
-##### `version`
-
-Data type: `String`
-
-
-
-Default value: $helm::version
-
-##### `install_path`
-
-Data type: `String`
-
-
-
-Default value: $helm::install_path
-
-##### `proxy`
-
-Data type: `Optional[String]`
-
-
-
-Default value: $helm::proxy
-
-##### `archive_baseurl`
-
-Data type: `String`
-
-
-
-Default value: $helm::archive_baseurl
-
-### helm::config
-
-== Class: helm::config
-
-#### Parameters
-
-The following parameters are available in the `helm::config` class.
-
-##### `canary_image`
-
-Data type: `Boolean`
-
-
-
-Default value: $helm::canary_image
-
-##### `client_only`
-
-Data type: `Boolean`
-
-
-
-Default value: $helm::client_only
-
-##### `debug`
-
-Data type: `Boolean`
-
-
-
-Default value: $helm::debug
-
-##### `dry_run`
-
-Data type: `Boolean`
-
-
-
-Default value: $helm::dry_run
-
-##### `env`
-
-Data type: `Array`
-
-
-
-Default value: $helm::env
-
-##### `home`
-
-Data type: `Optional[String]`
-
-
-
-Default value: $helm::home
-
-##### `host`
-
-Data type: `Optional[String]`
-
-
-
-Default value: $helm::host
-
-##### `init`
-
-Data type: `Boolean`
-
-
-
-Default value: $helm::init
-
-##### `kube_context`
-
-Data type: `Optional[String]`
-
-
-
-Default value: $helm::kube_context
-
-##### `local_repo_url`
-
-Data type: `Optional[String]`
-
-
-
-Default value: $helm::local_repo_url
-
-##### `net_host`
-
-Data type: `Boolean`
-
-
-
-Default value: $helm::net_host
-
-##### `node_selectors`
-
-Data type: `Optional[String]`
-
-
-
-Default value: $helm::node_selectors
-
-##### `overrides`
-
-Data type: `Optional[Array]`
-
-
-
-Default value: $helm::overrides
-
-##### `path`
-
-Data type: `Array`
-
-
-
-Default value: $helm::path
-
-##### `service_account`
-
-Data type: `String`
-
-
-
-Default value: $helm::service_account
-
-##### `skip_refresh`
-
-Data type: `Boolean`
-
-
-
-Default value: $helm::skip_refresh
-
-##### `stable_repo_url`
-
-Data type: `Optional[String]`
-
-
-
-Default value: $helm::stable_repo_url
-
-##### `tiller_image`
-
-Data type: `Optional[String]`
-
-
-
-Default value: $helm::tiller_image
-
-##### `tiller_namespaces`
-
-Data type: `Array[String]`
-
-
-
-Default value: $helm::tiller_namespaces
-
-##### `tiller_tls`
-
-Data type: `Boolean`
-
-
-
-Default value: $helm::tiller_tls
-
-##### `tiller_tls_cert`
-
-Data type: `Optional[String]`
-
-
-
-Default value: $helm::tiller_tls_cert
-
-##### `tiller_tls_key`
-
-Data type: `Optional[String]`
-
-
-
-Default value: $helm::tiller_tls_key
-
-##### `tiller_tls_verify`
-
-Data type: `Boolean`
-
-
-
-Default value: $helm::tiller_tls_verify
-
-##### `tls_ca_cert`
-
-Data type: `Optional[String]`
-
-
-
-Default value: $helm::tls_ca_cert
-
-##### `upgrade`
-
-Data type: `Boolean`
-
-
-
-Default value: $helm::upgrade
-
 ### helm::params
 
-== Class: helm::params
+This module installs Helm, the Kubernetes package manager.
 
 ## Defined types
 
 ### helm::chart
 
-== helm::chart
+Defined Type helm::chart
 
 #### Parameters
 
@@ -725,7 +338,7 @@ The following parameters are available in the `helm::chart` defined type.
 
 Data type: `String`
 
-
+Specifies whether a chart is deployed.
 
 Default value: present
 
@@ -733,7 +346,7 @@ Default value: present
 
 Data type: `Optional[String]`
 
-
+Verifies the certificates of the HTTPS-enabled servers using the CA bundle.
 
 Default value: `undef`
 
@@ -741,15 +354,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
-
-Default value: `undef`
-
-##### `chart`
-
-Data type: `Optional[String]`
-
-
+Identifies the HTTPS client using this SSL certificate file.
 
 Default value: `undef`
 
@@ -757,7 +362,8 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Specifies whether to enable verbose output.
+Values `true`, `false`.
 
 Default value: `false`
 
@@ -765,7 +371,8 @@ Default value: `false`
 
 Data type: `Boolean`
 
-
+Specifies whether to use development versions.
+Values `true`, `false`.
 
 Default value: `false`
 
@@ -773,7 +380,8 @@ Default value: `false`
 
 Data type: `Boolean`
 
-
+Specifies whether to simulate an installation or delete a deployment.
+Values `true`, `false`.
 
 Default value: `false`
 
@@ -781,7 +389,7 @@ Default value: `false`
 
 Data type: `Optional[Array]`
 
-
+Sets the environment variables for Helm to connect to the kubernetes cluster.
 
 Default value: `undef`
 
@@ -789,7 +397,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Identifies the HTTPS client using thie SSL key file.
 
 Default value: `undef`
 
@@ -797,7 +405,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Location of the public keys that are used for verification.
 
 Default value: `undef`
 
@@ -805,7 +413,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Location of your Helm config. This value overrides `$HELM_HOME`.
 
 Default value: `undef`
 
@@ -813,7 +421,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Address of Tiller. This value overrides `$HELM_HOST`.
 
 Default value: `undef`
 
@@ -821,7 +429,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Name of the kubeconfig context.
 
 Default value: `undef`
 
@@ -829,15 +437,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
-
-Default value: `undef`
-
-##### `namespace`
-
-Data type: `Optional[String]`
-
-
+The template used to name the release.
 
 Default value: `undef`
 
@@ -845,7 +445,8 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Specifies whether to prevent hooks running during the installation.
+Values `true`, `false`.
 
 Default value: `false`
 
@@ -853,7 +454,7 @@ Default value: `false`
 
 Data type: `Optional[Array]`
 
-
+The PATH variable used for exec types.
 
 Default value: `undef`
 
@@ -861,15 +462,24 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Specifies whether to remove the release from the store, and make its name available for later use.
+Values `true`, `false`.
 
 Default value: `true`
+
+##### `release_name`
+
+Data type: `Optional[String]`
+
+**Required.** The release name.
+
+Default value: `undef`
 
 ##### `replace`
 
 Data type: `Boolean`
 
-
+Reuse the release name.
 
 Default value: `false`
 
@@ -877,15 +487,7 @@ Default value: `false`
 
 Data type: `Optional[String]`
 
-
-
-Default value: `undef`
-
-##### `release_name`
-
-Data type: `Optional[String]`
-
-
+The repository URL for a requested chart.
 
 Default value: `undef`
 
@@ -893,13 +495,104 @@ Default value: `undef`
 
 Data type: `Optional[Array]`
 
-
+The set array of values for the `helm create` command.
 
 Default value: []
 
 ##### `timeout`
 
 Data type: `Optional[Integer]`
+
+The timeout in seconds to wait for a Kubernetes operation.
+
+Default value: `undef`
+
+##### `tiller_namespace``
+
+The Tiller namespace.
+
+##### `tls`
+
+Data type: `Boolean`
+
+Specifies whether to enable TLS.
+Values `true`, `false`.
+
+Default value: `false`
+
+##### `tls_ca_cert`
+
+Data type: `Optional[String]`
+
+The path to TLS CA certificate file.
+
+Default value: `undef`
+
+##### `tls_cert`
+
+Data type: `Optional[String]`
+
+The path to TLS certificate file.
+
+Default value: `undef`
+
+##### `tls_key``
+
+The path to TLS key file.
+
+##### `tls_verify`
+
+Data type: `Boolean`
+
+Enable TLS for request and verify remote.
+
+Default value: `false`
+
+##### `values`
+
+Data type: `Optional[Array]`
+
+Specify values from a YAML file. Multiple values in an array are accepted.
+
+Default value: []
+
+##### `verify`
+
+Data type: `Boolean`
+
+Specifies whether to verify the package before installing it.
+Values `true`, `false`.
+
+Default value: `false`
+
+##### `version`
+
+Data type: `Optional[String]`
+
+Specify the version of the chart to install. `undef` installs the latest version.
+
+Default value: `undef`
+
+##### `wait`
+
+Data type: `Boolean`
+
+Before marking the release as successful, specify whether to wait until all the pods, PVCs, services, and the minimum number of deployment pods are in a ready state. The `timeout` value determines the duration.
+Values `true`, `false`.
+
+Default value: `false`
+
+##### `chart`
+
+Data type: `Optional[String]`
+
+The file system location of the package.
+
+Default value: `undef`
+
+##### `namespace`
+
+Data type: `Optional[String]`
 
 
 
@@ -913,30 +606,6 @@ Data type: `Optional[String]`
 
 Default value: 'kube-system'
 
-##### `tls`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### `tls_ca_cert`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `tls_cert`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
 ##### `tls_key`
 
 Data type: `Optional[String]`
@@ -945,49 +614,9 @@ Data type: `Optional[String]`
 
 Default value: `undef`
 
-##### `tls_verify`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### `values`
-
-Data type: `Optional[Array]`
-
-
-
-Default value: []
-
-##### `verify`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### `version`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `wait`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
 ### helm::chart_update
 
-The helm::chart_update class.
+Defined Type helm::chart::update
 
 #### Parameters
 
@@ -997,7 +626,8 @@ The following parameters are available in the `helm::chart_update` defined type.
 
 Data type: `String`
 
-
+Specifies whether a chart must be updated.
+Valid values are 'present', 'absent'.
 
 Default value: present
 
@@ -1005,7 +635,7 @@ Default value: present
 
 Data type: `Optional[String]`
 
-
+Verifies the certificates of the HTTPS-enabled servers using the CA bundle.
 
 Default value: `undef`
 
@@ -1013,15 +643,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
-
-Default value: `undef`
-
-##### `chart`
-
-Data type: `Optional[String]`
-
-
+Identifies the HTTPS client using this SSL certificate file.
 
 Default value: `undef`
 
@@ -1029,7 +651,8 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Specifies whether to enable verbose output.
+Values `true`, `false`.
 
 Default value: `false`
 
@@ -1037,7 +660,8 @@ Default value: `false`
 
 Data type: `Boolean`
 
-
+Specifies whether to use development versions.
+Values `true`, `false`.
 
 Default value: `false`
 
@@ -1045,7 +669,8 @@ Default value: `false`
 
 Data type: `Boolean`
 
-
+Specifies whether to simulate a chart update.
+Values `true`, `false`.
 
 Default value: `false`
 
@@ -1053,39 +678,7 @@ Default value: `false`
 
 Data type: `Optional[Array]`
 
-
-
-Default value: `undef`
-
-##### `key_file`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `keyring`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `home`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `host`
-
-Data type: `Optional[String]`
-
-
+Sets the environment variables for Helm to connect to the kubernetes cluster.
 
 Default value: `undef`
 
@@ -1093,15 +686,217 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+If a release by this name doesn't already exist, run an install
 
 Default value: `true`
+
+##### `key_file`
+
+Data type: `Optional[String]`
+
+Identifies the HTTPS client using the SSL key file.
+
+Default value: `undef`
+
+##### `keyring`
+
+Data type: `Optional[String]`
+
+Location of the public keys that are used for verification.
+
+Default value: `undef`
+
+##### `home`
+
+Data type: `Optional[String]`
+
+Location of your Helm config. This value overrides `$HELM_HOME`.
+
+Default value: `undef`
+
+##### `host`
+
+Data type: `Optional[String]`
+
+Address of Tiller. This value overrides `$HELM_HOST`.
+
+Default value: `undef`
 
 ##### `kube_context`
 
 Data type: `Optional[String]`
 
+Name of the kubeconfig context.
 
+Default value: `undef`
+
+##### `recreate_pods`
+
+Data type: `Optional[String]`
+
+Performs pods restart for the resource if applicable
+
+Default value: `undef`
+
+##### `reset_values`
+
+Data type: `Optional[String]`
+
+When upgrading, reset the values to the ones built into the chart
+
+Default value: `undef`
+
+##### `reuse_values`
+
+Data type: `Optional[String]`
+
+when upgrading, reuse the last release's values, and merge in any new values. If '--reset-values' is specified, this is ignored.
+
+Default value: `undef`
+
+##### `no_hooks#`
+
+@param
+Specifies whether to prevent hooks running during the installation.
+Values `true`, `false`.
+
+##### `path`
+
+Data type: `Array`
+
+The PATH variable used for exec types.
+
+Default value: `undef`
+
+##### `purge`
+
+Data type: `Boolean`
+
+Specifies whether to remove the release from the store, and make its name available for later use.
+Values `true`, `false`.
+
+Default value: `true`
+
+##### `release_name`
+
+Data type: `Optional[String]`
+
+**Required.** The release name.
+
+Default value: `undef`
+
+##### `repo`
+
+Data type: `Optional[String]`
+
+The repository URL for a requested chart.
+
+Default value: `undef`
+
+##### `set`
+
+Data type: `Optional[Array]`
+
+The set array of values for the `helm create` command.
+
+Default value: []
+
+##### `timeout`
+
+Data type: `Optional[Integer]`
+
+The timeout in seconds to wait for a Kubernetes operation.
+
+Default value: `undef`
+
+##### `tiller_namespace`
+
+Data type: `String`
+
+The Tiller namespace.
+
+Default value: 'kube-system'
+
+##### `tls`
+
+Data type: `Boolean`
+
+Specifies whether to enable TLS.
+Values `true`, `false`.
+
+Default value: `false`
+
+##### `tls_ca_cert`
+
+Data type: `Optional[String]`
+
+The path to TLS CA certificate file.
+
+Default value: `undef`
+
+##### `tls_cert`
+
+Data type: `Optional[String]`
+
+The path to TLS certificate file.
+
+Default value: `undef`
+
+##### `tls_key`
+
+Data type: `Optional[String]`
+
+The path to TLS key file.
+
+Default value: `undef`
+
+##### `tls_verify`
+
+Data type: `Boolean`
+
+Enable TLS for request and verify remote.
+
+Default value: `false`
+
+##### `values`
+
+Data type: `Optional[Array]`
+
+Specify values from a YAML file. Multiple values in an array are accepted.
+
+Default value: []
+
+##### `verify`
+
+Data type: `Boolean`
+
+Specifies whether to verify the package before installing it.
+Values `true`, `false`.
+
+Default value: `false`
+
+##### `version`
+
+Data type: `Optional[String]`
+
+Specify the version of the chart to install. `undef` installs the latest version.
+
+Default value: `undef`
+
+##### `wait`
+
+Data type: `Boolean`
+
+Before marking the release as successful, specify whether to wait until all the pods, PVCs, services, and the minimum number of deployment pods are in a ready state. The `timeout` value determines the duration.
+Values `true`, `false`.
+
+Default value: `false`
+
+##### `chart`
+
+Data type: `Optional[String]`
+
+The file system location of the package.
 
 Default value: `undef`
 
@@ -1121,161 +916,9 @@ Data type: `Boolean`
 
 Default value: `false`
 
-##### `path`
-
-Data type: `Array`
-
-
-
-Default value: `undef`
-
-##### `purge`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
-
-##### `repo`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `release_name`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `recreate_pods`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `reset_values`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `reuse_values`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `set`
-
-Data type: `Optional[Array]`
-
-
-
-Default value: []
-
-##### `timeout`
-
-Data type: `Optional[Integer]`
-
-
-
-Default value: `undef`
-
-##### `tiller_namespace`
-
-Data type: `String`
-
-
-
-Default value: 'kube-system'
-
-##### `tls`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### `tls_ca_cert`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `tls_cert`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `tls_key`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `tls_verify`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### `values`
-
-Data type: `Optional[Array]`
-
-
-
-Default value: []
-
-##### `verify`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### `version`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `wait`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
 ### helm::create
 
-== helm::create
+Defined Type helm::chart::create
 
 #### Parameters
 
@@ -1285,7 +928,8 @@ The following parameters are available in the `helm::create` defined type.
 
 Data type: `Optional[String]`
 
-
+The name of the Helm chart.
+Defaults to `undef`.
 
 Default value: `undef`
 
@@ -1293,7 +937,8 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The location of the Helm chart.
+If the directory in the path does not exist, Helm attempts to create it. If the directory and the files already exist, only the conflicting files are overwritten.
 
 Default value: `undef`
 
@@ -1301,7 +946,8 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Specifies whether to enable verbose output.
+Values `true`, `false`.
 
 Default value: `false`
 
@@ -1309,7 +955,7 @@ Default value: `false`
 
 Data type: `Optional[Array]`
 
-
+Sets the environment variables for Helm to connect to the Kubernetes cluster.
 
 Default value: `undef`
 
@@ -1317,7 +963,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The location of your Helm configuration. This value overrides `$HELM_HOME`.
 
 Default value: `undef`
 
@@ -1325,7 +971,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Address of Tiller. This value overrides `$HELM_HOST`.
 
 Default value: `undef`
 
@@ -1333,7 +979,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The name of the kubeconfig context.
 
 Default value: `undef`
 
@@ -1341,7 +987,7 @@ Default value: `undef`
 
 Data type: `Optional[Array]`
 
-
+The PATH variable used for exec types.
 
 Default value: `undef`
 
@@ -1349,7 +995,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Value for the starter chart.
 
 Default value: `undef`
 
@@ -1357,13 +1003,13 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Namespace of Tiller.
 
 Default value: `undef`
 
 ### helm::helm_init
 
-== helm::helm_init
+Defined Type helm::helm_init
 
 #### Parameters
 
@@ -1373,7 +1019,8 @@ The following parameters are available in the `helm::helm_init` defined type.
 
 Data type: `Boolean`
 
-
+Specifies whether to deploy the tiller pod and initialise the Helm client.
+Valid values are `true`, `false`.
 
 Default value: `true`
 
@@ -1381,7 +1028,8 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+Specifies whether to use the canary Tiller image.
+Valid values are `true`, `false`.
 
 Default value: `false`
 
@@ -1389,7 +1037,8 @@ Default value: `false`
 
 Data type: `Boolean`
 
-
+Specifies whether to deploy Tiller.
+Valid values are `true`, `false`.
 
 Default value: `false`
 
@@ -1397,7 +1046,8 @@ Default value: `false`
 
 Data type: `Boolean`
 
-
+Specifies whether to enable the verbose output.
+Values `true`, `false`.
 
 Default value: `false`
 
@@ -1405,7 +1055,8 @@ Default value: `false`
 
 Data type: `Boolean`
 
-
+Specifies whether to simulate an installation or delete of a deployment.
+Values `true`, `false`.
 
 Default value: `false`
 
@@ -1413,7 +1064,7 @@ Default value: `false`
 
 Data type: `Optional[Array]`
 
-
+Sets the environment variables required for Helm to connect to the kubernetes cluster.
 
 Default value: `undef`
 
@@ -1421,7 +1072,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The location for your Helm configuration. This value overrides `$HELM_HOME`.
 
 Default value: `undef`
 
@@ -1429,7 +1080,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The host address for Tiller. Overrides `$HELM_HOST`.
 
 Default value: `undef`
 
@@ -1437,7 +1088,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The name for the kubeconfig context to use.
 
 Default value: `undef`
 
@@ -1445,7 +1096,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The local repository URL.
 
 Default value: `undef`
 
@@ -1453,7 +1104,8 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Specifies whether to install Tiller with `net=host`.
+Valid values are `true`, `false`.
 
 Default value: `false`
 
@@ -1461,7 +1113,7 @@ Default value: `false`
 
 Data type: `Optional[Array]`
 
-
+The PATH variable used for exec types.
 
 Default value: `undef`
 
@@ -1469,7 +1121,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The name for the service account used for deploying Tiller.
 
 Default value: `undef`
 
@@ -1477,7 +1129,8 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Specifies whether to refresh or download the local repository cache.
+Valid values are `true`, `false`.
 
 Default value: `false`
 
@@ -1485,9 +1138,77 @@ Default value: `false`
 
 Data type: `Optional[String]`
 
-
+The stable repository URL.
 
 Default value: `undef`
+
+##### `tiller_image`
+
+Data type: `Optional[String]`
+
+Override the Tiller image.
+
+Default value: `undef`
+
+##### `tiller_namespace`
+
+Data type: `String`
+
+Namespace for Tiller.
+
+Default value: 'kube-system'
+
+##### `tiller_tls`
+
+Data type: `Boolean`
+
+Specifies whether to install Tiller with TLS enabled.
+Valid values are `true`, `false`.
+
+Default value: `false`
+
+##### `tiller_tls_cert`
+
+Data type: `Optional[String]`
+
+The path to the TLS certificate file that is installed with Tiller.
+
+Default value: `undef`
+
+##### `tiller_tls_key`
+
+Data type: `Optional[String]`
+
+The path to the TLS key file that is installed with Tiller.
+
+Default value: `undef`
+
+##### `tiller_tls_verify`
+
+Data type: `Boolean`
+
+Specifies whether to install Tiller with TLS enabled and to verify remote certificates.
+Valid values are `true`, `false`.
+
+Default value: `false`
+
+##### `tls_ca_cert`
+
+Data type: `Optional[String]`
+
+Specifies whether to use the path to the CA root certificate.
+Valid values are `true`, `false`.
+
+Default value: `undef`
+
+##### `upgrade`
+
+Data type: `Boolean`
+
+Specifies whether to upgrade if Tiller is installed.
+Valid values are `true`, `false`.
+
+Default value: `false`
 
 ##### `overrides`
 
@@ -1505,73 +1226,9 @@ Data type: `Optional[String]`
 
 Default value: `undef`
 
-##### `tiller_image`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `tiller_namespace`
-
-Data type: `String`
-
-
-
-Default value: 'kube-system'
-
-##### `tiller_tls`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### `tiller_tls_cert`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `tiller_tls_key`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `tiller_tls_verify`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### `tls_ca_cert`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `upgrade`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
 ### helm::package
 
-== helm::package
+Defined Type helm::package
 
 #### Parameters
 
@@ -1581,7 +1238,8 @@ The following parameters are available in the `helm::package` defined type.
 
 Data type: `Optional[String]`
 
-
+Defaults to `undef`.
+The name of the Helm chart.
 
 Default value: `undef`
 
@@ -1589,7 +1247,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The file system location of the chart.
 
 Default value: `undef`
 
@@ -1597,15 +1255,80 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Specifies whether to enable verbose output.
+Values `true`, `false`.
+Defaults to `false`.
 
 Default value: `false`
+
+##### `home`
+
+Data type: `Optional[String]`
+
+Location of your Helm config. This value overrides `$HELM_HOME`.
+Defaults to `undef`.
+
+Default value: `undef`
+
+##### ``host``
+
+The address for Tiller. This value overrides `$HELM_HOST`.
+Defaults to `undef`.
+
+##### `kube_context`
+
+Data type: `Optional[String]`
+
+The name for the kubeconfig context.
+Defaults to `undef`.
+
+Default value: `undef`
+
+##### `save`
+
+Data type: `Boolean`
+
+Specifies whether to save the packaged chart to the local chart repository.
+Valid values are `true`, `false`.
+Defaults to `true`.
+
+Default value: `true`
+
+##### `sign`
+
+Data type: `Boolean`
+
+Specifies whether to use a PGP private key to sign the package.
+Valid values are `true`, `false`.
+Defaults to `false`.
+
+Default value: `false`
+
+##### `tiller_namespace`
+
+Data type: `Optional[String]`
+
+The namespace for Tiller.
+Defaults to `undef`.
+
+Default value: `undef`
+
+##### `version`
+
+Data type: `Optional[String]`
+
+The version of the chart.
+Defaults to `undef`.
+
+Default value: `undef`
 
 ##### `dependency_update`
 
 Data type: `Boolean`
 
-
+Specifies whether to update dependencies.
+Valid values are `true`, `false`.
+Defaults to `false`.
 
 Default value: `false`
 
@@ -1613,7 +1336,8 @@ Default value: `false`
 
 Data type: `Optional[String]`
 
-
+The destination location to write to.
+Defaults to `undef`.
 
 Default value: `undef`
 
@@ -1621,23 +1345,8 @@ Default value: `undef`
 
 Data type: `Optional[Array]`
 
-
-
-Default value: `undef`
-
-##### `home`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `host`
-
-Data type: `Optional[String]`
-
-
+Sets the environment variables required for Helm to connect to the kubernetes cluster.
+ Defaults to `undef`.
 
 Default value: `undef`
 
@@ -1645,7 +1354,8 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Specify the key to use.
+Defaults to `undef`.
 
 Default value: `undef`
 
@@ -1653,11 +1363,12 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The location of the public keys that are used for verification.
+Defaults to `undef`.
 
 Default value: `undef`
 
-##### `kube_context`
+##### `host`
 
 Data type: `Optional[String]`
 
@@ -1673,41 +1384,9 @@ Data type: `Optional[Array]`
 
 Default value: `undef`
 
-##### `save`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
-
-##### `sign`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### `tiller_namespace`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### `version`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
 ### helm::repo
 
-== helm::repo
+Defined Type helm::repo
 
 #### Parameters
 
@@ -1717,7 +1396,8 @@ The following parameters are available in the `helm::repo` defined type.
 
 Data type: `String`
 
-
+Specifies whether a repo is added.
+Valid values are 'present', 'absent'.
 
 Default value: present
 
@@ -1725,7 +1405,7 @@ Default value: present
 
 Data type: `Optional[String]`
 
-
+Verify the certificates of HTTPS-enabled servers that are using the current CA bundle.
 
 Default value: `undef`
 
@@ -1733,7 +1413,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Use the SSL certificate file to identify the HTTPS client.
 
 Default value: `undef`
 
@@ -1741,7 +1421,8 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Specifies whether to enable verbose output.
+Values true, false.
 
 Default value: `false`
 
@@ -1749,7 +1430,7 @@ Default value: `false`
 
 Data type: `Optional[Array]`
 
-
+Sets the environment variables required for Helm to connect to the kubernetes cluster.
 
 Default value: `undef`
 
@@ -1757,7 +1438,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Use the SSL key file to identify the HTTPS client.
 
 Default value: `undef`
 
@@ -1765,7 +1446,8 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Specifies whether to create an error when the repository is already registered.
+Values true, false.
 
 Default value: `false`
 
@@ -1773,7 +1455,7 @@ Default value: `false`
 
 Data type: `Optional[String]`
 
-
+Location of your Helm config. This value overrrides $HELM_HOME.
 
 Default value: `undef`
 
@@ -1781,7 +1463,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The address for Tiller. This value overrides $HELM_HOST.
 
 Default value: `undef`
 
@@ -1789,7 +1471,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The name for the kubeconfig context to use.
 
 Default value: `undef`
 
@@ -1797,7 +1479,7 @@ Default value: `undef`
 
 Data type: `Optional[Array]`
 
-
+The PATH variable used for exec types.
 
 Default value: `undef`
 
@@ -1805,7 +1487,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The namespace for Tiller.
 
 Default value: `undef`
 
@@ -1813,7 +1495,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The username for the remote repository
 
 Default value: `undef`
 
@@ -1821,7 +1503,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The password for the remote repository.
 
 Default value: `undef`
 
@@ -1829,7 +1511,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The name for the remote repository.
 
 Default value: `undef`
 
@@ -1837,13 +1519,13 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The URL for the remote repository.
 
 Default value: `undef`
 
 ### helm::repo_update
 
-== helm::repo_update
+Defined Type helm::repo_update
 
 #### Parameters
 
@@ -1853,7 +1535,8 @@ The following parameters are available in the `helm::repo_update` defined type.
 
 Data type: `Boolean`
 
-
+Specifies whether to enable verbose output.
+Values true, false.
 
 Default value: `false`
 
@@ -1861,7 +1544,7 @@ Default value: `false`
 
 Data type: `Optional[Array]`
 
-
+Sets the environment variables required for Helm to connect to the Kubernetes cluster.
 
 Default value: `undef`
 
@@ -1869,7 +1552,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The location of your Helm config. This value overrides $HELM_HOME.
 
 Default value: `undef`
 
@@ -1877,7 +1560,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The address for Tiller. This value overrides $HELM_HOST.
 
 Default value: `undef`
 
@@ -1885,7 +1568,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The name for the kubeconfig context to use.
 
 Default value: `undef`
 
@@ -1893,7 +1576,7 @@ Default value: `undef`
 
 Data type: `Optional[Array]`
 
-
+The PATH variable used for exec types.
 
 Default value: `undef`
 
@@ -1901,7 +1584,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The namespace for Tiller.
 
 Default value: `undef`
 
@@ -1909,7 +1592,8 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Specifies whether the repository is updated.
+Values true, false.
 
 Default value: `true`
 

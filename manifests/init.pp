@@ -1,131 +1,127 @@
-# Class: helm
-# ===========================
+# @summary
+#   A module to install Helm, the Kubernetes package manager.
 #
-# A module to install Helm, the Kubernetes package manager.
 #
-# Parameters
-# ----------
+# @param canary_image
+#   Use the helm canary image for the default init of helm.
+#   Defaults to false
 #
-# [*canary_image]
-# Use the helm canary image for the default init of helm.
-# Defaults to false
+# @param client_only
+#   Make the default init install the client only.
+#   Defaults to false
 #
-# [*client_only]
-# Make the default init install the client only.
-# Defaults to false
+# @param debug
+#   Set output logging to debug for the default init.
+#   Defaults to false
 #
-# [*debug*]
-# Set output logging to debug for the default init.
-# Defaults to false
+# @param dry_run
+#   Make the default init run in dry-run mode.
+#   Defaults to false
 #
-# [*dry_run*]
-# Make the default init run in dry-run mode.
-# Defaults to false
+# @param env
+#   Environment variables to specify the location of configruation files, or any other custom variables required for helm to run.
+#   Defaults to [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']
 #
-# [*env*]
-# Environment variables to specify the location of configruation files, or any other custom variables required for helm to run.
-# Defaults to [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf']
+# @param home
+#   Set the HELM_HOME variable for the default init.
+#   Defaults to undef
 #
-# [*home*]
-# Set the HELM_HOME variable for the default init.
-# Defaults to undef
+# @param host
+#   Specify the HELM_HOST for the default init.
+#   Defaults to undef
 #
-# [*host*]
-# Specify the HELM_HOST for the default init.
-# Defaults to undef
+# @param init
+#   Determines the behaviour of the config function. Setting to true will init the cluster and install tiller.
+#   False will install Helm in client only mode.
+#   Defaults to true
 #
-# [*init*]
-# Determines the behaviour of the config function. Setting to true will init the cluster and install tiller.
-# False will install Helm in client only mode.
-# Defaults to true
+# @param install_path
+#   The path to extract helm binary to.
+#   Defaults to '/usr/bin'
 #
-# [*install_path*]
-# The path to extract helm binary to.
-# Defaults to '/usr/bin'
+# @param kube_context
+#   Specify the kube_context for the default init.
+#   Defaults to undef
 #
-# [*kube_context*]
-# Specify the kube_context for the default init.
-# Defaults to undef
+# @param local_repo_url
+#   Specify the local_repo_url for the default init.
+#   Defaults to undef
 #
-# [*local_repo_url*]
-# Specify the local_repo_url for the default init.
-# Defaults to undef
+# @param net_host
+#   Enable net_host mode for the default init.
+#   Defaults to false
 #
-# [*net_host*]
-# Enable net_host mode for the default init.
-# Defaults to false
+# @param node_selectors
+#   Specify node selectors for the helm init on the default init.
+#   Defaults to undef
 #
-# [*node_selectors*]
-# Specify node selectors for the helm init on the default init.
-# Defaults to undef
+# @param overrides
+#   Specify override parameters for the default init.
+#   Defaults to undef
 #
-# [*overrides*]
-# Specify override parameters for the default init.
-# Defaults to undef
+# @param path
+#   The PATH variable used for exec types.
+#   Defaults to ['/bin','/usr/bin']
 #
-# [*path*]
-# The PATH variable used for exec types.
-# Defaults to ['/bin','/usr/bin']
+# @param proxy
+#   Specify an internet proxy if necessary.
+#   Defaults to undef
 #
-# [*proxy*]
-# Specify an internet proxy if necessary.
-# Defaults to undef
+# @param service_account
+#   The service account for tiller
+#   Defaults to 'tiller'
 #
-# [*service_account*]
-# The service account for tiller
-# Defaults to 'tiller'
+# @param skip_refresh
+#   Enable skip refresh mode for the default init.
+#   Defaults to false
 #
-# [*skip_refresh*]
-# Enable skip refresh mode for the default init.
-# Defaults to false
+# @param stable_repo_url
+#   Specify the stable repo url for the default init.
+#   Defaults to undef
 #
-# [*stable_repo_url*]
-# Specify the stable repo url for the default init.
-# Defaults to undef
-#
-# [*tiller_image*]
-# Specify the image for the tiller install in the default init.
-# Defaults to undef
+# @param tiller_image
+#   Specify the image for the tiller install in the default init.
+#   Defaults to undef
 # 
-# [*tiller_image_pull_secrets*]
-# Optionnaly put imagePullSecret(s) in tiller's serviceaccount.
+# @param tiller_image_pull_secrets
+#   Optionnaly put imagePullSecret(s) in tiller's serviceaccount.
 #
-# [*tiller_namespaces*]
-# Array of namespaces in which to install tiller
-# Defaults to ['kube-system']
+# @param tiller_namespaces
+#   Array of namespaces in which to install tiller
+#   Defaults to ['kube-system']
 #
-# [*tiller_tls*]
-# Enable TLS for tiller in the default init.
-# Defaults to false
+# @param tiller_tls
+#   Enable TLS for tiller in the default init.
+#   Defaults to false
 #
-# [*tiller_tls_cert*]
-# Specify a TLS cert for tiller in the default init.
-# Defaults to undef
+# @param tiller_tls_cert
+#   Specify a TLS cert for tiller in the default init.
+#   Defaults to undef
 #
-# [*tiller_tls_key*]
-# Specify a TLS key for tiller in the default init.
-# Defaults to undef
+# @param tiller_tls_key
+#   Specify a TLS key for tiller in the default init.
+#   Defaults to undef
 #
-# [*tiller_tls_verify*]
-# Enable TLS verification for tiller in the default init.
-# Defaults to undef
+# @param tiller_tls_verify
+#   Enable TLS verification for tiller in the default init.
+#   Defaults to undef
 #
-# [*tls_ca_cert*]
-# Specify a TLS CA certificate for tiller in the default init.
-# Defaults to undef
+# @param tls_ca_cert
+#   Specify a TLS CA certificate for tiller in the default init.
+#   Defaults to undef
 #
-# [*upgrade*]
-# Whether to upgrade tiller in the default init.
-# Defaults to false
+# @param upgrade
+#   Whether to upgrade tiller in the default init.
+#   Defaults to false
 #
-# [*version*]
-# The version of helm to install.
-# Defaults to 2.5.1
+# @param version
+#   The version of helm to install.
+#   Defaults to 2.5.1
 #
-# [*archive_baseurl*]
-# The base URL for downloading the helm archive, must contain file helm-v${version}-linux-${arch}.tar.gz
-# Defaults to https://kubernetes-helm.storage.googleapis.com
-# URLs supported by puppet/archive module will work, e.g. puppet:///modules/helm_files
+# @param archive_baseurl
+#   The base URL for downloading the helm archive, must contain file helm-v${version}-linux-${arch}.tar.gz
+#   Defaults to https://kubernetes-helm.storage.googleapis.com
+#   URLs supported by puppet/archive module will work, e.g. puppet:///modules/helm_files
 #
 class helm (
   Boolean $canary_image                              = $helm::params::canary_image,

@@ -1,4 +1,7 @@
-# == Class: helm::account_config 
+# @summary
+# helm::account_config
+#
+# @api private
 class helm::account_config (
   Array $env                                         = $helm::env,
   Array $path                                        = $helm::path,
