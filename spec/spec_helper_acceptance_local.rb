@@ -158,7 +158,7 @@ EOS
 
   if os[:family] == 'redhat'
     run_shell('sed -i /cni_network_provider/d /etc/puppetlabs/code/environments/production/hieradata/Redhat.yaml')
-    run_shell('echo "kubernetes::cni_network_provider: https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml" >> /etc/puppetlabs/code/environments/production/hieradata/Redhat.yaml')
+    run_shell('echo "kubernetes::cni_network_provider: https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml" >> /etc/puppetlabs/code/environments/production/hieradata/Redhat.yaml')
     run_shell('echo "kubernetes::schedule_on_controller: true"  >> /etc/puppetlabs/code/environments/production/hieradata/Redhat.yaml')
     run_shell('echo "kubernetes::taint_master: false" >> /etc/puppetlabs/code/environments/production/hieradata/Redhat.yaml')
     run_shell('export KUBECONFIG=\'/etc/kubernetes/admin.conf\'')
