@@ -20,8 +20,6 @@ describe 'the helm module' do
       if $::osfamily == 'Debian'{
         class {'kubernetes':
                 controller => true,
-                kubernetes_version => '1.16.6',
-                kubernetes_package_version => '1.16.6-00',
                 schedule_on_controller => true,
                 environment  => ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
                 ignore_preflight_errors => ['NumCPU'],
