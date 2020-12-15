@@ -38,14 +38,12 @@ define helm::repo_update (
   Optional[Array] $path              = undef,
   Optional[String] $tiller_namespace = undef,
   Boolean $update                    = true,
-  Optional[String] $version          = $helm::params::version,
 ){
 
+  include ::helm
   include ::helm::params
 
-  $versioninfo = split($version, '.')
-
-  if (Integer($version[0]) < 3) {
+  if versioncmp($helm::version, '3.0.0') < 0 {
     if $update {
       $helm_repo_update_flags = helm_repo_update_flags({
         debug => $debug,

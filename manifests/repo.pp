@@ -71,14 +71,12 @@ define helm::repo (
   Optional[String] $password         = undef,
   Optional[String] $repo_name        = undef,
   Optional[String] $url              = undef,
-  Optional[String] $version          = $helm::version,
 ){
 
+  include ::helm
   include ::helm::params
 
-  $versioninfo = split($version, '.')
-
-  if (Integer($version[0]) < 3) {
+  if versioncmp($helm::version, '3.0.0') < 0 {
     if $ensure == present {
       $helm_repo_add_flags = helm_repo_add_flags({
         ensure => $ensure,
