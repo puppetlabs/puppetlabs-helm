@@ -20,6 +20,7 @@ describe 'helm::repo', :type => :define do
                     'repo_name' => 'foo',
                     'home' => '/home',
                     'url' => 'https://foo.com/bar',
+                    'kubeconfig' => '/etc/kubernetes/admin.conf',
                  } }
     it do
       is_expected.to compile.with_all_deps
@@ -39,10 +40,11 @@ describe 'helm::repo', :type => :define do
                     'repo_name' => 'foo',
                     'home' => '/home',
                     'url' => 'https://foo.com/bar',
+                    'kubeconfig' => '/etc/kubernetes/admin.conf',
                  } }
     it do
       is_expected.to compile.with_all_deps
-      is_expected.to contain_exec('helm repo foo').with_command("helm repo add --username 'bar' --password 'bar' 'foo' 'https://foo.com/bar'")
+      is_expected.to contain_exec('helm repo foo').with_command("helm repo add --kubeconfig '/etc/kubernetes/admin.conf' --username 'bar' --password 'bar' 'foo' 'https://foo.com/bar'")
     end
   end
   context 'with ensure => absent and repo_name => foo and home => /home and version => 2.7.2' do
@@ -55,10 +57,11 @@ describe 'helm::repo', :type => :define do
                     'path' => [ '/bin','/usr/bin'],
                     'repo_name' => 'foo',
                     'home' => '/home',
+                    'kubeconfig' => '/etc/kubernetes/admin.conf',
                  } }
     it do
       is_expected.to compile.with_all_deps
-      is_expected.to contain_exec('helm repo foo').with_command(/helm repo remove --home '\/home' 'foo'/)
+      is_expected.to contain_exec('helm repo foo').with_command("helm repo remove --home '/home' 'foo'")
     end
   end
   context 'with ensure => absent and repo_name => foo and home => /home (not used with v3) and version => 3.2.1' do
@@ -71,10 +74,11 @@ describe 'helm::repo', :type => :define do
                     'path' => [ '/bin','/usr/bin'],
                     'repo_name' => 'foo',
                     'home' => '/home',
+                    'kubeconfig' => '/etc/kubernetes/admin.conf',
                  } }
     it do
       is_expected.to compile.with_all_deps
-      is_expected.to contain_exec('helm repo foo').with_command(/helm repo remove 'foo'/)
+      is_expected.to contain_exec('helm repo foo').with_command("helm repo remove --kubeconfig '/etc/kubernetes/admin.conf' 'foo'")
     end
   end
 end

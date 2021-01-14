@@ -56,10 +56,11 @@ describe 'the helm module for v3' do
     context 'it should install the module' do
       let(:pp) {"
       helm::create { 'myapptest':
-        env        => [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
+        env        => [ 'HOME=/root' ],
         chart_path => '/tmp',
         chart_name => 'myapptest',
         path       =>  ['/bin','/usr/bin'],
+        kubeconfig => '/etc/kubernetes/admin.conf',
       }
       "}
       it 'should run' do
@@ -76,7 +77,8 @@ describe 'the helm module for v3' do
          chart_path  => '/tmp',
          chart_name  => 'myapptest',
          destination => '/root',
-         env         => [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'] ,
+         env         => [ 'HOME=/root' ],
+         kubeconfig  => '/etc/kubernetes/admin.conf',
          path        => ['/bin','/usr/bin'],
          version     => '0.1.0',
       }
@@ -94,7 +96,8 @@ describe 'the helm module for v3' do
       helm::chart { 'myapptest':
           ensure       => present,
           chart        => '/root/myapptest-0.1.0.tgz',
-          env          => [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
+          env          => [ 'HOME=/root' ],
+          kubeconfig   => '/etc/kubernetes/admin.conf',
           path         => ['/bin','/usr/bin'],
           release_name => 'myapprelease',
       }
@@ -112,7 +115,8 @@ describe 'the helm module for v3' do
       helm::chart { 'myapptest':
           ensure       => absent,
           chart        => 'local/myapptest',
-          env          => [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
+          env          => [ 'HOME=/root' ],
+          kubeconfig   => '/etc/kubernetes/admin.conf',
           path         => ['/bin','/usr/bin'],
           release_name => 'myapprelease',
       }
@@ -128,11 +132,12 @@ describe 'the helm module for v3' do
     context 'it should install the module' do
       let(:pp) {"
       helm::repo { 'myrepo':
-          ensure => present,
-          env    => [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
-          path   => ['/bin','/usr/bin'],
-          repo_name => 'myrepo',
-          url       => 'https://raw.githubusercontent.com/sheenaajay/helmchart/master/charts/'
+          ensure     => present,
+          env        => [ 'HOME=/root' ],
+          kubeconfig => '/etc/kubernetes/admin.conf',
+          path       => ['/bin','/usr/bin'],
+          repo_name  => 'myrepo',
+          url        => 'https://raw.githubusercontent.com/sheenaajay/helmchart/master/charts/'
       }
       "}
       it 'should run' do
@@ -146,11 +151,12 @@ describe 'the helm module for v3' do
     context 'it should remove a helm repo' do
       let(:pp) {"
         helm::repo { 'myrepo':
-          ensure => absent,
-          env    => [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
-          path   => ['/bin','/usr/bin'],
-          repo_name => 'myrepo',
-          url       => 'https://raw.githubusercontent.com/sheenaajay/helmchart/master/charts/'
+          ensure     => absent,
+          env        => [ 'HOME=/root' ],
+          kubeconfig => '/etc/kubernetes/admin.conf',
+          path       => ['/bin','/usr/bin'],
+          repo_name  => 'myrepo',
+          url        => 'https://raw.githubusercontent.com/sheenaajay/helmchart/master/charts/'
         }
       "}
       it 'should run' do

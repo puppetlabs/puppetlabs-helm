@@ -17,6 +17,7 @@ module Puppet::Parser::Functions
     flags << "--key '#{opts['key']}'" if opts['key'] && opts['key'].to_s != 'undef'
     flags << "--keystring '#{opts['keystrings']}'" if opts['keystring'] && opts['keystring'].to_s != 'undef'
     flags << "--kube-context '#{opts['kube_context']}'" if opts['kube_context'] && opts['kube_context'].to_s != 'undef'
+    flags << "--kubeconfig '#{opts['kubeconfig']}'" if opts['kubeconfig'] && opts['kubeconfig'].to_s != 'undef'
     flags << '--save' if opts['save']
     flags << '--sign' if opts['sign']
     flags << "--tiller-namespace '#{opts['tiller_namespace']}'" if opts['tiller_namespace'] && opts['tiller_namespace'].to_s != 'undef'

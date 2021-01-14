@@ -14,6 +14,7 @@ describe 'helm::package', :type => :define do
                   'path' => [ '/bin','/usr/bin'],
                   'home' => '/root',
                   'tiller_namespace' => 'kube-system',
+                  'kubeconfig' => '/etc/kubernetes/admin.conf',
                } }
     it do
       is_expected.to compile.with_all_deps
@@ -25,7 +26,7 @@ describe 'helm::package', :type => :define do
 
       it do
         is_expected.to compile.with_all_deps
-        is_expected.to contain_exec('helm package foo').with_command("helm package --save '/tmp/foo'")
+        is_expected.to contain_exec('helm package foo').with_command("helm package --kubeconfig '/etc/kubernetes/admin.conf' --save '/tmp/foo'")
       end
     end
   end

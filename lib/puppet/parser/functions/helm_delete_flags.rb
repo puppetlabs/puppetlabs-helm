@@ -14,6 +14,7 @@ module Puppet::Parser::Functions
     flags << "--home '#{opts['home']}'" if opts['home'].to_s != 'undef'
     flags << "--host '#{opts['host']}'" if opts['host'].to_s != 'undef'
     flags << "--kube-context '#{opts['kube_context']}'" if opts['kube_context'].to_s != 'undef'
+    flags << "--kubeconfig '#{opts['kubeconfig']}'" if opts['kubeconfig'] && opts['kubeconfig'].to_s != 'undef'
     flags << '--no-hooks' if opts['no_hooks']
     flags << '--purge' if opts['purge']
     flags << "--timeout '#{opts['timeout']}'" if opts['timeout'] && opts['timeout'].to_s != 'undef'

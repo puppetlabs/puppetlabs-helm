@@ -21,6 +21,7 @@ describe 'helm::chart', :type => :define do
                  'release_name' => 'foo',
                  'home' => '/root',
                  'tiller_namespace' => 'kube-system',
+                 'kubeconfig' => '/etc/kubernetes/admin.conf',
 
                } }
     it do
@@ -33,7 +34,7 @@ describe 'helm::chart', :type => :define do
 
       it do
         is_expected.to compile.with_all_deps
-        is_expected.to contain_exec('helm install helm chart').with_command("helm install --name 'foo' 'foo'")
+        is_expected.to contain_exec('helm install helm chart').with_command("helm install --kubeconfig '/etc/kubernetes/admin.conf' --name 'foo' 'foo'")
       end
     end
   end

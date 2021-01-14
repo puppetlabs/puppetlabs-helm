@@ -27,6 +27,9 @@
 #   The name for the kubeconfig context.
 #   Defaults to `undef`.
 # 
+# @param kubeconfig
+#   Path to the kubeconfig (v3 only)
+#
 # @param save
 #   Specifies whether to save the packaged chart to the local chart repository.
 #   Valid values are `true`, `false`.
@@ -78,6 +81,7 @@ define helm::package (
   Optional[String] $key               = undef,
   Optional[String] $keystring         = undef,
   Optional[String] $kube_context      = undef,
+  Optional[String] $kubeconfig        = undef,
   Optional[Array] $path               = undef,
   Boolean $save                       = true,
   Boolean $sign                       = false,
@@ -91,9 +95,11 @@ define helm::package (
   if versioncmp($helm::version, '3.0.0') >= 0 {
     $_home = undef
     $_tiller_namespace = undef
+    $_kubeconfig = $kubeconfig
   } else {
     $_home = $home
     $_tiller_namespace = $tiller_namespace
+    $_kubeconfig = undef
   }
 
   $helm_package_flags = helm_package_flags({
@@ -107,6 +113,7 @@ define helm::package (
     key => $key,
     keystring => $keystring,
     kube_context => $kube_context,
+    kubeconfig => $_kubeconfig,
     save => $save,
     sign => $sign,
     tiller_namespace => $_tiller_namespace,

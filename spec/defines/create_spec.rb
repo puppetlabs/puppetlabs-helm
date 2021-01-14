@@ -12,6 +12,7 @@ describe 'helm::create', :type => :define do
                   'path' => [ '/bin','/usr/bin'],
                   'home' => '/root',
                   'tiller_namespace' => 'kube-system',
+                  'kubeconfig' => '/etc/kubernetes/admin.conf',
                } }
 
   context 'with chart_path => /tmp and chart_name => foo' do
@@ -25,7 +26,7 @@ describe 'helm::create', :type => :define do
 
       it do
         is_expected.to compile.with_all_deps
-        is_expected.to contain_exec('helm create foo').with_command("helm create '/tmp/foo'")
+        is_expected.to contain_exec('helm create foo').with_command("helm create --kubeconfig '/etc/kubernetes/admin.conf' '/tmp/foo'")
       end
     end
   end

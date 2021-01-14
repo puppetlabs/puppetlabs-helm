@@ -47,6 +47,9 @@
 # @param kube_context
 #   Name of the kubeconfig context.
 # 
+# @param kubeconfig
+#   Path to the kubeconfig (v3 only)
+#
 # @param recreate_pods
 #   Performs pods restart for the resource if applicable
 # 
@@ -130,6 +133,7 @@ define helm::chart_update (
   Optional[String] $host          = undef,
   Boolean $install                = true,
   Optional[String] $kube_context  = undef,
+  Optional[String] $kubeconfig    = undef,
   Optional[String] $namespace     = undef,
   Boolean $no_hooks               = false,
   Array $path                     = undef,
@@ -163,9 +167,11 @@ define helm::chart_update (
   if versioncmp($helm::version, '3.0.0') >= 0 {
     $_home = undef
     $_tiller_namespace = undef
+    $_kubeconfig = $kubeconfig
   } else {
     $_home = $home
     $_tiller_namespace = $tiller_namespace
+    $_kubeconfig = undef
   }
 
   if $ensure == present {
@@ -183,6 +189,7 @@ define helm::chart_update (
       host => $host,
       install => $install,
       kube_context => $kube_context,
+      kubeconfig => $_kubeconfig,
       namespace => $namespace,
       no_hooks => $no_hooks,
       recreate_pods => $recreate_pods,
@@ -216,6 +223,7 @@ define helm::chart_update (
       home => $_home,
       host => $host,
       kube_context => $kube_context,
+      kubeconfig => $_kubeconfig,
       namespace => $namespace,
       no_hooks => $no_hooks,
       purge => $purge,
@@ -235,6 +243,7 @@ define helm::chart_update (
       home => $_home,
       host => $host,
       kube_context => $kube_context,
+      kubeconfig => $_kubeconfig,
       tiller_namespace => $_tiller_namespace,
       short => true,
       tls => $tls,

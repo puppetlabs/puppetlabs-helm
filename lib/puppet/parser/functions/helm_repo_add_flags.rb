@@ -18,6 +18,7 @@ module Puppet::Parser::Functions
     flags << "--home '#{opts['home']}'" if opts['home'] && opts['home'].to_s != 'undef'
     flags << "--host '#{opts['host']}'" if opts['host'] && opts['host'].to_s != 'undef'
     flags << "--kube-context '#{opts['kube_context']}'" if opts['kube_context'] && opts['kube_context'].to_s != 'undef'
+    flags << "--kubeconfig '#{opts['kubeconfig']}'" if opts['kubeconfig'] && opts['kubeconfig'].to_s != 'undef'
     flags << "--tiller-namespace '#{opts['tiller_namespace']}'" if opts['tiller_namespace'] && opts['tiller_namespace'].to_s != 'undef'
     flags << "--username '#{opts['username']}'" if opts['username'] && opts['username'].to_s != 'undef'
     flags << "--password '#{opts['password']}'" if opts['password'] && opts['password'].to_s != 'undef'

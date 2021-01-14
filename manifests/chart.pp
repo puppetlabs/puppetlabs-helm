@@ -42,6 +42,9 @@
 # @param kube_context
 #   Name of the kubeconfig context.
 #  
+# @param kubeconfig
+#   Path to the kubeconfig (v3 only)
+#
 # @param name_template
 #   The template used to name the release.
 #  
@@ -121,6 +124,7 @@ define helm::chart (
   Optional[String] $home              = undef,
   Optional[String] $host              = undef,
   Optional[String] $kube_context      = undef,
+  Optional[String] $kubeconfig        = undef,
   Optional[String] $name_template     = undef,
   Optional[String] $namespace         = undef,
   Boolean $no_hooks                   = false,
@@ -153,9 +157,11 @@ define helm::chart (
   if versioncmp($helm::version, '3.0.0') >= 0 {
     $_home = undef
     $_tiller_namespace = undef
+    $_kubeconfig = $kubeconfig
   } else {
     $_home = $home
     $_tiller_namespace = $tiller_namespace
+    $_kubeconfig = undef
   }
 
   if $ensure == present {
@@ -172,6 +178,7 @@ define helm::chart (
       home => $_home,
       host => $host,
       kube_context => $kube_context,
+      kubeconfig => $_kubeconfig,
       name_template => $name_template,
       namespace => $namespace,
       no_hooks => $no_hooks,
@@ -198,6 +205,7 @@ define helm::chart (
       home => $_home,
       host => $host,
       kube_context => $kube_context,
+      kubeconfig => $_kubeconfig,
       tiller_namespace => $_tiller_namespace,
       short => true,
       tls => $tls,
@@ -217,6 +225,7 @@ define helm::chart (
       home => $_home,
       host => $host,
       kube_context => $kube_context,
+      kubeconfig => $_kubeconfig,
       name_template => $name_template,
       namespace => $namespace,
       no_hooks => $no_hooks,
@@ -237,6 +246,7 @@ define helm::chart (
       home => $_home,
       host => $host,
       kube_context => $kube_context,
+      kubeconfig => $_kubeconfig,
       tiller_namespace => $_tiller_namespace,
       short => true,
       tls => $tls,
