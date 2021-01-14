@@ -7,7 +7,7 @@ describe 'helm', :type => :class do
                  :architecture => 'amd64'
               } }
 
-  let(:params) { {
+  let(:default_params) { {
                   'env' => [ 'HOME=/root', 'KUBECONFIG=/root/admin.conf'],
                   'init' => true,
                   'install_path' => '/usr/bin',
@@ -19,12 +19,25 @@ describe 'helm', :type => :class do
                } }
 
   context 'with sane default values for all parameters' do
+    let(:params) { default_params }
     it do
       is_expected.to compile.with_all_deps
       is_expected.to contain_class('helm')
       is_expected.to contain_class('helm::binary')
       is_expected.to contain_class('helm::account_config')
       is_expected.to contain_class('helm::config')
+    end
+  end
+
+  context 'helm v3' do
+    let(:params) { default_params.merge('version' => '3.5.0') }
+
+    it do
+      is_expected.to compile.with_all_deps
+      is_expected.to contain_class('helm')
+      is_expected.to contain_class('helm::binary')
+      is_expected.not_to contain_class('helm::account_config')
+      is_expected.not_to contain_class('helm::config')
     end
   end
 end

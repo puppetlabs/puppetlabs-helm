@@ -28,8 +28,6 @@ describe 'helm::config', :type => :class do
                     'tiller_tls_verify'  => false,
                     'tls_ca_cert'        => 'ca_cert',
                     'upgrade'            => false,
-                    'version'            => '2.5.1',
-                    'install_path'       => '/usr/bin',
                  } }
 
     it do
@@ -60,8 +58,6 @@ describe 'helm::config', :type => :class do
         'tiller_tls_verify'  => 'false',
         'tls_ca_cert'        => 'ca_cert',
         'upgrade'            => 'false',
-        'version'            => '2.5.1',
-        'install_path'       => '/usr/bin',
       })
     end
   end

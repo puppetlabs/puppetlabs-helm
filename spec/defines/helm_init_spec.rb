@@ -14,7 +14,6 @@ describe 'helm::helm_init', :type => :define do
                   'tiller_tls_cert' => 'cert',
                   'tiller_tls_key' => 'key',
                   'tiller_tls_verify' => true,
-                  'version' => '2.7.2',
                } }
     it do
       is_expected.to compile.with_all_deps
@@ -28,7 +27,6 @@ describe 'helm::helm_init', :type => :define do
                   'path' => [ '/bin','/usr/bin'],
                   'service_account' => 'tiller',
                   'tiller_namespace' => 'kube-system',
-                  'version' => '2.7.2',
                   } }
     it do
       is_expected.to compile.with_all_deps
@@ -43,7 +41,6 @@ describe 'helm::helm_init', :type => :define do
       'path' => [ '/bin','/usr/bin'],
       'service_account' => 'tiller',
       'tiller_namespace' => 'kube-system',
-      'version' => '2.7.2',
     }}
       it do
         is_expected.to compile.with_all_deps
@@ -58,7 +55,6 @@ describe 'helm::helm_init', :type => :define do
       'path' => [ '/bin','/usr/bin'],
       'service_account' => 'tiller',
       'tiller_namespace' => 'kube-system',
-      'version' => '2.7.2',
     }}
     it do
       is_expected.to compile.with_all_deps

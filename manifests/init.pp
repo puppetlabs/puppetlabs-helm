@@ -162,18 +162,22 @@ class helm (
     }
   }
 
-  contain ::helm::binary
-  contain ::helm::config
+  if versioncmp($version, '3.0.0') >= 0 {
+    contain ::helm::binary
+  } else {
+    contain ::helm::binary
+    contain ::helm::config
 
-  if $client_only == false {
-    contain ::helm::account_config
-    Class['helm::binary']
-      -> Class['helm::account_config']
-      -> Class['helm::config']
-  }
-  else{
-    Class['helm::binary']
-      -> Class['helm::config']
+    if $client_only == false {
+      contain ::helm::account_config
+      Class['helm::binary']
+        -> Class['helm::account_config']
+        -> Class['helm::config']
+    }
+    else{
+      Class['helm::binary']
+        -> Class['helm::config']
+    }
   }
 
 }
