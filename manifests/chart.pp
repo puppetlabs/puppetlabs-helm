@@ -42,6 +42,9 @@
 # @param kube_context
 #   Name of the kubeconfig context.
 #  
+# @param kubeconfig
+#   Path to the kubeconfig (v3 only)
+#
 # @param name_template
 #   The template used to name the release.
 #  
@@ -121,6 +124,7 @@ define helm::chart (
   Optional[String] $home              = undef,
   Optional[String] $host              = undef,
   Optional[String] $kube_context      = undef,
+  Optional[String] $kubeconfig        = undef,
   Optional[String] $name_template     = undef,
   Optional[String] $namespace         = undef,
   Boolean $no_hooks                   = false,
@@ -149,6 +153,19 @@ define helm::chart (
     fail("\nYou must specify a name for the service with the release_name attribute \neg: release_name => 'mysql'")
   }
 
+<<<<<<< HEAD
+=======
+  if versioncmp($helm::version, '3.0.0') >= 0 {
+    $_home = undef
+    $_tiller_namespace = undef
+    $_kubeconfig = $kubeconfig
+  } else {
+    $_home = $home
+    $_tiller_namespace = $tiller_namespace
+    $_kubeconfig = undef
+  }
+
+>>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
   if $ensure == present {
     $helm_install_flags = helm_install_flags({
       ensure => $ensure,
@@ -163,6 +180,7 @@ define helm::chart (
       home => $home,
       host => $host,
       kube_context => $kube_context,
+      kubeconfig => $_kubeconfig,
       name_template => $name_template,
       namespace => $namespace,
       no_hooks => $no_hooks,
@@ -189,7 +207,12 @@ define helm::chart (
       home => $home,
       host => $host,
       kube_context => $kube_context,
+<<<<<<< HEAD
       tiller_namespace => $tiller_namespace,
+=======
+      kubeconfig => $_kubeconfig,
+      tiller_namespace => $_tiller_namespace,
+>>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
       short => true,
       tls => $tls,
       tls_ca_cert => $tls_ca_cert,
@@ -208,6 +231,7 @@ define helm::chart (
       home => $home,
       host => $host,
       kube_context => $kube_context,
+      kubeconfig => $_kubeconfig,
       name_template => $name_template,
       namespace => $namespace,
       no_hooks => $no_hooks,
@@ -228,7 +252,12 @@ define helm::chart (
       home => $home,
       host => $host,
       kube_context => $kube_context,
+<<<<<<< HEAD
       tiller_namespace => $tiller_namespace,
+=======
+      kubeconfig => $_kubeconfig,
+      tiller_namespace => $_tiller_namespace,
+>>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
       short => true,
       tls => $tls,
       tls_ca_cert => $tls_ca_cert,

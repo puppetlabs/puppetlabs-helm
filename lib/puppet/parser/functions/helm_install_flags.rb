@@ -20,6 +20,7 @@ module Puppet::Parser::Functions
     flags << "--home '#{opts['home']}'" if opts['home'] && opts['home'].to_s != 'undef'
     flags << "--host '#{opts['host']}'" if opts['host'] && opts['host'].to_s != 'undef'
     flags << "--kube-context '#{opts['kube_context']}'" if opts['kube_context'] && opts['kube_context'].to_s != 'undef'
+    flags << "--kubeconfig '#{opts['kubeconfig']}'" if opts['kubeconfig'] && opts['kubeconfig'].to_s != 'undef'
     flags << "--name '#{opts['release_name']}'" if opts['release_name'] && opts['release_name'].to_s != 'undef'
     flags << "--name-template '#{opts['name_template']}'" if opts['name_template'] && opts['name_template'].to_s != 'undef'
     flags << "--namespace '#{opts['namespace']}'" if opts['namespace'] && opts['namespace'].to_s != 'undef'

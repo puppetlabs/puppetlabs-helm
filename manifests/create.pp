@@ -27,6 +27,9 @@
 # @param kube_context
 #   The name of the kubeconfig context.
 # 
+# @param kubeconfig
+#   Path to the kubeconfig (v3 only)
+#
 # @param path
 #   The PATH variable used for exec types.
 # 
@@ -44,6 +47,7 @@ define helm::create (
   Optional[String] $home             = undef,
   Optional[String] $host             = undef,
   Optional[String] $kube_context     = undef,
+  Optional[String] $kubeconfig       = undef,
   Optional[Array] $path              = undef,
   Optional[String] $starter          = undef,
   Optional[String] $tiller_namespace = undef,
@@ -51,6 +55,19 @@ define helm::create (
 
   include ::helm::params
 
+<<<<<<< HEAD
+=======
+  if versioncmp($helm::version, '3.0.0') >= 0 {
+    $_home = undef
+    $_tiller_namespace = undef
+    $_kubeconfig = $kubeconfig
+  } else {
+    $_home = $home
+    $_tiller_namespace = $tiller_namespace
+    $_kubeconfig = undef
+  }
+
+>>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
   $helm_create_flags = helm_create_flags({
     chart_name => $chart_name,
     chart_path => $chart_path,
@@ -58,6 +75,7 @@ define helm::create (
     home => $home,
     host => $host,
     kube_context => $kube_context,
+    kubeconfig => $_kubeconfig,
     starter => $starter,
     tiller_namespace => $tiller_namespace,
   })

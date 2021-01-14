@@ -36,6 +36,9 @@
 # @param kube_context
 #   The name for the kubeconfig context to use.
 #
+# @param kubeconfig
+#   Path to the kubeconfig (v3 only)
+#
 # @param path
 #   The PATH variable used for exec types.
 #
@@ -65,6 +68,7 @@ define helm::repo (
   Optional[String] $home             = undef,
   Optional[String] $host             = undef,
   Optional[String] $kube_context     = undef,
+  Optional[String] $kubeconfig       = undef,
   Optional[Array] $path              = undef,
   Optional[String] $tiller_namespace = undef,
   Optional[String] $username         = undef,
@@ -75,6 +79,19 @@ define helm::repo (
 
   include ::helm::params
 
+<<<<<<< HEAD
+=======
+  if versioncmp($helm::version, '3.0.0') >= 0 {
+    $_home = undef
+    $_tiller_namespace = undef
+    $_kubeconfig = $kubeconfig
+  } else {
+    $_home = $home
+    $_tiller_namespace = $tiller_namespace
+    $_kubeconfig = undef
+  }
+
+>>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
   if $ensure == present {
     $helm_repo_add_flags = helm_repo_add_flags({
       ensure => $ensure,
@@ -86,7 +103,12 @@ define helm::repo (
       home => $home,
       host => $host,
       kube_context => $kube_context,
+<<<<<<< HEAD
       tiller_namespace => $tiller_namespace,
+=======
+      kubeconfig => $_kubeconfig,
+      tiller_namespace => $_tiller_namespace,
+>>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
       username => $username,
       password => $password,
       repo_name => $repo_name,
@@ -102,6 +124,7 @@ define helm::repo (
       home => $home,
       host => $host,
       kube_context => $kube_context,
+      kubeconfig => $_kubeconfig,
       repo_name => $repo_name,
       tiller_namespace => $tiller_namespace,
     })

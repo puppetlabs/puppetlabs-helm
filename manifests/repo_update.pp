@@ -19,6 +19,9 @@
 # @param kube_context
 #   The name for the kubeconfig context to use.
 #
+# @param kubeconfig
+#   Path to the kubeconfig (v3 only)
+#
 # @param path
 #   The PATH variable used for exec types.
 #
@@ -35,6 +38,7 @@ define helm::repo_update (
   Optional[String] $home             = undef,
   Optional[String] $host             = undef,
   Optional[String] $kube_context     = undef,
+  Optional[String] $kubeconfig       = undef,
   Optional[Array] $path              = undef,
   Optional[String] $tiller_namespace = undef,
   Boolean $update                    = true,
@@ -42,13 +46,31 @@ define helm::repo_update (
 
   include ::helm::params
 
+<<<<<<< HEAD
+=======
+  if versioncmp($helm::version, '3.0.0') >= 0 {
+    $_home = undef
+    $_tiller_namespace = undef
+    $_kubeconfig = $kubeconfig
+  } else {
+    $_home = $home
+    $_tiller_namespace = $tiller_namespace
+    $_kubeconfig = undef
+  }
+
+>>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
   if $update {
     $helm_repo_update_flags = helm_repo_update_flags({
       debug => $debug,
       home => $home,
       host => $host,
       kube_context => $kube_context,
+<<<<<<< HEAD
       tiller_namespace => $tiller_namespace,
+=======
+      kubeconfig => $_kubeconfig,
+      tiller_namespace => $_tiller_namespace,
+>>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
       update => $update,
     })
     $exec_update = "helm repo ${helm_repo_update_flags}"
