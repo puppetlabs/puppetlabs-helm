@@ -26,7 +26,7 @@ module Puppet::Parser::Functions
     flags << '--no-hooks' if opts['no_hooks']
     flags << '--replace' if opts['replace']
 
-    if opts['repo'].to_s != 'undef'
+    if opts['repo'] && opts['repo'].to_s != 'undef'
       flags << "--repo '#{opts['repo']}'"
     end
 

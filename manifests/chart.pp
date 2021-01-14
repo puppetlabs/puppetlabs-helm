@@ -143,10 +143,19 @@ define helm::chart (
   Boolean $wait                       = false,
 ){
 
+  include ::helm
   include ::helm::params
 
   if ($release_name == undef) {
     fail("\nYou must specify a name for the service with the release_name attribute \neg: release_name => 'mysql'")
+  }
+
+  if versioncmp($helm::version, '3.0.0') >= 0 {
+    $_home = undef
+    $_tiller_namespace = undef
+  } else {
+    $_home = $home
+    $_tiller_namespace = $tiller_namespace
   }
 
   if $ensure == present {
@@ -160,7 +169,7 @@ define helm::chart (
       dry_run => $dry_run,
       key_file => $key_file,
       key_ring => $key_ring,
-      home => $home,
+      home => $_home,
       host => $host,
       kube_context => $kube_context,
       name_template => $name_template,
@@ -171,7 +180,7 @@ define helm::chart (
       release_name => $release_name,
       set => $set,
       timeout => $timeout,
-      tiller_namespace => $tiller_namespace,
+      tiller_namespace => $_tiller_namespace,
       tls => $tls,
       tls_ca_cert => $tls_ca_cert,
       tls_cert => $tls_cert,
@@ -186,10 +195,10 @@ define helm::chart (
     $exec_chart = "helm ${helm_install_flags}"
     $helm_ls_flags = helm_ls_flags({
       ls => true,
-      home => $home,
+      home => $_home,
       host => $host,
       kube_context => $kube_context,
-      tiller_namespace => $tiller_namespace,
+      tiller_namespace => $_tiller_namespace,
       short => true,
       tls => $tls,
       tls_ca_cert => $tls_ca_cert,
@@ -205,7 +214,7 @@ define helm::chart (
       ensure => $ensure,
       debug => $debug,
       dry_run => $dry_run,
-      home => $home,
+      home => $_home,
       host => $host,
       kube_context => $kube_context,
       name_template => $name_template,
@@ -214,7 +223,7 @@ define helm::chart (
       purge => $purge,
       release_name => $release_name,
       timeout => $timeout,
-      tiller_namespace => $tiller_namespace,
+      tiller_namespace => $_tiller_namespace,
       tls => $tls,
       tls_ca_cert => $tls_ca_cert,
       tls_cert => $tls_cert,
@@ -225,10 +234,10 @@ define helm::chart (
     $exec_chart = "helm ${helm_delete_flags}"
     $helm_ls_flags = helm_ls_flags({
       ls => true,
-      home => $home,
+      home => $_home,
       host => $host,
       kube_context => $kube_context,
-      tiller_namespace => $tiller_namespace,
+      tiller_namespace => $_tiller_namespace,
       short => true,
       tls => $tls,
       tls_ca_cert => $tls_ca_cert,

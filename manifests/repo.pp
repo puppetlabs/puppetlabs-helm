@@ -76,72 +76,46 @@ define helm::repo (
   include ::helm
   include ::helm::params
 
-  if versioncmp($helm::version, '3.0.0') < 0 {
-    if $ensure == present {
-      $helm_repo_add_flags = helm_repo_add_flags({
-        ensure => $ensure,
-        ca_file => $ca_file,
-        cert_file => $cert_file,
-        debug => $debug,
-        key_file => $key_file,
-        no_update => $no_update,
-        home => $home,
-        host => $host,
-        kube_context => $kube_context,
-        tiller_namespace => $tiller_namespace,
-        username => $username,
-        password => $password,
-        repo_name => $repo_name,
-        url => $url,
-      })
-      $exec_repo = "helm repo ${helm_repo_add_flags}"
-      $unless_repo = "helm repo list | awk '{if(NR>1)print \$1}' | grep -w ${repo_name}"
-    }
-
-    if $ensure == absent {
-      $helm_repo_remove_flags = helm_repo_remove_flags({
-        ensure => $ensure,
-        home => $home,
-        host => $host,
-        kube_context => $kube_context,
-        repo_name => $repo_name,
-        tiller_namespace => $tiller_namespace,
-      })
-      $exec_repo = "helm repo ${helm_repo_remove_flags}"
-      $unless_repo = "helm repo list | awk '{if (\$1 == \"${repo_name}\") exit 1}'"
-    }
+  if versioncmp($helm::version, '3.0.0') >= 0 {
+    $_home = undef
+    $_tiller_namespace = undef
   } else {
-    if $ensure == present {
-      $helm_repo_add_flags = helm_repo_add_flags({
-        ensure => $ensure,
-        ca_file => $ca_file,
-        cert_file => $cert_file,
-        debug => $debug,
-        key_file => $key_file,
-        no_update => $no_update,
-        host => $host,
-        kube_context => $kube_context,
-        tiller_namespace => $tiller_namespace,
-        username => $username,
-        password => $password,
-        repo_name => $repo_name,
-        url => $url,
-      })
-      $exec_repo = "helm repo ${helm_repo_add_flags}"
-      $unless_repo = "helm repo list | awk '{if(NR>1)print \$1}' | grep -w ${repo_name}"
-    }
+    $_home = $home
+    $_tiller_namespace = $tiller_namespace
+  }
 
-    if $ensure == absent {
-      $helm_repo_remove_flags = helm_repo_remove_flags({
-        ensure => $ensure,
-        host => $host,
-        kube_context => $kube_context,
-        repo_name => $repo_name,
-        tiller_namespace => $tiller_namespace,
-      })
-      $exec_repo = "helm repo ${helm_repo_remove_flags}"
-      $unless_repo = "helm repo list | awk '{if (\$1 == \"${repo_name}\") exit 1}'"
-    }
+  if $ensure == present {
+    $helm_repo_add_flags = helm_repo_add_flags({
+      ensure => $ensure,
+      ca_file => $ca_file,
+      cert_file => $cert_file,
+      debug => $debug,
+      key_file => $key_file,
+      no_update => $no_update,
+      home => $_home,
+      host => $host,
+      kube_context => $kube_context,
+      tiller_namespace => $_tiller_namespace,
+      username => $username,
+      password => $password,
+      repo_name => $repo_name,
+      url => $url,
+    })
+    $exec_repo = "helm repo ${helm_repo_add_flags}"
+    $unless_repo = "helm repo list | awk '{if(NR>1)print \$1}' | grep -w ${repo_name}"
+  }
+
+  if $ensure == absent {
+    $helm_repo_remove_flags = helm_repo_remove_flags({
+      ensure => $ensure,
+      home => $_home,
+      host => $host,
+      kube_context => $kube_context,
+      repo_name => $repo_name,
+      tiller_namespace => $_tiller_namespace,
+    })
+    $exec_repo = "helm repo ${helm_repo_remove_flags}"
+    $unless_repo = "helm repo list | awk '{if (\$1 == \"${repo_name}\") exit 1}'"
   }
 
   exec { "helm repo ${repo_name}":

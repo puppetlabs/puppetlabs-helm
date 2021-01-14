@@ -85,7 +85,16 @@ define helm::package (
   Optional[String] $version           = undef,
 ){
 
+  include ::helm
   include ::helm::params
+
+  if versioncmp($helm::version, '3.0.0') >= 0 {
+    $_home = undef
+    $_tiller_namespace = undef
+  } else {
+    $_home = $home
+    $_tiller_namespace = $tiller_namespace
+  }
 
   $helm_package_flags = helm_package_flags({
     chart_name => $chart_name,
@@ -93,14 +102,14 @@ define helm::package (
     debug => $debug,
     dependency_update => $dependency_update,
     destination => $destination,
-    home => $home,
+    home => $_home,
     host => $host,
     key => $key,
     keystring => $keystring,
     kube_context => $kube_context,
     save => $save,
     sign => $sign,
-    tiller_namespace => $tiller_namespace,
+    tiller_namespace => $_tiller_namespace,
     version => $version,
     })
 

@@ -49,17 +49,26 @@ define helm::create (
   Optional[String] $tiller_namespace = undef,
 ){
 
+  include ::helm
   include ::helm::params
+
+  if versioncmp($helm::version, '3.0.0') >= 0 {
+    $_home = undef
+    $_tiller_namespace = undef
+  } else {
+    $_home = $home
+    $_tiller_namespace = $tiller_namespace
+  }
 
   $helm_create_flags = helm_create_flags({
     chart_name => $chart_name,
     chart_path => $chart_path,
     debug => $debug,
-    home => $home,
+    home => $_home,
     host => $host,
     kube_context => $kube_context,
     starter => $starter,
-    tiller_namespace => $tiller_namespace,
+    tiller_namespace => $_tiller_namespace,
   })
 
   $exec_chart = "helm create ${helm_create_flags}"

@@ -43,29 +43,24 @@ define helm::repo_update (
   include ::helm
   include ::helm::params
 
-  if versioncmp($helm::version, '3.0.0') < 0 {
-    if $update {
-      $helm_repo_update_flags = helm_repo_update_flags({
-        debug => $debug,
-        home => $home,
-        host => $host,
-        kube_context => $kube_context,
-        tiller_namespace => $tiller_namespace,
-        update => $update,
-      })
-      $exec_update = "helm repo ${helm_repo_update_flags}"
-    }
+  if versioncmp($helm::version, '3.0.0') >= 0 {
+    $_home = undef
+    $_tiller_namespace = undef
   } else {
-    if $update {
-      $helm_repo_update_flags = helm_repo_update_flags({
-        debug => $debug,
-        host => $host,
-        kube_context => $kube_context,
-        tiller_namespace => $tiller_namespace,
-        update => $update,
-      })
-      $exec_update = "helm repo ${helm_repo_update_flags}"
-    }
+    $_home = $home
+    $_tiller_namespace = $tiller_namespace
+  }
+
+  if $update {
+    $helm_repo_update_flags = helm_repo_update_flags({
+      debug => $debug,
+      home => $_home,
+      host => $host,
+      kube_context => $kube_context,
+      tiller_namespace => $_tiller_namespace,
+      update => $update,
+    })
+    $exec_update = "helm repo ${helm_repo_update_flags}"
   }
 
   exec { 'helm repo update':
