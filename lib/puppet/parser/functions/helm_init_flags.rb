@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'shellwords'
 #
 # helm_init_flags.rb

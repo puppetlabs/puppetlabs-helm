@@ -13,6 +13,6 @@ Style/Lambda:
   Exclude:
   - lib/**/**/**/helm_install_flags.rb
   - lib/**/**/**/helm_chart_update_flags.rb 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
