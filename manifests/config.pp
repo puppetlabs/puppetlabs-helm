@@ -31,7 +31,7 @@ class helm::config (
 ){
 
   $tiller_namespaces.each |$ns| {
-    helm::helm_init { "helm-${ns}-master":
+    helm::helm_init { "helm-${ns}-control-plane":
       canary_image     => $canary_image,
       client_only      => $client_only,
       debug            => $debug,
