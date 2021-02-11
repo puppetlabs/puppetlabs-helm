@@ -8,6 +8,8 @@ describe 'the helm module' do
       pp = <<-MANIFEST
       if $::osfamily == 'RedHat'{
         class {'kubernetes':
+                kubernetes_version => '1.13.5',
+                kubernetes_package_version => '1.13.5',
                 container_runtime => 'docker',
                 manage_docker => false,
                 etcd_hostname => 'localhost.localdomain',
@@ -20,6 +22,8 @@ describe 'the helm module' do
         }
       if $::osfamily == 'Debian'{
         class {'kubernetes':
+                kubernetes_version => '1.13.5',
+                kubernetes_package_version => '1.13.5-00',
                 controller => true,
                 schedule_on_controller => true,
                 environment  => ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
