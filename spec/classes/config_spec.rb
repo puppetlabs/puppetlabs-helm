@@ -32,7 +32,7 @@ describe 'helm::config', :type => :class do
 
     it do
       is_expected.to compile
-      is_expected.to contain_helm__helm_init('helm-kube-system-master').with({
+      is_expected.to contain_helm__helm_init('helm-kube-system-control-plane').with({
         'canary_image'       => 'false',
         'client_only'        => 'false',
         'debug'              => 'false',

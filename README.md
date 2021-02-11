@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-helm.svg?branch=master)](https://travis-ci.org/puppetlabs/puppetlabs-helm)
+[![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-helm.svg?branch=main)](https://travis-ci.org/puppetlabs/puppetlabs-helm)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppetlabs/helm.svg)](https://forge.puppetlabs.com/puppetlabs/helm)
 [![Puppet Forge Downloads](http://img.shields.io/puppetforge/dt/puppetlabs/helm.svg)](https://forge.puppetlabs.com/puppetlabs/helm)
 
@@ -105,7 +105,7 @@ helm::repo_update { 'update':
 
 ## Reference
 
-[REFERENCE.md](https://github.com/puppetlabs/puppetlabs-helm/blob/master/REFERENCE.md).
+[REFERENCE.md](https://github.com/puppetlabs/puppetlabs-helm/blob/main/REFERENCE.md).
 
 ## Limitations
 
@@ -115,7 +115,7 @@ This module is compatible only with the `Linux` kernel.
 
 ### Contributing
 
-If you would like to contribute to this module please follow the rules in the [CONTRIBUTING.md](https://github.com/puppetlabs/puppetlabs-helm/blob/master/CONTRIBUTING.md).
+If you would like to contribute to this module please follow the rules in the [CONTRIBUTING.md](https://github.com/puppetlabs/puppetlabs-helm/blob/main/CONTRIBUTING.md).
 
 To run the acceptance tests you can use Puppet Litmus with the Vagrant provider by using the following commands:
 
