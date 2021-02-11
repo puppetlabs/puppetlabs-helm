@@ -10,6 +10,7 @@ describe 'the helm module' do
         class {'kubernetes':
                 container_runtime => 'docker',
                 manage_docker => false,
+                etcd_hostname => 'localhost.localdomain',
                 controller => true,
                 schedule_on_controller => true,
                 environment  => ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf'],
