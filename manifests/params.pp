@@ -20,7 +20,7 @@ class helm::params {
   $path                      = [ '/bin','/usr/bin']
   $service_account           = 'tiller'
   $skip_refresh              = false
-  $stable_repo_url           = undef
+  $stable_repo_url           = 'https://charts.helm.sh/stable'
   $tiller_image              = undef
   $tiller_image_pull_secrets = []
   $tiller_namespaces         = ['kube-system']
