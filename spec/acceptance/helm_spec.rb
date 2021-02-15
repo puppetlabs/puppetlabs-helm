@@ -83,7 +83,7 @@ describe 'the helm module' do
         apply_manifest(pp,)
       end
       it 'should package chart' do
-        run_shell('ls /root/.helm/repository/local/myapptest-0.1.0.tgz')
+        run_shell('ls /root/myapptest-0.1.0.tgz')
       end
     end
 
