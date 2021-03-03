@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'the helm module' do
+describe 'the helm module', :integration do
 
   describe 'kubernetes class' do
     context 'it should install the module and run' do
