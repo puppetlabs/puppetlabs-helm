@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'the helm module' do
+describe 'the helm module', :integration do
 
   describe 'kubernetes class' do
     context 'it should install the module and run' do
@@ -8,8 +8,8 @@ describe 'the helm module' do
       pp = <<-MANIFEST
       if $::osfamily == 'RedHat'{
         class {'kubernetes':
-                kubernetes_version => '1.13.5',
-                kubernetes_package_version => '1.13.5',
+                kubernetes_version => '1.16.6',
+                kubernetes_package_version => '1.16.6',
                 container_runtime => 'docker',
                 manage_docker => false,
                 etcd_hostname => 'localhost.localdomain',
@@ -47,7 +47,9 @@ describe 'the helm module' do
   describe 'helm class' do
     context 'it should install the module' do
       let(:pp) {"
-      include helm
+        class { 'helm':
+          version           => '2.17.0',
+        }
       "}
       it 'should run' do
         apply_manifest(pp)
