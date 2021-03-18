@@ -160,7 +160,6 @@ RSpec.configure do |c|
     run_shell('puppet module install puppetlabs-kubernetes')
     run_shell('puppet module install puppetlabs-stdlib')
     run_shell('puppet module install stahnma-epel')
-    run_shell('puppet module install puppetlabs-translate')
     run_shell('puppet module install puppet-archive')
     run_shell('puppet module install puppetlabs-docker')
 
