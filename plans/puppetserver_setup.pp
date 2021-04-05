@@ -1,9 +1,26 @@
+# @summary Provisions machines
+#
+# Puppet Server Setup
+#
+# @example
+#   helm::puppetserver_setup
 plan helm::puppetserver_setup(
+  Optional[String] $collection = 'puppet7-nightly'
 ) {
   $puppet_server =  get_targets('*').filter |$n| { $n.vars['role'] == 'controller' }
-  $puppet_server_string = $puppet_server[0].name
-  # install pe server
-  run_task('provision::install_puppetserver', $puppet_server)
+
+  # get facts
+  $puppet_server_facts = facts($puppet_server[0])
+  $platform = $puppet_server_facts['platform']
+
+  # install puppet server
+  run_task(
+    'provision::install_puppetserver',
+    $puppet_server,
+    'install and configure server',
+    { 'collection' => $collection, 'platform' => $platform }
+  )
 }
+
 
 
