@@ -149,6 +149,7 @@ jobs:
       run: |
         buildevents cmd $TRACE_ID $STEP_ID 'rake helm::puppetserver_setup' -- bundle exec bolt --modulepath spec/fixtures/modules plan run helm::puppetserver_setup -i ./inventory.yaml
     - name: Install agent
+      run: |
         command: buildevents cmd $TRACE_ID $STEP_ID 'rake litmus:install_agent ${{ matrix.collection }}' -- bundle exec rake 'litmus:install_agent[${{ matrix.collection }}]'
 
     - name: Install module
