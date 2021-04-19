@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 require 'puppet_litmus'
 require 'tempfile'
-require 'pry'
 
 include PuppetLitmus
 
@@ -71,6 +70,7 @@ def configure_puppet_server(controller, worker1, worker2)
   execute_agent('controller')
   # Configure the puppet agents
   configure_puppet_agent('worker1')
+  puppet_cert_sign
   configure_puppet_agent('worker2')
   puppet_cert_sign
   # Create site.pp
@@ -164,17 +164,16 @@ RSpec.configure do |c|
     run_shell('puppet module install puppetlabs-docker')
 
     nginx = <<-EOS
-    apiVersion: v1
-    kind: Namespace
-    metadata:
-      name: nginx
     ---
-    apiVersion: apps/v1beta1
+    apiVersion: apps/v1
     kind: Deployment
     metadata:
       name: my-nginx
-      namespace: nginx
     spec:
+      selector:
+        matchLabels:
+          run: my-nginx
+      replicas: 2
       template:
         metadata:
           labels:
@@ -182,7 +181,7 @@ RSpec.configure do |c|
         spec:
           containers:
           - name: my-nginx
-            image: nginx:1.12-alpine
+            image: nginx
             ports:
             - containerPort: 80
     ---
@@ -190,7 +189,6 @@ RSpec.configure do |c|
     kind: Service
     metadata:
       name: my-nginx
-      namespace: nginx
       labels:
         run: my-nginx
     spec:
@@ -308,6 +306,7 @@ EOS
   run_shell("export KUBECONFIG=\'/etc/kubernetes/admin.conf\'")
   execute_agent('controller')
   execute_agent('worker1')
+  execute_agent('worker2')
   puppet_cert_sign
 end
 end
