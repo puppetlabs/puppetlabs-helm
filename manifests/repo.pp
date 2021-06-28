@@ -79,8 +79,6 @@ define helm::repo (
 
   include ::helm::params
 
-<<<<<<< HEAD
-=======
   if versioncmp($helm::version, '3.0.0') >= 0 {
     $_home = undef
     $_tiller_namespace = undef
@@ -91,7 +89,6 @@ define helm::repo (
     $_kubeconfig = undef
   }
 
->>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
   if $ensure == present {
     $helm_repo_add_flags = helm_repo_add_flags({
       ensure => $ensure,
@@ -103,12 +100,8 @@ define helm::repo (
       home => $home,
       host => $host,
       kube_context => $kube_context,
-<<<<<<< HEAD
-      tiller_namespace => $tiller_namespace,
-=======
       kubeconfig => $_kubeconfig,
       tiller_namespace => $_tiller_namespace,
->>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
       username => $username,
       password => $password,
       repo_name => $repo_name,

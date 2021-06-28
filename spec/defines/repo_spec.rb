@@ -11,9 +11,6 @@ describe 'helm::repo', :type => :define do
                     'username' => 'bar',
                     'password' => 'bar',
                     'repo_name' => 'foo',
-<<<<<<< HEAD
-                    'url' => 'https://foo.com/bar'
-=======
                     'home' => '/home',
                     'url' => 'https://foo.com/bar',
                     'kubeconfig' => '/etc/kubernetes/admin.conf',
@@ -37,7 +34,6 @@ describe 'helm::repo', :type => :define do
                     'home' => '/home',
                     'url' => 'https://foo.com/bar',
                     'kubeconfig' => '/etc/kubernetes/admin.conf',
->>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
                  } }
     it do
       is_expected.to compile.with_all_deps
@@ -49,9 +45,6 @@ describe 'helm::repo', :type => :define do
                     'ensure' => 'absent',
                     'env' => ['HOME=/root', 'KUBECONFIG=/root/admin.conf'],
                     'path' => [ '/bin','/usr/bin'],
-<<<<<<< HEAD
-                    'repo_name' => 'foo'
-=======
                     'repo_name' => 'foo',
                     'home' => '/home',
                     'kubeconfig' => '/etc/kubernetes/admin.conf',
@@ -72,7 +65,6 @@ describe 'helm::repo', :type => :define do
                     'repo_name' => 'foo',
                     'home' => '/home',
                     'kubeconfig' => '/etc/kubernetes/admin.conf',
->>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
                  } }
     it do
       is_expected.to compile.with_all_deps

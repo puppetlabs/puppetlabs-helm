@@ -91,8 +91,6 @@ define helm::package (
 
   include ::helm::params
 
-<<<<<<< HEAD
-=======
   if versioncmp($helm::version, '3.0.0') >= 0 {
     $_home = undef
     $_tiller_namespace = undef
@@ -103,7 +101,6 @@ define helm::package (
     $_kubeconfig = undef
   }
 
->>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
   $helm_package_flags = helm_package_flags({
     chart_name => $chart_name,
     chart_path => $chart_path,

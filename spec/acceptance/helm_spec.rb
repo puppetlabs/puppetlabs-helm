@@ -8,8 +8,8 @@ describe 'the helm module', :integration do
       pp = <<-MANIFEST
       if $::osfamily == 'RedHat'{
         class {'kubernetes':
-                kubernetes_version => '1.16.6',
-                kubernetes_package_version => '1.16.6',
+                kubernetes_version => 1.20.6',
+                kubernetes_package_version => '1.20.6',
                 container_runtime => 'docker',
                 manage_docker => false,
                 etcd_hostname => 'localhost.localdomain',

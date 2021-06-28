@@ -9,9 +9,6 @@ describe 'helm::repo_update', :type => :define do
   context 'with default values for all params' do
     it { is_expected.to contain_exec('helm repo update').with_command('helm repo update') }
   end
-<<<<<<< HEAD
-end
-=======
 
   context 'with home => /home and version => 2.7.2' do
     let(:pre_condition) {
@@ -28,4 +25,3 @@ end
     it { is_expected.to contain_exec('helm repo update').with_command("helm repo --kubeconfig '/etc/kubernetes/admin.conf' update") }
   end
 end
->>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3

@@ -116,7 +116,7 @@
 #
 # @param version
 #   The version of helm to install.
-#   Defaults to 2.5.1
+#   Defaults to 2.7.2
 #
 # @param archive_baseurl
 #   The base URL for downloading the helm archive, must contain file helm-v${version}-linux-${arch}.tar.gz
@@ -162,18 +162,22 @@ class helm (
     }
   }
 
-  contain ::helm::binary
-  contain ::helm::config
+  if versioncmp($version, '3.0.0') >= 0 {
+    contain ::helm::binary
+  } else {
+    contain ::helm::binary
+    contain ::helm::config
 
-  if $client_only == false {
-    contain ::helm::account_config
-    Class['helm::binary']
-      -> Class['helm::account_config']
-      -> Class['helm::config']
-  }
-  else{
-    Class['helm::binary']
-      -> Class['helm::config']
+    if $client_only == false {
+      contain ::helm::account_config
+      Class['helm::binary']
+        -> Class['helm::account_config']
+        -> Class['helm::config']
+    }
+    else{
+      Class['helm::binary']
+        -> Class['helm::config']
+    }
   }
 
 }

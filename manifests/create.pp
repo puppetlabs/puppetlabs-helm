@@ -55,8 +55,6 @@ define helm::create (
 
   include ::helm::params
 
-<<<<<<< HEAD
-=======
   if versioncmp($helm::version, '3.0.0') >= 0 {
     $_home = undef
     $_tiller_namespace = undef
@@ -67,7 +65,6 @@ define helm::create (
     $_kubeconfig = undef
   }
 
->>>>>>> f745a94... Add kubeconfig parameter for all defined types to better support Helm v3
   $helm_create_flags = helm_create_flags({
     chart_name => $chart_name,
     chart_path => $chart_path,
