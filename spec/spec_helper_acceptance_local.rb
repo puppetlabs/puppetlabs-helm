@@ -89,7 +89,7 @@ def configure_puppet_server(controller, worker1, worker2)
       cgroup_driver => 'cgroupfs',
     }
     class { 'helm':
-      version           => '3.6.0',
+      version           => '3.2.1',
     }
   }
   node /#{worker1}/ {
