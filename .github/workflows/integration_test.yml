@@ -147,7 +147,7 @@ jobs:
     - name: Install module
       run: |
         buildevents cmd $TRACE_ID $STEP_ID 'rake litmus:install_module' -- bundle exec rake 'litmus:install_module'
-        
+    ## ssh session     
     - name: Start SSH session
       uses: luchihoratiu/debug-via-ssh@main
       with:
