@@ -9,13 +9,13 @@ describe 'helm::binary', :type => :class do
                     'install_path'    => '/usr/bin',
                     'version'         => '2.5.1',
                     'proxy'           => 'https://proxy',
-                    'archive_baseurl' => 'https://kubernetes-helm.storage.googleapis.com',
+                    'archive_baseurl' => 'https://get.helm.sh',
                  } }
     it do
       is_expected.to compile
       is_expected.to contain_archive('helm').with({
         'path' => '/tmp/helm-v2.5.1-linux-amd64.tar.gz',
-        'source' => 'https://kubernetes-helm.storage.googleapis.com/helm-v2.5.1-linux-amd64.tar.gz',
+        'source' => 'https://get.helm.sh/helm-v2.5.1-linux-amd64.tar.gz',
         'extract_command' => 'tar xfz %s linux-amd64/helm --strip-components=1 -O > /usr/bin/helm-2.5.1',
         'extract' => 'true',
         'extract_path' => '/usr/bin',
