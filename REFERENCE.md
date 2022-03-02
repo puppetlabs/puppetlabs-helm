@@ -352,7 +352,7 @@ Default value: `$helm::params::version`
 Data type: `String`
 
 The base URL for downloading the helm archive, must contain file helm-v${version}-linux-${arch}.tar.gz
-Defaults to https://kubernetes-helm.storage.googleapis.com
+Defaults to https://get.helm.sh
 URLs supported by puppet/archive module will work, e.g. puppet:///modules/helm_files
 
 Default value: `$helm::params::archive_baseurl`
