@@ -7,8 +7,7 @@ class helm::binary (
   String $install_path    = $helm::install_path,
   Optional[String] $proxy = $helm::proxy,
   String $archive_baseurl = $helm::archive_baseurl,
-){
-
+) {
   case $::architecture {
     'amd64': {
       $arch = 'amd64'

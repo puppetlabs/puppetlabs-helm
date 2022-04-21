@@ -28,8 +28,7 @@ class helm::config (
   Boolean $tiller_tls_verify                = $helm::tiller_tls_verify,
   Optional[String] $tls_ca_cert             = $helm::tls_ca_cert,
   Boolean $upgrade                          = $helm::upgrade,
-){
-
+) {
   $tiller_namespaces.each |$ns| {
     helm::helm_init { "helm-${ns}-control-plane":
       canary_image     => $canary_image,

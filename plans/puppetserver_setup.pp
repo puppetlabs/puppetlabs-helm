@@ -21,6 +21,3 @@ plan helm::puppetserver_setup(
     { 'collection' => $collection, 'platform' => $platform }
   )
 }
-
-
-

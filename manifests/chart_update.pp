@@ -1,4 +1,3 @@
-
 # Defined Type helm::chart::update
 #
 # @summary
@@ -139,7 +138,7 @@ define helm::chart_update (
   Optional[String] $recreate_pods = undef,
   Optional[String] $reset_values  = undef,
   Optional[String] $reuse_values  = undef,
-  Optional[Array] $set            = [],
+  Array $set                      = [],
   Optional[Integer] $timeout      = undef,
   String $tiller_namespace        = 'kube-system',
   Boolean $tls                    = false,
@@ -147,12 +146,11 @@ define helm::chart_update (
   Optional[String] $tls_cert      = undef,
   Optional[String] $tls_key       = undef,
   Boolean $tls_verify             = false,
-  Optional[Array] $values         = [],
+  Array $values                   = [],
   Boolean $verify                 = false,
   Optional[String] $version       = undef,
   Boolean $wait                   = false,
-){
-
+) {
   include ::helm::params
 
   if ($release_name == undef) {
@@ -160,80 +158,83 @@ define helm::chart_update (
   }
 
   if $ensure == present {
-    $helm_chart_update_flags = helm_chart_update_flags({
-      ensure => $ensure,
-      ca_file =>$ca_file,
-      cert_file => $cert_file,
-      chart => $chart,
-      debug => $debug,
-      devel => $devel,
-      dry_run => $dry_run,
-      key_file => $key_file,
-      keyring => $keyring,
-      home => $home,
-      host => $host,
-      install => $install,
-      kube_context => $kube_context,
-      namespace => $namespace,
-      no_hooks => $no_hooks,
-      recreate_pods => $recreate_pods,
-      reset_values => $reset_values,
-      reuse_values => $reuse_values,
-      repo => $repo,
-      release_name => $release_name,
-      set => $set,
-      timeout => $timeout,
-      tiller_namespace => $tiller_namespace,
-      tls => $tls,
-      tls_ca_cert => $tls_ca_cert,
-      tls_cert => $tls_cert,
-      tls_key => $tls_key,
-      tls_verify => $tls_verify,
-      values => $values,
-      verify => $verify,
-      version => $version,
-      wait => $wait,
-      })
+    $helm_chart_update_flags = helm_chart_update_flags( {
+        ensure => $ensure,
+        ca_file => $ca_file,
+        cert_file => $cert_file,
+        chart => $chart,
+        debug => $debug,
+        devel => $devel,
+        dry_run => $dry_run,
+        key_file => $key_file,
+        keyring => $keyring,
+        home => $home,
+        host => $host,
+        install => $install,
+        kube_context => $kube_context,
+        namespace => $namespace,
+        no_hooks => $no_hooks,
+        recreate_pods => $recreate_pods,
+        reset_values => $reset_values,
+        reuse_values => $reuse_values,
+        repo => $repo,
+        release_name => $release_name,
+        set => $set,
+        timeout => $timeout,
+        tiller_namespace => $tiller_namespace,
+        tls => $tls,
+        tls_ca_cert => $tls_ca_cert,
+        tls_cert => $tls_cert,
+        tls_key => $tls_key,
+        tls_verify => $tls_verify,
+        values => $values,
+        verify => $verify,
+        version => $version,
+        wait => $wait,
+      }
+    )
     $exec = "helm upgrade ${name}"
     $exec_chart = "helm ${helm_chart_update_flags}"
     $unless_chart = undef
   }
 
   if $ensure == absent {
-    $helm_delete_flags = helm_delete_flags({
-      ensure => $ensure,
-      debug => $debug,
-      dry_run => $dry_run,
-      home => $home,
-      host => $host,
-      kube_context => $kube_context,
-      namespace => $namespace,
-      no_hooks => $no_hooks,
-      purge => $purge,
-      release_name => $release_name,
-      timeout => $timeout,
-      tiller_namespace => $tiller_namespace,
-      tls => $tls,
-      tls_ca_cert => $tls_ca_cert,
-      tls_cert => $tls_cert,
-      tls_key => $tls_key,
-      tls_verify => $tls_verify,
-      })
+    $helm_delete_flags = helm_delete_flags( {
+        ensure => $ensure,
+        debug => $debug,
+        dry_run => $dry_run,
+        home => $home,
+        host => $host,
+        kube_context => $kube_context,
+        namespace => $namespace,
+        no_hooks => $no_hooks,
+        purge => $purge,
+        release_name => $release_name,
+        timeout => $timeout,
+        tiller_namespace => $tiller_namespace,
+        tls => $tls,
+        tls_ca_cert => $tls_ca_cert,
+        tls_cert => $tls_cert,
+        tls_key => $tls_key,
+        tls_verify => $tls_verify,
+      }
+    )
     $exec = "helm delete ${name}"
     $exec_chart = "helm ${helm_delete_flags}"
-    $helm_ls_flags = helm_ls_flags({
-      ls => true,
-      home => $home,
-      host => $host,
-      kube_context => $kube_context,
-      tiller_namespace => $tiller_namespace,
-      short => true,
-      tls => $tls,
-      tls_ca_cert => $tls_ca_cert,
-      tls_cert => $tls_cert,
-      tls_key => $tls_key,
-      tls_verify => $tls_verify,
-    })
+    $helm_ls_flags = helm_ls_flags( {
+        ls => true,
+        home => $home,
+        host => $host,
+        kube_context => $kube_context,
+        tiller_namespace => $tiller_namespace,
+        short => true,
+        tls => $tls,
+        tls_ca_cert => $tls_ca_cert,
+        tls_cert => $tls_cert,
+        tls_key => $tls_key,
+        tls_verify => $tls_verify,
+      }
+    )
     $unless_chart = "helm ${helm_ls_flags} | awk '{if(\$1 == \"${release_name}\") exit 1}'"
   }
 
