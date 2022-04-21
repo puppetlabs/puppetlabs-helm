@@ -6,7 +6,7 @@ class helm::params {
   $client_only               = false
   $debug                     = false
   $dry_run                   = false
-  $env                       = [ 'HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf']
+  $env                       = ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/admin.conf']
   $home                      = undef
   $host                      = undef
   $init                      = true
@@ -17,7 +17,7 @@ class helm::params {
   $net_host                  = false
   $node_selectors            = undef
   $overrides                 = undef
-  $path                      = [ '/bin','/usr/bin']
+  $path                      = ['/bin','/usr/bin']
   $service_account           = 'tiller'
   $skip_refresh              = false
   $stable_repo_url           = 'https://charts.helm.sh/stable'

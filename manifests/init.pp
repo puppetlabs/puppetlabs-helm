@@ -155,7 +155,6 @@ class helm (
   String $version                                    = $helm::params::version,
   String $archive_baseurl                            = $helm::params::archive_baseurl,
 ) inherits helm::params {
-
   if $::kernel {
     assert_type(Pattern[/Linux/], $::kernel) |$a, $b| {
       fail('This module only supports the Linux kernel')
@@ -168,12 +167,10 @@ class helm (
   if $client_only == false {
     contain ::helm::account_config
     Class['helm::binary']
-      -> Class['helm::account_config']
-      -> Class['helm::config']
-  }
-  else{
+    -> Class['helm::account_config']
+    -> Class['helm::config']
+  } else {
     Class['helm::binary']
-      -> Class['helm::config']
+    -> Class['helm::config']
   }
-
 }

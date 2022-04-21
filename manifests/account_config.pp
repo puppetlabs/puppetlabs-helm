@@ -8,8 +8,7 @@ class helm::account_config (
   String $service_account                            = $helm::service_account,
   Optional[Array[String]] $tiller_image_pull_secrets = $helm::tiller_image_pull_secrets,
   Array[String] $tiller_namespaces                   = $helm::tiller_namespaces,
-){
-
+) {
   if (count($tiller_namespaces) > 1) {
     $_global_tiller = false
   } else {
@@ -23,19 +22,19 @@ class helm::account_config (
     path        => $path,
   }
 
-  file {'/etc/kubernetes/tiller-serviceaccount.yaml':
+  file { '/etc/kubernetes/tiller-serviceaccount.yaml':
     ensure  => 'file',
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
     content => epp('helm/tiller-serviceaccount.yaml.epp', {
-      'service_account'    => $service_account,
-      'image_pull_secrets' => $tiller_image_pull_secrets,
+        'service_account'    => $service_account,
+        'image_pull_secrets' => $tiller_image_pull_secrets,
     }),
   }
 
   $tiller_namespaces.each |$ns| {
-    exec {"create ${ns} tiller service account":
+    exec { "create ${ns} tiller service account":
       command   => "kubectl apply -n ${ns} -f tiller-serviceaccount.yaml",
       unless    => "kubectl get serviceaccount ${service_account} -n ${ns}",
       subscribe => File['/etc/kubernetes/tiller-serviceaccount.yaml'],
@@ -43,36 +42,36 @@ class helm::account_config (
   }
 
   if $_global_tiller {
-    file {'/etc/kubernetes/tiller-clusterrole.yaml':
+    file { '/etc/kubernetes/tiller-clusterrole.yaml':
       ensure  => 'file',
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
       content => epp('helm/tiller-clusterrole.yaml.epp', {
-        'namespace'       => $tiller_namespaces[0],
-        'service_account' => $service_account,
+          'namespace'       => $tiller_namespaces[0],
+          'service_account' => $service_account,
       }),
     }
 
-    exec {'create cluster role':
+    exec { 'create cluster role':
       command   => 'kubectl apply -f tiller-clusterrole.yaml',
       unless    => 'kubectl get clusterrolebinding tiller-cluster-rule',
       subscribe => File['/etc/kubernetes/tiller-clusterrole.yaml'],
     }
   } else {
     $tiller_namespaces.each |$ns| {
-      file {"/etc/kubernetes/tiller-${ns}-role.yaml":
+      file { "/etc/kubernetes/tiller-${ns}-role.yaml":
         ensure  => 'file',
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
         content => epp('helm/tiller-role.yaml.epp', {
-          'namespace'       => $ns,
-          'service_account' => $service_account,
+            'namespace'       => $ns,
+            'service_account' => $service_account,
         }),
       }
 
-      exec {"create ${ns} tiller role and binding":
+      exec { "create ${ns} tiller role and binding":
         command   => "kubectl apply -f tiller-${ns}-role.yaml",
         unless    => "kubectl get rolebinding tiller-binding -n ${ns}",
         subscribe => File["/etc/kubernetes/tiller-${ns}-role.yaml"],

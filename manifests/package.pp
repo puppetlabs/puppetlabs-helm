@@ -83,27 +83,26 @@ define helm::package (
   Boolean $sign                       = false,
   Optional[String] $tiller_namespace  = undef,
   Optional[String] $version           = undef,
-){
-
+) {
   include ::helm::params
 
-  $helm_package_flags = helm_package_flags({
-    chart_name => $chart_name,
-    chart_path => $chart_path,
-    debug => $debug,
-    dependency_update => $dependency_update,
-    destination => $destination,
-    home => $home,
-    host => $host,
-    key => $key,
-    keystring => $keystring,
-    kube_context => $kube_context,
-    save => $save,
-    sign => $sign,
-    tiller_namespace => $tiller_namespace,
-    version => $version,
-    })
-
+  $helm_package_flags = helm_package_flags( {
+      chart_name => $chart_name,
+      chart_path => $chart_path,
+      debug => $debug,
+      dependency_update => $dependency_update,
+      destination => $destination,
+      home => $home,
+      host => $host,
+      key => $key,
+      keystring => $keystring,
+      kube_context => $kube_context,
+      save => $save,
+      sign => $sign,
+      tiller_namespace => $tiller_namespace,
+      version => $version,
+    }
+  )
 
   $exec_package = "helm package ${helm_package_flags}"
 
