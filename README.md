@@ -9,6 +9,7 @@
 - [Helm](#Helm)
       - [Table of Contents](#Table-of-Contents)
   - [Description](#Description)
+  - [Support](#support)
   - [Setup](#Setup)
   - [Usage](#Usage)
   - [Reference](#Reference)
@@ -20,6 +21,13 @@
 ## Description
 
 This module installs the the Helm package manager, which consists of the Helm client (Helm) and the Helm server (Tiller), and it also manages the Helm deployments. The Helm package manager installs and manages Kubernetes applications.
+
+## Support
+
+This module is not supported or maintained by Puppet and does not qualify for Puppet Support plans.
+It's provided without guarantee or warranty and you can use it at your own risk.
+All bugfixes, updates, and new feature development will come from community contributions.
+[tier:community]
 
 ## Setup
 
