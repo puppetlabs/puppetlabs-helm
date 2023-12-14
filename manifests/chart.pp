@@ -107,6 +107,12 @@
 # @param chart
 #   The file system location of the package.
 #
+# @param namespace
+#
+# @param tiller_namespace
+#
+# @param tls_key
+#
 define helm::chart (
   String $ensure                      = present,
   Optional[String] $ca_file           = undef,
@@ -129,7 +135,7 @@ define helm::chart (
   Boolean $replace                    = false,
   Optional[String] $repo              = undef,
   Optional[String] $release_name      = undef,
-  Array $set                          = [],
+  Optional[Array] $set                = undef,
   Optional[Integer] $timeout          = undef,
   String $tiller_namespace            = 'kube-system',
   Boolean $tls                        = false,
@@ -137,19 +143,19 @@ define helm::chart (
   Optional[String] $tls_cert          = undef,
   Optional[String] $tls_key           = undef,
   Boolean $tls_verify                 = false,
-  Array $values                       = [],
+  Optional[Array] $values             = undef,
   Boolean $verify                     = false,
   Optional[String] $version           = undef,
   Boolean $wait                       = false,
 ) {
-  include ::helm::params
+  include helm::params
 
   if ($release_name == undef) {
     fail("\nYou must specify a name for the service with the release_name attribute \neg: release_name => 'mysql'")
   }
 
   if $ensure == present {
-    $helm_install_flags = helm_install_flags( {
+    $helm_install_flags = helm_install_flags({
         ensure => $ensure,
         ca_file => $ca_file,
         cert_file => $cert_file,
@@ -180,11 +186,10 @@ define helm::chart (
         verify => $verify,
         version => $version,
         wait => $wait,
-      }
-    )
+    })
     $exec = "helm install ${name}"
     $exec_chart = "helm ${helm_install_flags}"
-    $helm_ls_flags = helm_ls_flags( {
+    $helm_ls_flags = helm_ls_flags({
         ls => true,
         home => $home,
         host => $host,
@@ -196,13 +201,12 @@ define helm::chart (
         tls_cert => $tls_cert,
         tls_key => $tls_key,
         tls_verify => $tls_verify,
-      }
-    )
+    })
     $unless_chart = "helm ${helm_ls_flags} | grep -q '^${release_name}$'"
   }
 
   if $ensure == absent {
-    $helm_delete_flags = helm_delete_flags( {
+    $helm_delete_flags = helm_delete_flags({
         ensure => $ensure,
         debug => $debug,
         dry_run => $dry_run,
@@ -221,11 +225,10 @@ define helm::chart (
         tls_cert => $tls_cert,
         tls_key => $tls_key,
         tls_verify => $tls_verify,
-      }
-    )
+    })
     $exec = "helm delete ${name}"
     $exec_chart = "helm ${helm_delete_flags}"
-    $helm_ls_flags = helm_ls_flags( {
+    $helm_ls_flags = helm_ls_flags({
         ls => true,
         home => $home,
         host => $host,
@@ -237,8 +240,7 @@ define helm::chart (
         tls_cert => $tls_cert,
         tls_key => $tls_key,
         tls_verify => $tls_verify,
-      }
-    )
+    })
     $unless_chart = "helm ${helm_ls_flags} | awk '{if(\$1 == \"${release_name}\") exit 1}'"
   }
 
