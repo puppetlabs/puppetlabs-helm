@@ -82,7 +82,11 @@
 # @param upgrade
 #   Specifies whether to upgrade if Tiller is installed.
 #   Valid values are `true`, `false`.
-# 
+#
+# @param overrides
+#
+# @param node_selectors
+#
 define helm::helm_init (
   Boolean $init                      = true,
   Boolean $canary_image              = false,
@@ -110,10 +114,10 @@ define helm::helm_init (
   Optional[String] $tls_ca_cert      = undef,
   Boolean $upgrade                   = false,
 ) {
-  include ::helm::params
+  include helm::params
 
   if $init {
-    $helm_init_flags = helm_init_flags( {
+    $helm_init_flags = helm_init_flags({
         init             => $init,
         canary_image     => $canary_image,
         client_only      => $client_only,
@@ -136,12 +140,12 @@ define helm::helm_init (
         tiller_tls_key   => $tiller_tls_key,
         tls_ca_cert      => $tls_ca_cert,
         upgrade          => $upgrade,
-      }
-    )
+    })
 
     if $home != undef {
       $is_client_init_cmd = "test -d ${home}/plugins"
-    } else {
+    }
+    else {
       $is_client_init_cmd = 'test -d ~/.helm/plugins'
     }
 
