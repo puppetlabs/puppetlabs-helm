@@ -120,7 +120,7 @@
 #
 # @param archive_baseurl
 #   The base URL for downloading the helm archive, must contain file helm-v${version}-linux-${arch}.tar.gz
-#   Defaults to https://get.helm.sh
+#   Defaults to https://kubernetes-helm.storage.googleapis.com
 #   URLs supported by puppet/archive module will work, e.g. puppet:///modules/helm_files
 #
 class helm (
@@ -155,21 +155,22 @@ class helm (
   String $version                                    = $helm::params::version,
   String $archive_baseurl                            = $helm::params::archive_baseurl,
 ) inherits helm::params {
-  if $::kernel {
-    assert_type(Pattern[/Linux/], $::kernel) |$a, $b| {
+  if $facts['kernel'] {
+    assert_type(Pattern[/Linux/], $facts['kernel']) |$a, $b| {
       fail('This module only supports the Linux kernel')
     }
   }
 
-  contain ::helm::binary
-  contain ::helm::config
+  contain helm::binary
+  contain helm::config
 
   if $client_only == false {
-    contain ::helm::account_config
+    contain helm::account_config
     Class['helm::binary']
     -> Class['helm::account_config']
     -> Class['helm::config']
-  } else {
+  }
+  else {
     Class['helm::binary']
     -> Class['helm::config']
   }

@@ -8,7 +8,7 @@ class helm::binary (
   Optional[String] $proxy = $helm::proxy,
   String $archive_baseurl = $helm::archive_baseurl,
 ) {
-  case $::architecture {
+  case $facts['os']['architecture'] {
     'amd64': {
       $arch = 'amd64'
     }
@@ -19,7 +19,7 @@ class helm::binary (
       $arch = 'amd64'
     }
     default: {
-      fail("${::architecture} is not supported")
+      fail("${facts['os']['architecture']} is not supported")
     }
   }
 

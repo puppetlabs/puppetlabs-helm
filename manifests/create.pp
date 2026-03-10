@@ -48,9 +48,9 @@ define helm::create (
   Optional[String] $starter          = undef,
   Optional[String] $tiller_namespace = undef,
 ) {
-  include ::helm::params
+  include helm::params
 
-  $helm_create_flags = helm_create_flags( {
+  $helm_create_flags = helm_create_flags({
       chart_name => $chart_name,
       chart_path => $chart_path,
       debug => $debug,
@@ -59,8 +59,7 @@ define helm::create (
       kube_context => $kube_context,
       starter => $starter,
       tiller_namespace => $tiller_namespace,
-    }
-  )
+  })
 
   $exec_chart = "helm create ${helm_create_flags}"
 

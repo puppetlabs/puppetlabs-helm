@@ -66,6 +66,10 @@
 #   The location of the public keys that are used for verification.
 #   Defaults to `undef`.
 #
+# @param host
+#
+# @param path
+#
 define helm::package (
   Optional[String] $chart_name        = undef,
   Optional[String] $chart_path        = undef,
@@ -84,9 +88,9 @@ define helm::package (
   Optional[String] $tiller_namespace  = undef,
   Optional[String] $version           = undef,
 ) {
-  include ::helm::params
+  include helm::params
 
-  $helm_package_flags = helm_package_flags( {
+  $helm_package_flags = helm_package_flags({
       chart_name => $chart_name,
       chart_path => $chart_path,
       debug => $debug,
@@ -101,8 +105,7 @@ define helm::package (
       sign => $sign,
       tiller_namespace => $tiller_namespace,
       version => $version,
-    }
-  )
+  })
 
   $exec_package = "helm package ${helm_package_flags}"
 

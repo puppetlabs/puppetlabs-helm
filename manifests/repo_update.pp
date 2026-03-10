@@ -39,18 +39,17 @@ define helm::repo_update (
   Optional[String] $tiller_namespace = undef,
   Boolean $update                    = true,
 ) {
-  include ::helm::params
+  include helm::params
 
   if $update {
-    $helm_repo_update_flags = helm_repo_update_flags( {
+    $helm_repo_update_flags = helm_repo_update_flags({
         debug => $debug,
         home => $home,
         host => $host,
         kube_context => $kube_context,
         tiller_namespace => $tiller_namespace,
         update => $update,
-      }
-    )
+    })
     $exec_update = "helm repo ${helm_repo_update_flags}"
   }
 
